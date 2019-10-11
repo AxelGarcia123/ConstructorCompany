@@ -21,14 +21,18 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JTextField editUserName;
-	private JTextField textField;
 	private JLabel singUp;
 	private JButton buttonSingIn;
+	private Index index;
+	private JPasswordField userPassword;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -112,14 +116,6 @@ public class Login extends JFrame {
 		lblPassword.setBounds(10, 118, 269, 36);
 		panel_5.add(lblPassword);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField.setColumns(10);
-		textField.setBorder(new LineBorder(new Color(171, 173, 179), 1, true));
-		textField.setBounds(10, 175, 269, 31);
-		panel_5.add(textField);
-		
 		JLabel lblForgotYourPassword = new JLabel("Forgot your password?");
 		lblForgotYourPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblForgotYourPassword.setForeground(Color.GRAY);
@@ -133,6 +129,7 @@ public class Login extends JFrame {
 		panel_5.add(lblForgotYourPassword);
 		
 		buttonSingIn = new JButton("Sing In ");
+		buttonSingIn.addActionListener(this);
 		buttonSingIn.setForeground(Color.WHITE);
 		buttonSingIn.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		buttonSingIn.setBackground(new Color(45, 0, 255));
@@ -151,5 +148,20 @@ public class Login extends JFrame {
 		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		singUp.setFont(font.deriveFont(attributesUp));
 		panel_5.add(singUp);
+		
+		userPassword = new JPasswordField();
+		userPassword.setBounds(10, 175, 269, 30);
+		panel_5.add(userPassword);
+	}
+
+	//Comienzo con el botón del login
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == buttonSingIn) {
+			setExtendedState(MAXIMIZED_BOTH);
+			contentPane.removeAll();
+			index = new Index();
+			contentPane.add(index, BorderLayout.CENTER);
+		}
 	}
 }

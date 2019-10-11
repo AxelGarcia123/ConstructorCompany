@@ -1,70 +1,26 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.font.TextAttribute;
 import java.util.Map;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Cursor;
-
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 import javax.swing.JButton;
-import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
-public class Login extends JFrame implements ActionListener{
+public class Log extends JPanel {
 
-	private JPanel contentPane;
-	private JTextField editUserName;
-	private JLabel singUp;
-	private JButton buttonSingIn;
-	private LateralMenu menu;
-	private JPasswordField userPassword;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public Login() {
-		setResizable(false);
-		setBackground(Color.WHITE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 840, 502);
-		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel);
-		
+	public Log() {
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -93,7 +49,7 @@ public class Login extends JFrame implements ActionListener{
 		panel_3.add(panel_5);
 		panel_5.setLayout(null);
 		
-		editUserName = new JTextField();
+		JTextField editUserName = new JTextField();
 		editUserName.setBorder(new LineBorder(new Color(171, 173, 179), 1, true));
 		editUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		editUserName.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -128,8 +84,8 @@ public class Login extends JFrame implements ActionListener{
 		lblForgotYourPassword.setFont(font.deriveFont(attributes));
 		panel_5.add(lblForgotYourPassword);
 		
-		buttonSingIn = new JButton("Sing In ");
-		buttonSingIn.addActionListener(this);
+		JButton buttonSingIn = new JButton("Sing In ");
+		//buttonSingIn.addActionListener(this);
 		buttonSingIn.setForeground(Color.WHITE);
 		buttonSingIn.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		buttonSingIn.setBackground(new Color(45, 0, 255));
@@ -137,7 +93,7 @@ public class Login extends JFrame implements ActionListener{
 		buttonSingIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_5.add(buttonSingIn);
 		
-		singUp = new JLabel("Don't have an account? Sing Up");
+		JLabel singUp = new JLabel("Don't have an account? Sing Up");
 		singUp.setHorizontalAlignment(SwingConstants.CENTER);
 		singUp.setForeground(Color.GRAY);
 		singUp.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -149,21 +105,8 @@ public class Login extends JFrame implements ActionListener{
 		singUp.setFont(font.deriveFont(attributesUp));
 		panel_5.add(singUp);
 		
-		userPassword = new JPasswordField();
+		JPasswordField userPassword = new JPasswordField();
 		userPassword.setBounds(10, 175, 269, 30);
 		panel_5.add(userPassword);
-	}
-
-	//Comienzo con el botón del login
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == buttonSingIn) {
-			setExtendedState(MAXIMIZED_BOTH);
-			contentPane.removeAll();
-			contentPane.setLayout(new BorderLayout(0, 0));
-			menu = new LateralMenu();
-			contentPane.add(menu, BorderLayout.WEST);
-			repaint();
-		}
 	}
 }

@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
@@ -13,9 +14,9 @@ import java.awt.Font;
 
 public class Index extends JPanel {
 	private JButton buttonAddPhoto;
-	private JButton buttonAddNewEmployee;
-	private JButton buttonNewClient;
-	private JButton buttonNewContract;
+	private JButton buttonEmployees;
+	private JButton buttonClients;
+	private JButton buttonContracts;
 	private JButton buttonScheduleAppointment;
 	private JButton buttonAppoiment;
 	private JButton buttonMaterials;
@@ -23,6 +24,7 @@ public class Index extends JPanel {
 	private JButton buttonActivities;
 	private JButton buttonPay;
 	private JButton buttonTime;
+	private JButton buttonProjects;
 
 	public Index() {
 		setBackground(Color.WHITE);
@@ -52,6 +54,7 @@ public class Index extends JPanel {
 		buttonAddPhoto.setContentAreaFilled(false);
 		buttonAddPhoto.setBorderPainted(false);
 		buttonAddPhoto.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_add_a_photo_black_18dp.png"));
+		buttonAddPhoto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_3.add(buttonAddPhoto);
 		
 		JLabel lblNewLabel = new JLabel("Alejandra Colín Jiménez");
@@ -70,38 +73,41 @@ public class Index extends JPanel {
 		panel_1.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton buttonProjects = new JButton("Proyectos");
+		buttonProjects = new JButton("Proyectos");
 		buttonProjects.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonProjects.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonProjects.setContentAreaFilled(false);
 		buttonProjects.setBorderPainted(false);
 		buttonProjects.setBackground(Color.WHITE);
 		buttonProjects.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_folder_black_18dp.png"));
+		buttonProjects.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonProjects);
 		
-		buttonAddNewEmployee = new JButton("Agregar empleado");
-		buttonAddNewEmployee.setHorizontalAlignment(SwingConstants.LEFT);
-		buttonAddNewEmployee.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_person_add_black_18dp.png"));
-		buttonAddNewEmployee.setContentAreaFilled(false);
-		buttonAddNewEmployee.setBorderPainted(false);
-		buttonAddNewEmployee.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_4.add(buttonAddNewEmployee);
+		buttonEmployees = new JButton("Empleados");
+		buttonEmployees.setHorizontalAlignment(SwingConstants.LEFT);
+		buttonEmployees.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\round_person_black_18dp.png"));
+		buttonEmployees.setContentAreaFilled(false);
+		buttonEmployees.setBorderPainted(false);
+		buttonEmployees.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonEmployees.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_4.add(buttonEmployees);
 		
-		buttonNewClient = new JButton("Nuevo Cliente");
-		buttonNewClient.setHorizontalAlignment(SwingConstants.LEFT);
-		buttonNewClient.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_supervisor_account_black_18dp.png"));
-		buttonNewClient.setContentAreaFilled(false);
-		buttonNewClient.setBorderPainted(false);
-		buttonNewClient.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_4.add(buttonNewClient);
+		buttonClients = new JButton("Clientes");
+		buttonClients.setHorizontalAlignment(SwingConstants.LEFT);
+		buttonClients.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_supervisor_account_black_18dp.png"));
+		buttonClients.setContentAreaFilled(false);
+		buttonClients.setBorderPainted(false);
+		buttonClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonClients.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_4.add(buttonClients);
 		
-		buttonNewContract = new JButton("Nuevo Contrato");
-		buttonNewContract.setHorizontalAlignment(SwingConstants.LEFT);
-		buttonNewContract.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_description_black_18dp.png"));
-		buttonNewContract.setContentAreaFilled(false);
-		buttonNewContract.setBorderPainted(false);
-		buttonNewContract.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_4.add(buttonNewContract);
+		buttonContracts = new JButton("Contratos");
+		buttonContracts.setHorizontalAlignment(SwingConstants.LEFT);
+		buttonContracts.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_description_black_18dp.png"));
+		buttonContracts.setContentAreaFilled(false);
+		buttonContracts.setBorderPainted(false);
+		buttonContracts.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_4.add(buttonContracts);
 		
 		buttonScheduleAppointment = new JButton("Agendar cita");
 		buttonScheduleAppointment.setHorizontalAlignment(SwingConstants.LEFT);
@@ -109,6 +115,7 @@ public class Index extends JPanel {
 		buttonScheduleAppointment.setContentAreaFilled(false);
 		buttonScheduleAppointment.setBorderPainted(false);
 		buttonScheduleAppointment.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonScheduleAppointment.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonScheduleAppointment);
 		
 		buttonAppoiment = new JButton("Citas");
@@ -125,6 +132,7 @@ public class Index extends JPanel {
 		buttonMaterials.setBorderPainted(false);
 		buttonMaterials.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonMaterials.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonMaterials.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonMaterials);
 		
 		buttonBuyMoreMaterials = new JButton("Resurtir");
@@ -133,6 +141,7 @@ public class Index extends JPanel {
 		buttonBuyMoreMaterials.setContentAreaFilled(false);
 		buttonBuyMoreMaterials.setBorderPainted(false);
 		buttonBuyMoreMaterials.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonBuyMoreMaterials.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonBuyMoreMaterials);
 		
 		buttonActivities = new JButton("Actividades");
@@ -141,6 +150,7 @@ public class Index extends JPanel {
 		buttonActivities.setBorderPainted(false);
 		buttonActivities.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonActivities.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonActivities.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonActivities);
 		
 		buttonPay = new JButton("Pagos");
@@ -149,6 +159,7 @@ public class Index extends JPanel {
 		buttonPay.setBorderPainted(false);
 		buttonPay.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonPay.setHorizontalAlignment(SwingConstants.LEFT);
+		buttonPay.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonPay);
 		
 		buttonTime = new JButton("Horarios");
@@ -157,6 +168,7 @@ public class Index extends JPanel {
 		buttonTime.setBorderPainted(false);
 		buttonTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonTime.setHorizontalAlignment(SwingConstants.LEFT);
+		buttonTime.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_4.add(buttonTime);
 		
 		JPanel panel_2 = new JPanel();

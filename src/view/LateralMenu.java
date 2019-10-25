@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
+@SuppressWarnings("serial")
 public class LateralMenu extends JPanel {
 	private JButton buttonAddPhoto;
 	private JButton buttonProjects;
@@ -40,6 +41,7 @@ public class LateralMenu extends JPanel {
 		buttonAddPhoto.setContentAreaFilled(false);
 		buttonAddPhoto.setBorderPainted(false);
 		buttonAddPhoto.setBackground(Color.WHITE);
+		buttonAddPhoto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.add(buttonAddPhoto);
 		
 		JLabel label_2 = new JLabel("Alejandra Colín Jiménez");
@@ -86,6 +88,7 @@ public class LateralMenu extends JPanel {
 		buttonContracts.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_description_black_18dp.png"));
 		buttonContracts.setContentAreaFilled(false);
 		buttonContracts.setBorderPainted(false);
+		buttonContracts.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		buttonContracts.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel.add(buttonContracts);
 		
@@ -103,6 +106,7 @@ public class LateralMenu extends JPanel {
 		buttonAppoiment.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonAppoiment.setContentAreaFilled(false);
 		buttonAppoiment.setBorderPainted(false);
+		buttonAppoiment.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		buttonAppoiment.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel.add(buttonAppoiment);
 		
@@ -156,5 +160,53 @@ public class LateralMenu extends JPanel {
 		add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		
+	}
+	
+	public JButton getButtonAddPhoto() {
+		return buttonAddPhoto;
+	}
+	
+	public JButton getButtonProjects() {
+		return buttonProjects;
+	}
+	
+	public JButton getButtonEmployees() {
+		return buttonEmployees;
+	}
+	
+	public JButton getButtonClients() {
+		return buttonClients;
+	}
+	
+	public JButton getButtonContracts() {
+		return buttonContracts;
+	}
+	
+	public JButton getButtonScheduleAppointment() {
+		return buttonScheduleAppointment;
+	}
+	
+	public JButton getButtonAppoiment() {
+		return buttonAppoiment;
+	}
+	
+	public JButton getButtonMaterials() {
+		return buttonMaterials;
+	}
+	
+	public JButton getButtonBuyMoreMaterials() {
+		return buttonBuyMoreMaterials;
+	}
+	
+	public JButton getButtonActivities() {
+		return buttonActivities;
+	}
+	
+	public JButton getButtonPay() {
+		return buttonPay;
+	}
+	
+	public JButton getButtonTime() {
+		return buttonTime;
 	}
 }

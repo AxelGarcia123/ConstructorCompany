@@ -20,11 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+@SuppressWarnings("serial")
 public class Login extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
@@ -33,6 +33,7 @@ public class Login extends JFrame implements ActionListener{
 	private JButton buttonSingIn;
 	private LateralMenu menu;
 	private JPasswordField userPassword;
+	private Projects projects;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,7 +49,6 @@ public class Login extends JFrame implements ActionListener{
 	}
 
 	public Login() {
-		setResizable(false);
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 502);
@@ -155,6 +155,7 @@ public class Login extends JFrame implements ActionListener{
 	}
 
 	//Comienzo con el botón del login
+	//AQUÍ ESTÁ TODO EL ESCUCHADOR DE LOS BOTONES
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonSingIn) {
@@ -164,6 +165,24 @@ public class Login extends JFrame implements ActionListener{
 			menu = new LateralMenu();
 			contentPane.add(menu, BorderLayout.WEST);
 			repaint();
+			
+			/*OPCIÓN DE VER LOS PROYECTOS*/
+			menu.getButtonProjects().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					listOfProjects();
+				}
+			});
+		}
+	}
+	
+	/*LISTADO DE TODOS LOS PROYECTOS*/
+	public void listOfProjects() {
+		if(projects == null) {
+			projects = new Projects();
+			contentPane.add(projects, BorderLayout.CENTER);
+			setVisible(true);
 		}
 	}
 }

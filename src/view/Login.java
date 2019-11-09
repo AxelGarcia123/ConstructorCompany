@@ -11,6 +11,7 @@ import java.awt.font.TextAttribute;
 import java.util.Map;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
@@ -34,6 +35,7 @@ public class Login extends JFrame implements ActionListener{
 	private LateralMenu menu;
 	private JPasswordField userPassword;
 	private Projects projects;
+	private int iterator = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -181,6 +183,7 @@ public class Login extends JFrame implements ActionListener{
 	public void listOfProjects() {
 		if(projects == null) {
 			projects = new Projects();
+			
 			contentPane.add(projects, BorderLayout.CENTER);
 			setVisible(true);
 		}

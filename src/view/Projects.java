@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
@@ -20,12 +22,14 @@ import java.awt.Font;
 public class Projects extends JPanel implements ActionListener{
 	private JButton buttonAddNewProject;
 	private JPanel panel;
-	private List<JPanel> projectFolders;
+	private List<JButton> projectFolders;
+	private int counter = 0;
+	
 	public Projects() {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		
-		projectFolders = new ArrayList<JPanel>();
+		projectFolders = new ArrayList<JButton>();
 		
 		panel = new JPanel();
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
@@ -53,27 +57,41 @@ public class Projects extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonAddNewProject) {
-			JPanel panel_3 = new JPanel();
-			panel_3.setBackground(Color.WHITE);
-			//panel.add(panel_3);
-			panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+//			JPanel panel_3 = new JPanel();
+//			panel_3.setBackground(Color.WHITE);
+//			panel.add(panel_3);
+//			panel_3.setLayout(new GridLayout(0, 1, 0, 0));
 			
-			JButton btnNewButton_4 = new JButton("");
-			btnNewButton_4.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_folder_black_18dp.png"));
-			btnNewButton_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnNewButton_4.setContentAreaFilled(false);
-			btnNewButton_4.setBorderPainted(false);
-			panel_3.add(btnNewButton_4);
+			JButton buttonFolders = new JButton("");
+			buttonFolders.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_folder_black_18dp.png"));
+			buttonFolders.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			buttonFolders.setContentAreaFilled(false);
+			buttonFolders.setBorderPainted(false);
 			
-			JLabel lblNewLabel = new JLabel("Construcciones");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			panel_3.add(lblNewLabel);
+//			JLabel foldersDescription = new JLabel("Construcciones");
+//			foldersDescription.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//			foldersDescription.setHorizontalAlignment(SwingConstants.CENTER);
+//			panel_3.add(foldersDescription);
 			
-			projectFolders.add(panel_3);
-			for (JPanel jPanel : projectFolders) {
-				panel.add(jPanel).setVisible(true);
-			}
+			projectFolders.add(buttonFolders);
+			panel.add(buttonFolders);			
+//			for (JButton buttons : projectFolders) {
+//				buttons.addActionListener(new ActionListener() {
+//					
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						JOptionPane.showMessageDialog(null, "Sí pasa por aquí");
+//						counter++;
+//						System.out.println(counter);
+//					}
+//				});
+//				panel.add(buttons);
+//				panel.setVisible(true);
+//			}
 		}
+	}
+	
+	public List<JButton> getButtons() {
+		return projectFolders;
 	}
 }

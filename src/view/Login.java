@@ -20,6 +20,10 @@ import java.awt.Cursor;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
+
+import baseDeDatos.BaseDeDatos;
+import baseDeDatos.BaseDeDatos;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,6 +32,7 @@ import javax.swing.JPasswordField;
 @SuppressWarnings("serial")
 public class Login extends JFrame implements ActionListener{
 
+	private BaseDeDatos baseDatos;
 	private JPanel contentPane;
 	private JTextField editUserName;
 	private JLabel singUp;
@@ -60,6 +65,11 @@ public class Login extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		baseDatos = new BaseDeDatos("constructorcompany", "root", "17650010");
+		baseDatos.setDriver("com.mysql.jdbc.Driver");
+		baseDatos.setProtocolo("jdbc:mysql://localhost/");
+		baseDatos.hacerConexion();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

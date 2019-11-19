@@ -3,6 +3,11 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Contrato;
+import modelo.Persona;
 
 public class TablaCliente {
 	private Connection conexion;
@@ -30,4 +35,23 @@ public class TablaCliente {
 //			return sql.toString();
 //		}
 //	}
+	
+	public List<Persona> getCliente(String tipoContrato){
+		String sql = "call sp_contratosclientes('" + tipoContrato + "')";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Persona> people = new ArrayList<>();
+			while (rs.next()) {
+				Persona person = new Persona();
+				person.setApellidoMaternoPer(rs.getString("am_per"));
+				person.setApellidoPaternoPer(rs.getString("ap_per"));
+				person.setNombrePer(rs.getString("nom_per"));
+				people.add(person);
+			}
+			return people;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

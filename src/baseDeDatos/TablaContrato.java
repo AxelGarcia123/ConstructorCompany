@@ -35,23 +35,31 @@ public class TablaContrato {
 //		}
 //	}
 	
-	public List<Contrato> getResurtidos(){
-		String sql = "select * from contrato";
+	public List<Contrato> getContratos(){
+		String sql = "select * from tipoproyecto";
 		try {
 			ResultSet rs = statement.executeQuery(sql);
 			List<Contrato> contratos = new ArrayList<>();
 			while (rs.next()) {
 				Contrato contrato = new Contrato();
-				contrato.setClaveContrato(rs.getInt("cve_cont"));
-				contrato.setFechaInicioContrato(rs.getDate("fechain_cont"));
-				contrato.setFechaFinContrato(rs.getDate("fechafin_cont"));
 				contrato.setTipoContrato(rs.getString("tipo_cont"));
-				contrato.setMetrosCuadradosContrato(rs.getInt("metroscuadrados_cont"));
-				contrato.setHonorariosArquitectoContrato(rs.getInt("honorariosArquitecto_cont"));
-				contrato.setCostoObraContrato(rs.getInt("costoobra_cont"));
-				contrato.setClaveCliente(rs.getInt("cve_cli"));
-				contrato.setClaveTrabajador(rs.getInt("cve_tra"));
-				
+				contratos.add(contrato);
+			}
+			return contratos;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	public List<Contrato> getFecha(String tipoContrato){
+		String sql = "call sp_contratosclientes('" + tipoContrato + "')";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Contrato> contratos = new ArrayList<>();
+			while (rs.next()) {
+				Contrato contrato = new Contrato();
+				contrato.setFechaInicioContrato(rs.getDate("fechain_cont"));
 				contratos.add(contrato);
 			}
 			return contratos;

@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +18,13 @@ import java.awt.GridLayout;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+
+import modelo.Contrato;
+
 import java.awt.Font;
 
 @SuppressWarnings("serial")
-public class Projects extends JPanel implements ActionListener{
-	private JButton buttonAddNewProject;
+public class Projects extends JPanel {
 	private JPanel panel;
 	private List<JPanel> panels;
 	private List<JButton> projectFolders;
@@ -55,17 +59,12 @@ public class Projects extends JPanel implements ActionListener{
 		panel_2.setBackground(Color.WHITE);
 		add(panel_2, BorderLayout.SOUTH);
 		
-		buttonAddNewProject = new JButton("Add new project");
-		buttonAddNewProject.addActionListener(this);
-		panel_2.add(buttonAddNewProject);	
-		
 		verProyecto = new JButton("Ver proyecto");
 		panel_2.add(verProyecto);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == buttonAddNewProject) {
+	
+	public void showProjectFolders(List<Contrato> contratos) {
+		for (Contrato contrato : contratos) {
 			JPanel panel_3 = new JPanel();
 			panel_3.setBackground(Color.WHITE);
 			panel.add(panel_3);
@@ -77,9 +76,8 @@ public class Projects extends JPanel implements ActionListener{
 			buttonFolders.setContentAreaFilled(false);
 			buttonFolders.setBorderPainted(false);
 			panel_3.add(buttonFolders);
-			iterator++;
 			
-			JLabel foldersDescription = new JLabel("Construcciones");
+			JLabel foldersDescription = new JLabel("  " + contrato.getTipoContrato() + "  ");
 			foldersDescription.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			foldersDescription.setHorizontalAlignment(SwingConstants.CENTER);
 			panel_3.add(foldersDescription);
@@ -89,6 +87,7 @@ public class Projects extends JPanel implements ActionListener{
 			projectsNames.add(foldersDescription);
 			panel.add(panel_3);
 			panel.updateUI();
+			
 			for (JButton buttons : projectFolders) {
 				buttons.addActionListener(new ActionListener() {
 					
@@ -106,10 +105,16 @@ public class Projects extends JPanel implements ActionListener{
 	}
 	
 	public int getCounter() {
-		return counter;
+		iterator = counter;
+		counter = 0;
+		return iterator;
 	}
 	
 	public JButton getProyecto() {
 		return verProyecto;
+	}
+	
+	public List<JLabel> getTipos() {
+		return projectsNames;
 	}
 }

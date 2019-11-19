@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.font.TextAttribute;
+import java.sql.Date;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -24,6 +25,9 @@ import javax.swing.border.LineBorder;
 import baseDeDatos.BaseDeDatos;
 import baseDeDatos.TablaCliente;
 import baseDeDatos.TablaContrato;
+import baseDeDatos.TablaContratoTrabajador;
+import baseDeDatos.TablaStatusContrato;
+import modelo.Contrato;
 import baseDeDatos.BaseDeDatos;
 
 import javax.swing.JButton;
@@ -45,10 +49,13 @@ public class Login extends JFrame implements ActionListener{
 	private Projects projects;
 	private LateralMenu menu;
 	private Contracts contracts;
+	private ProjectDetails details;
 	private int iterator = 0;
 	private JLabel forgotPassword;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
+	private TablaStatusContrato tablaStatus;
+	private TablaContratoTrabajador tablaTrabajador;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,7 +88,9 @@ public class Login extends JFrame implements ActionListener{
 
 		tablaContrato = new TablaContrato(baseDatos.getConexion());
 		tablaCliente = new TablaCliente(baseDatos.getConexion());
-		
+		tablaStatus = new TablaStatusContrato(baseDatos.getConexion());
+		tablaTrabajador = new TablaContratoTrabajador(baseDatos.getConexion());
+
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
@@ -172,8 +181,8 @@ public class Login extends JFrame implements ActionListener{
 		singUp.setFont(new Font("Roboto", Font.PLAIN, 13));
 		singUp.setBounds(10, 316, 269, 28);
 		singUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		Font fontUp = forgotPassword.getFont();
-		Map attributesUp = font.getAttributes();
+		Font fontUp = singUp.getFont();
+		Map attributesUp = fontUp.getAttributes();
 		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		singUp.setFont(font.deriveFont(attributesUp));
 		panel_5.add(singUp);
@@ -195,7 +204,7 @@ public class Login extends JFrame implements ActionListener{
 			repaint();
 		}
 	}
-	
+
 	/*MENÚ LATERAL*/
 	public void menuLateral() {
 		if(menu == null) {
@@ -208,7 +217,7 @@ public class Login extends JFrame implements ActionListener{
 					listOfProjects();
 				}
 			});
-			
+
 			contentPane.add(menu, BorderLayout.WEST);
 			setVisible(true);
 		}
@@ -216,11 +225,18 @@ public class Login extends JFrame implements ActionListener{
 
 	/*CREACIÓN DE UN NUEVO USUARIO*/
 	public void nuevoUsuario() {
-		
+
 	}
 
 	/*LISTADO DE TODOS LOS PROYECTOS*/
 	public void listOfProjects() {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		menuLateral();
+		repaint();
+		
 		if(projects == null) {
 			projects = new Projects();
 			projects.showProjectFolders(tablaContrato.getContratos());
@@ -242,32 +258,60 @@ public class Login extends JFrame implements ActionListener{
 			setVisible(true);
 		}
 	}
-	
+
 	public void listOfContracts(String carpeta) {
 		contentPane.removeAll();
 		projects = null;
 		menu = null;
+		contracts = null;
 		menuLateral();
 		repaint();
 		if(contracts == null) {
 			contracts = new Contracts();
-			
+
 			contracts.showProjectContracts(tablaContrato.getFecha(carpeta), tablaCliente.getCliente(carpeta));
 			contracts.getContrato().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					iterator = contracts.getCounter();
-					String carpeta = contracts.getNombres().get(contracts.getNombres().size() - iterator).getText();
-					if(iterator != 0) {
-						JOptionPane.showMessageDialog(null, carpeta);
+					String cliente = contracts.getNombres().get(contracts.getNombres().size() - iterator).getText();
+					
+					if(iterator != 0 && cliente.length() != 0) {
+						String nombre = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getNombrePer();
+						String paterno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoPaternoPer();
+						String materno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoMaternoPer();
+						Date fecha = tablaContrato.getFecha(carpeta).get(contracts.getFechas().size() - iterator).getFechaInicioContrato();
+						int clave = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getClavePer();
+						detailsContract(nombre, paterno, materno, fecha, clave, cliente);
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
 				}
 			});
-			
+
 			contentPane.add(contracts, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+
+	public void detailsContract(String nombre, String paterno, String materno, Date fecha, int clave, String cliente) {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		menuLateral();
+		repaint();
+		
+		if(details == null) {
+			details = new ProjectDetails();
+
+			Contrato contract = tablaContrato.getDetailsProject(nombre, paterno, materno, fecha, clave);
+			String arquitecto = String.valueOf(tablaTrabajador.getArquitecto(contract.getClaveTrabajador()));
+			details.showDetailsProyect(contract, tablaStatus.getStatus(contract.getClaveContrato()), cliente, arquitecto);
+
+			contentPane.add(details, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

@@ -1,6 +1,7 @@
 package baseDeDatos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -63,6 +64,31 @@ public class TablaContrato {
 				contratos.add(contrato);
 			}
 			return contratos;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	public Contrato getDetailsProject(String nombre, String paterno, String materno, Date fecha, int clave) {
+		String sql = "call sp_projectDetails('"+ nombre + "', '"+ paterno +"', '"+ materno + "', '"+ fecha + "', '"+ clave + "')";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next()) {
+				Contrato contrato = new Contrato();
+				contrato.setClaveContrato(rs.getInt("cve_cont"));
+				contrato.setFechaInicioContrato(rs.getDate("fechain_cont"));
+				contrato.setFechaFinContrato(rs.getDate("fechafin_cont"));
+				contrato.setTipoContrato(rs.getString("tipo_cont"));
+				contrato.setMetrosCuadradosContrato(rs.getInt("metroscuadrados_cont"));
+				contrato.setHonorariosArquitectoContrato(rs.getInt("honorariosArquitecto_cont"));
+				contrato.setCostoObraContrato(rs.getInt("costoobra_cont"));
+				contrato.setClaveCliente(rs.getInt("cve_cli"));
+				contrato.setClaveTrabajador(rs.getInt("cve_tra"));
+				return contrato;
+			}
+			else 
+				return null;
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			return null;

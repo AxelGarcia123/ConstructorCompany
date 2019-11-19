@@ -46,6 +46,7 @@ public class TablaCliente {
 				person.setApellidoMaternoPer(rs.getString("am_per"));
 				person.setApellidoPaternoPer(rs.getString("ap_per"));
 				person.setNombrePer(rs.getString("nom_per"));
+				person.setClavePer(rs.getInt("cve_per"));
 				people.add(person);
 			}
 			return people;

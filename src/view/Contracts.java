@@ -26,6 +26,7 @@ public class Contracts extends JPanel {
 	private List<JButton> contractFiles;
 	private List<JLabel> contractNames;
 	private List<JPanel> panels;
+	private List<JLabel> date;
 	private int counter = 0;
 	private int iterator = 0;
 	private int i = 0;
@@ -38,6 +39,7 @@ public class Contracts extends JPanel {
 		contractFiles = new ArrayList<JButton>();
 		contractNames = new ArrayList<JLabel>();
 		panels = new ArrayList<JPanel>();
+		date = new ArrayList<JLabel>();
 		
 		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -62,7 +64,6 @@ public class Contracts extends JPanel {
 	
 	public void showProjectContracts(List<Contrato> contratos, List<Persona> personas) {
 		for (Contrato contrato : contratos) {
-			System.out.println("Entra al for");
 			JPanel panel_3 = new JPanel();
 			panel_3.setBackground(Color.WHITE);
 			panel.add(panel_3);
@@ -90,6 +91,7 @@ public class Contracts extends JPanel {
 			panels.add(panel_3);
 			contractFiles.add(buttonContracts);
 			contractNames.add(contractsDescription);
+			date.add(fecha);
 			panel.add(panel_3);
 			panel.updateUI();
 			
@@ -121,5 +123,9 @@ public class Contracts extends JPanel {
 	
 	public List<JLabel> getNombres() {
 		return contractNames;
+	}
+	
+	public List<JLabel> getFechas() {
+		return date;
 	}
 }

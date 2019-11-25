@@ -31,6 +31,8 @@ public class Contracts extends JPanel {
 	private int iterator = 0;
 	private int i = 0;
 	private JButton buttonVerContrato;
+	private JButton buttonRegresar;
+	private JButton buttonNuevoProyecto;
 
 	public Contracts() {
 		setBackground(Color.WHITE);
@@ -49,7 +51,13 @@ public class Contracts extends JPanel {
 		panel_1.setBackground(Color.WHITE);
 		add(panel_1, BorderLayout.NORTH);
 		
-		JLabel lblContratos = new JLabel("Contratos");
+		buttonRegresar = new JButton("");
+		buttonRegresar.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
+		buttonRegresar.setContentAreaFilled(false);
+		buttonRegresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_1.add(buttonRegresar);
+		
+		JLabel lblContratos = new JLabel("                                                                               Actividades                                                                                        ");
 		lblContratos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblContratos.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_1.add(lblContratos);
@@ -60,6 +68,9 @@ public class Contracts extends JPanel {
 		
 		buttonVerContrato = new JButton("Ver contrato");
 		panel_2.add(buttonVerContrato);	
+		
+		buttonNuevoProyecto = new JButton("Nuevo proyecto");
+		panel_2.add(buttonNuevoProyecto);
 	}
 	
 	public void showProjectContracts(List<Contrato> contratos, List<Persona> personas) {
@@ -127,5 +138,9 @@ public class Contracts extends JPanel {
 	
 	public List<JLabel> getFechas() {
 		return date;
+	}
+	
+	public JButton getBotonRegresar() {
+		return buttonRegresar;
 	}
 }

@@ -3,6 +3,11 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Avance;
+import modelo.Contrato;
 
 public class TablaAvance {
 	private Connection conexion;
@@ -30,4 +35,22 @@ public class TablaAvance {
 //			return sql.toString();
 //		}
 //	}
+	
+	public Avance getAvance(int claveTrabajador){
+		String sql = "call sp_veravance('" + claveTrabajador + "')";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			Avance avance = new Avance();
+			if(rs.next()) {
+				avance.setCantidadAvance(rs.getInt("sum(cantidad_ava)"));
+				avance.setFechaAvance(rs.getDate("fecha_ava"));
+				return avance;
+			}
+			else
+				return null;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

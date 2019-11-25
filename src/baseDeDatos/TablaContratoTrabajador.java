@@ -3,6 +3,8 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import modelo.ContratoTrabajador;
 import modelo.Persona;
@@ -47,6 +49,30 @@ public class TablaContratoTrabajador {
 			else
 				return null;
 		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	public List<ContratoTrabajador> getDetallesTrabajadorPuesto(int clave, String actividad) {
+		String sql = "select t.cve_traact, ap_per, am_per, nom_per, puesto_tra from trabajadoractividad t join actrealizar act " + 
+				"	on t.num_actrea = act.num_actrea join actividad a " + 
+				"	on act.cve_act = a.cve_act join contrato c " + 
+				"	on act.cve_cont = c.cve_cont join contratotra tra " + 
+				"	on t.cve_tra = tra.cve_tra join persona p " + 
+				"	on tra.cve_per = p.cve_per " + 
+				"	where nombre_act = '"+ actividad + "' " + 
+				"	and c.cve_cont = '" + clave + "'";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<ContratoTrabajador> empleados = new ArrayList<ContratoTrabajador>();
+			while(rs.next()) {
+				ContratoTrabajador empleado = new ContratoTrabajador();
+				empleado.setPuestoTrabajador(rs.getString("puesto_tra"));
+				empleados.add(empleado);
+			}
+			return empleados;
+		} catch (Exception e) {
 			System.out.println(e.toString());
 			return null;
 		}

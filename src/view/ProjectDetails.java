@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -12,7 +13,11 @@ import modelo.StatusContrato;
 
 import java.awt.GridLayout;
 import java.awt.font.TextAttribute;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class ProjectDetails extends JPanel {
 	private JLabel textFechaInicio;
@@ -28,6 +33,8 @@ public class ProjectDetails extends JPanel {
 	private JLabel textClausulas;
 	private JLabel textCliente;
 	private JLabel textArquitecto;
+	private List<JLabel> options;
+	private JButton buttonRegresar;
 
 	public ProjectDetails() {
 		setBackground(Color.WHITE);
@@ -37,7 +44,15 @@ public class ProjectDetails extends JPanel {
 		panel.setBackground(Color.WHITE);
 		add(panel, BorderLayout.NORTH);
 		
-		JLabel lblDetallesDelProyecto = new JLabel("Detalles del proyecto");
+		options = new ArrayList<JLabel>();
+		
+		buttonRegresar = new JButton("");
+		buttonRegresar.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
+		buttonRegresar.setContentAreaFilled(false);
+		buttonRegresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel.add(buttonRegresar);
+		
+		JLabel lblDetallesDelProyecto = new JLabel("                                                                     Detalles del proyecto                                                                                ");
 		lblDetallesDelProyecto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDetallesDelProyecto.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel.add(lblDetallesDelProyecto);
@@ -52,11 +67,11 @@ public class ProjectDetails extends JPanel {
 		panel_1.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		textCliente = new JLabel("Cliente:");
+		textCliente = new JLabel("    Cliente:");
 		textCliente.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 16));
 		panel_3.add(textCliente);
 		
-		textArquitecto = new JLabel("Arquitecto:");
+		textArquitecto = new JLabel("    Arquitecto:");
 		textArquitecto.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 16));
 		panel_3.add(textArquitecto);
 		
@@ -65,7 +80,7 @@ public class ProjectDetails extends JPanel {
 		panel_1.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new GridLayout(11, 2, 0, 0));
 		
-		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio");
+		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio\nAbajo");
 		lblFechaDeInicio.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
 		lblFechaDeInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblFechaDeInicio);
@@ -143,11 +158,13 @@ public class ProjectDetails extends JPanel {
 		textActividades = new JLabel("Ver actividades");
 		textActividades.setHorizontalAlignment(SwingConstants.CENTER);
 		textActividades.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
+		textActividades.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Font fontUp = textActividades.getFont();
 		Map attributesUp = fontUp.getAttributes();
 		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		textActividades.setFont(fontUp.deriveFont(attributesUp));
 		panel_4.add(textActividades);
+		options.add(textActividades);
 		
 		JLabel lblTrabajadoresEnEl = new JLabel("Trabajadores en el proyecto");
 		lblTrabajadoresEnEl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -157,11 +174,13 @@ public class ProjectDetails extends JPanel {
 		textTrabajadores = new JLabel("Ver trabajadores");
 		textTrabajadores.setHorizontalAlignment(SwingConstants.CENTER);
 		textTrabajadores.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
+		textTrabajadores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Font font = textTrabajadores.getFont();
 		Map attributes = font.getAttributes();
 		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		textTrabajadores.setFont(font.deriveFont(attributesUp));
 		panel_4.add(textTrabajadores);
+		options.add(textTrabajadores);
 		
 		JLabel lblAutorizacin = new JLabel("Autorización");
 		lblAutorizacin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,11 +190,13 @@ public class ProjectDetails extends JPanel {
 		textAutorizacion = new JLabel("Ver autorización");
 		textAutorizacion.setHorizontalAlignment(SwingConstants.CENTER);
 		textAutorizacion.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
+		textAutorizacion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Font fontAuto = textAutorizacion.getFont();
 		Map attributesAuto = fontAuto.getAttributes();
-		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		textAutorizacion.setFont(fontAuto.deriveFont(attributesUp));
+		attributesAuto.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		textAutorizacion.setFont(fontAuto.deriveFont(attributesAuto));
 		panel_4.add(textAutorizacion);
+		options.add(textAutorizacion);
 		
 		JLabel lblClausulas = new JLabel("Clausulas");
 		lblClausulas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,7 +206,13 @@ public class ProjectDetails extends JPanel {
 		textClausulas = new JLabel("Ver clausulas");
 		textClausulas.setHorizontalAlignment(SwingConstants.CENTER);
 		textClausulas.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
+		textClausulas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		Font fontClau = textAutorizacion.getFont();
+		Map attributesClau = fontClau.getAttributes();
+		attributesClau.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		textAutorizacion.setFont(fontClau.deriveFont(attributesClau));
 		panel_4.add(textClausulas);
+		options.add(textClausulas);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -202,5 +229,13 @@ public class ProjectDetails extends JPanel {
 		textHonorarios.setText(String.valueOf(contrato.getHonorariosArquitectoContrato()));
 		textCostoObra.setText(String.valueOf(contrato.getCostoObraContrato()));
 		textStatusProyecto.setText(status);
+	}
+	
+	public List<JLabel> getOpciones() {
+		return options;
+	}
+	
+	public JButton getBotonRegresar() {
+		return buttonRegresar;
 	}
 }

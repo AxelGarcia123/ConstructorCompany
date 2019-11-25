@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.font.TextAttribute;
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -23,10 +24,14 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 import baseDeDatos.BaseDeDatos;
+import baseDeDatos.TablaActividad;
+import baseDeDatos.TablaAvance;
 import baseDeDatos.TablaCliente;
 import baseDeDatos.TablaContrato;
 import baseDeDatos.TablaContratoTrabajador;
+import baseDeDatos.TablaPersona;
 import baseDeDatos.TablaStatusContrato;
+import baseDeDatos.TablaTrabajadorActividad;
 import modelo.Contrato;
 import baseDeDatos.BaseDeDatos;
 
@@ -46,16 +51,29 @@ public class Login extends JFrame implements ActionListener{
 	private JLabel singUp;
 	private JButton buttonSingIn;
 	private JPasswordField userPassword;
+	private JLabel forgotPassword;
+	private int iterator = 0;
+	private String carpeta = "";
+	private String cliente = "";
+	private String nombre = "";
+	private String paterno = "";
+	private String materno = "";
+	private Date fecha = null;
+	private int claveCli = 0;
 	private Projects projects;
 	private LateralMenu menu;
 	private Contracts contracts;
 	private ProjectDetails details;
-	private int iterator = 0;
-	private JLabel forgotPassword;
+	private Activities activities;
+	private Trabajadores trabajadores;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
 	private TablaStatusContrato tablaStatus;
 	private TablaContratoTrabajador tablaTrabajador;
+	private TablaActividad tablaActividad;
+	private TablaTrabajadorActividad tablaTraAct;
+	private TablaPersona tablaPersona;
+	private TablaAvance tablaAvance;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -90,6 +108,10 @@ public class Login extends JFrame implements ActionListener{
 		tablaCliente = new TablaCliente(baseDatos.getConexion());
 		tablaStatus = new TablaStatusContrato(baseDatos.getConexion());
 		tablaTrabajador = new TablaContratoTrabajador(baseDatos.getConexion());
+		tablaActividad = new TablaActividad(baseDatos.getConexion());
+		tablaTraAct = new TablaTrabajadorActividad(baseDatos.getConexion());
+		tablaPersona = new TablaPersona(baseDatos.getConexion());
+		tablaAvance = new TablaAvance(baseDatos.getConexion());
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -234,9 +256,12 @@ public class Login extends JFrame implements ActionListener{
 		projects = null;
 		menu = null;
 		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
 		menuLateral();
 		repaint();
-		
+
 		if(projects == null) {
 			projects = new Projects();
 			projects.showProjectFolders(tablaContrato.getContratos());
@@ -245,7 +270,7 @@ public class Login extends JFrame implements ActionListener{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					iterator = projects.getCounter();
-					String carpeta = projects.getTipos().get(projects.getTipos().size() - iterator).getText();
+					carpeta = projects.getTipos().get(projects.getTipos().size() - iterator).getText();
 					if(iterator != 0) {
 						listOfContracts(carpeta.trim());
 					}
@@ -264,8 +289,12 @@ public class Login extends JFrame implements ActionListener{
 		projects = null;
 		menu = null;
 		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
 		menuLateral();
 		repaint();
+		
 		if(contracts == null) {
 			contracts = new Contracts();
 
@@ -275,18 +304,26 @@ public class Login extends JFrame implements ActionListener{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					iterator = contracts.getCounter();
-					String cliente = contracts.getNombres().get(contracts.getNombres().size() - iterator).getText();
-					
+					cliente = contracts.getNombres().get(contracts.getNombres().size() - iterator).getText();
+
 					if(iterator != 0 && cliente.length() != 0) {
-						String nombre = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getNombrePer();
-						String paterno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoPaternoPer();
-						String materno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoMaternoPer();
-						Date fecha = tablaContrato.getFecha(carpeta).get(contracts.getFechas().size() - iterator).getFechaInicioContrato();
-						int clave = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getClavePer();
-						detailsContract(nombre, paterno, materno, fecha, clave, cliente);
+						nombre = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getNombrePer();
+						paterno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoPaternoPer();
+						materno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoMaternoPer();
+						fecha = tablaContrato.getFecha(carpeta).get(contracts.getFechas().size() - iterator).getFechaInicioContrato();
+						claveCli = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getClavePer();
+						detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+				}
+			});
+			
+			contracts.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					listOfProjects();
 				}
 			});
 
@@ -301,17 +338,131 @@ public class Login extends JFrame implements ActionListener{
 		menu = null;
 		contracts = null;
 		details = null;
+		activities = null;
+		trabajadores = null;
 		menuLateral();
 		repaint();
-		
+
 		if(details == null) {
 			details = new ProjectDetails();
 
 			Contrato contract = tablaContrato.getDetailsProject(nombre, paterno, materno, fecha, clave);
 			String arquitecto = String.valueOf(tablaTrabajador.getArquitecto(contract.getClaveTrabajador()));
 			details.showDetailsProyect(contract, tablaStatus.getStatus(contract.getClaveContrato()), cliente, arquitecto);
+			/*
+			 1.- Actividades
+			 2.- Trabajadores
+			 3.- Autorización
+			 4.- Clausulas
+			 */
+			//ACTIVIDADES
+			details.getOpciones().get(0).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					mostrarActividades(contract.getClaveContrato());
+				}
+			});
+
+			//TRABAJADORES
+			details.getOpciones().get(1).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					mostrarTrabajadores(contract.getClaveContrato());
+				}
+			});
+
+			//AUTORIZACIÓN
+			details.getOpciones().get(2).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					JOptionPane.showMessageDialog(null, "Escuchador autorizacion");
+				}
+			});
+
+			//CLAUSULAS
+			details.getOpciones().get(3).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					JOptionPane.showMessageDialog(null, "Escuchador clausulas");
+				}
+			});
+			
+			details.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					listOfContracts(carpeta.trim());
+				}
+			});
 
 			contentPane.add(details, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+
+	public void mostrarActividades(int clave) {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		menuLateral();
+		repaint();
+
+		if(activities == null) {
+			activities = new Activities();
+
+			activities.showActivities(tablaActividad.getDetailsActivities(clave), tablaTraAct.getDetailsTrabajadorAct(clave));
+			
+			activities.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
+				}
+			});
+
+			contentPane.add(activities, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void mostrarTrabajadores(int clave) {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		menuLateral();
+		repaint();
+		
+		if(trabajadores == null) {
+			trabajadores = new Trabajadores();
+			
+			trabajadores.showTrabajadores(tablaActividad.getDetailsActivities(clave), tablaPersona.getDetallesTrabajadorAct(clave), tablaTraAct.getDetailsTrabajadorAct(clave));
+			trabajadores.getVerAvance().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int claveTrabajador = trabajadores.getClaveTrabajador();
+					if(claveTrabajador != 0)
+						trabajadores.verAvance(tablaAvance.getAvance(claveTrabajador));
+				}
+			});
+			
+			trabajadores.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
+				}
+			});
+			
+			contentPane.add(trabajadores, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import modelo.Contrato;
 
 import java.awt.Font;
+import javax.swing.JSeparator;
 
 @SuppressWarnings("serial")
 public class Projects extends JPanel {
@@ -32,6 +33,8 @@ public class Projects extends JPanel {
 	private int counter = 0;
 	private int iterator = 0;
 	private JButton verProyecto;
+	private JButton buttonRegresar;
+	private JButton buttonNuevoProyecto;
 	
 	public Projects() {
 		setBackground(Color.WHITE);
@@ -50,7 +53,12 @@ public class Projects extends JPanel {
 		panel_1.setBackground(Color.WHITE);
 		add(panel_1, BorderLayout.NORTH);
 		
-		JLabel lblCategoras = new JLabel("Categorías");
+		buttonRegresar = new JButton("");
+		buttonRegresar.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
+		buttonRegresar.setContentAreaFilled(false);
+		panel_1.add(buttonRegresar);
+		
+		JLabel lblCategoras = new JLabel("                                                                             Categorías                                                                                        ");
 		lblCategoras.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCategoras.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblCategoras);
@@ -61,6 +69,9 @@ public class Projects extends JPanel {
 		
 		verProyecto = new JButton("Ver proyecto");
 		panel_2.add(verProyecto);
+		
+		buttonNuevoProyecto = new JButton("Nuevo proyecto");
+		panel_2.add(buttonNuevoProyecto);
 	}
 	
 	public void showProjectFolders(List<Contrato> contratos) {

@@ -72,6 +72,7 @@ public class Login extends JFrame implements ActionListener{
 	private Authorization autorizacion;
 	private Trabajadores trabajadores;
 	private Clause clausula;
+	private NewContract nuevoContrato;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
 	private TablaStatusContrato tablaStatus;
@@ -199,7 +200,7 @@ public class Login extends JFrame implements ActionListener{
 		buttonSingIn = new JButton("Sing In ");
 		buttonSingIn.addActionListener(this);
 		buttonSingIn.setForeground(Color.WHITE);
-		buttonSingIn.setFont(new Font("Roboto", Font.PLAIN, 17));
+		buttonSingIn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
 		buttonSingIn.setBackground(new Color(45, 0, 255));
 		buttonSingIn.setBounds(10, 266, 269, 29);
 		buttonSingIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -275,6 +276,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 
@@ -299,7 +301,7 @@ public class Login extends JFrame implements ActionListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					nuevoContrato();
 				}
 			});
 
@@ -318,6 +320,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -368,6 +371,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 
@@ -438,6 +442,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -469,6 +474,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -511,6 +517,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -554,6 +561,7 @@ public class Login extends JFrame implements ActionListener{
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -582,6 +590,28 @@ public class Login extends JFrame implements ActionListener{
 			});
 			
 			contentPane.add(clausula, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void nuevoContrato() {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		menuLateral();
+		repaint();
+		
+		if(nuevoContrato == null) {
+			nuevoContrato = new NewContract();
+			
+			contentPane.add(nuevoContrato, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

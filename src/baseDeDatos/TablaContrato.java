@@ -24,17 +24,19 @@ public class TablaContrato {
 		} 
 	}
 	
-//	public String guardar(Empleado empleado) {
-//		String sql = "insert into empleado values(null,'" + empleado.getPaterno() + "','" + empleado.getMaterno() + "','" + 
-//				empleado.getNombre() + "','" + empleado.getCargo() + "')";
-//		try {
-//			statement.executeUpdate(sql);
-//			return "Producto registrado";
-//		} catch (SQLException e) {
-//			System.out.println(e.toString());
-//			return sql.toString();
-//		}
-//	}
+	public String guardar(Contrato contrato) throws SQLException {
+		conexion.setAutoCommit(false);
+		
+		String sql = "insert into contrato values(null, curdate(), '" + contrato.getFechaInicioContrato() + "','" + 
+				contrato.getFechaFinContrato() + "','" + contrato.getTipoContrato() + "','"+ contrato.getMetrosCuadradosContrato() +"')";
+		try {
+			statement.executeUpdate(sql);
+			return "Producto registrado";
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return sql.toString();
+		}
+	}
 	
 	public List<Contrato> getContratos(){
 		String sql = "select * from tipoproyecto";

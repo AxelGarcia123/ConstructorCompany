@@ -128,4 +128,8 @@ public class Projects extends JPanel {
 	public List<JLabel> getTipos() {
 		return projectsNames;
 	}
+	
+	public JButton getNuevoProyecto() {
+		return buttonNuevoProyecto;
+	}
 }

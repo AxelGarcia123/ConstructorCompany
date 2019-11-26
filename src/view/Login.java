@@ -294,6 +294,14 @@ public class Login extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
 				}
 			});
+			
+			projects.getNuevoProyecto().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 
 			contentPane.add(projects, BorderLayout.CENTER);
 			setVisible(true);

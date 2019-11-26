@@ -3,6 +3,11 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Avance;
+import modelo.Permiso;
 
 public class TablaPermiso {
 	private Connection conexion;
@@ -30,4 +35,26 @@ public class TablaPermiso {
 //			return sql.toString();
 //		}
 //	}
+	
+	public List<Permiso> getPermiso(int claveContrato){
+		String sql = "select pc.cve_permcont, p.cve_perm, tipo_perm, fecha_permcont, costo_permcont, fechain_permcont, " + 
+				"fechafin_permcont, descripcion_perm from permisocontrato pc join permiso p " + 
+				"on pc.cve_perm = p.cve_perm " + 
+				"where pc.cve_cont = '"+ claveContrato +"'";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Permiso> permisos = new ArrayList<>();
+			while(rs.next()) {
+				Permiso permiso = new Permiso();
+				permiso.setClavePermiso(rs.getInt("cve_perm"));
+				permiso.setTipoPermiso(rs.getString("tipo_perm"));
+				permiso.setDescripcionPermiso(rs.getString("descripcion_perm"));
+				permisos.add(permiso);
+			}
+			return permisos;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

@@ -25,10 +25,14 @@ import javax.swing.border.LineBorder;
 
 import baseDeDatos.BaseDeDatos;
 import baseDeDatos.TablaActividad;
+import baseDeDatos.TablaAutorizacion;
 import baseDeDatos.TablaAvance;
+import baseDeDatos.TablaClausula;
 import baseDeDatos.TablaCliente;
 import baseDeDatos.TablaContrato;
 import baseDeDatos.TablaContratoTrabajador;
+import baseDeDatos.TablaPermiso;
+import baseDeDatos.TablaPermisoContrato;
 import baseDeDatos.TablaPersona;
 import baseDeDatos.TablaStatusContrato;
 import baseDeDatos.TablaTrabajadorActividad;
@@ -65,7 +69,9 @@ public class Login extends JFrame implements ActionListener{
 	private Contracts contracts;
 	private ProjectDetails details;
 	private Activities activities;
+	private Authorization autorizacion;
 	private Trabajadores trabajadores;
+	private Clause clausula;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
 	private TablaStatusContrato tablaStatus;
@@ -74,6 +80,10 @@ public class Login extends JFrame implements ActionListener{
 	private TablaTrabajadorActividad tablaTraAct;
 	private TablaPersona tablaPersona;
 	private TablaAvance tablaAvance;
+	private TablaPermiso tablaPermiso;
+	private TablaPermisoContrato tablaPermisoCont;
+	private TablaAutorizacion tablaAutorizacion;
+	private TablaClausula tablaClausula;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -112,7 +122,11 @@ public class Login extends JFrame implements ActionListener{
 		tablaTraAct = new TablaTrabajadorActividad(baseDatos.getConexion());
 		tablaPersona = new TablaPersona(baseDatos.getConexion());
 		tablaAvance = new TablaAvance(baseDatos.getConexion());
-
+		tablaPermiso = new TablaPermiso(baseDatos.getConexion());
+		tablaPermisoCont = new TablaPermisoContrato(baseDatos.getConexion());
+		tablaAutorizacion = new TablaAutorizacion(baseDatos.getConexion());
+		tablaClausula = new TablaClausula(baseDatos.getConexion());
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
@@ -259,6 +273,8 @@ public class Login extends JFrame implements ActionListener{
 		details = null;
 		activities = null;
 		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
 		menuLateral();
 		repaint();
 
@@ -292,6 +308,8 @@ public class Login extends JFrame implements ActionListener{
 		details = null;
 		activities = null;
 		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
 		menuLateral();
 		repaint();
 		
@@ -340,6 +358,8 @@ public class Login extends JFrame implements ActionListener{
 		details = null;
 		activities = null;
 		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
 		menuLateral();
 		repaint();
 
@@ -375,7 +395,7 @@ public class Login extends JFrame implements ActionListener{
 			details.getOpciones().get(2).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null, "Escuchador autorizacion");
+					autorizacion(contract.getClaveContrato());
 				}
 			});
 
@@ -383,7 +403,7 @@ public class Login extends JFrame implements ActionListener{
 			details.getOpciones().get(3).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null, "Escuchador clausulas");
+					clausulas(contract.getClaveContrato());
 				}
 			});
 			
@@ -408,9 +428,11 @@ public class Login extends JFrame implements ActionListener{
 		details = null;
 		activities = null;
 		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
 		menuLateral();
 		repaint();
-
+		
 		if(activities == null) {
 			activities = new Activities();
 
@@ -437,6 +459,8 @@ public class Login extends JFrame implements ActionListener{
 		details = null;
 		activities = null;
 		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
 		menuLateral();
 		repaint();
 		
@@ -451,6 +475,8 @@ public class Login extends JFrame implements ActionListener{
 					int claveTrabajador = trabajadores.getClaveTrabajador();
 					if(claveTrabajador != 0)
 						trabajadores.verAvance(tablaAvance.getAvance(claveTrabajador));
+					else
+						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
 			
@@ -463,6 +489,91 @@ public class Login extends JFrame implements ActionListener{
 			});
 			
 			contentPane.add(trabajadores, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void autorizacion(int clave) {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		menuLateral();
+		repaint();
+		
+		if(autorizacion == null) {
+			autorizacion = new Authorization();
+			autorizacion.showAutorizaciones(tablaPermisoCont.getPermisoContrato(clave), tablaPermiso.getPermiso(clave));
+			
+			autorizacion.getVerStatus().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int clavePermisoCont = autorizacion.getClavePermisoCont();
+					if(clavePermisoCont != 0) {
+						autorizacion.verAvance(tablaAutorizacion.getAutorizacionStatus(clavePermisoCont));
+					}
+					else
+						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
+			
+			autorizacion.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
+				}
+			});
+			
+			contentPane.add(autorizacion, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void clausulas(int clave) {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		menuLateral();
+		repaint();
+		
+		if(clausula == null) {
+			clausula = new Clause();
+			
+			clausula.showClausulas(tablaClausula.getClausulas(clave));
+			clausula.getDescripcion().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int bandera = clausula.getClavePermiso();
+					if(bandera != 0) 
+						clausula.verDescripcion();
+					else
+						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
+			
+			clausula.getBotonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
+				}
+			});
+			
+			contentPane.add(clausula, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

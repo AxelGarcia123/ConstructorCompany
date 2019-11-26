@@ -3,6 +3,10 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Clausula;
 
 public class TablaClausula {
 	private Connection conexion;
@@ -30,4 +34,23 @@ public class TablaClausula {
 //			return sql.toString();
 //		}
 //	}
+	
+	public List<Clausula> getClausulas(int claveCont) {
+		String sql = "select c.cve_cla, descripcion from contratoclausula con join clausula c " + 
+				"on con.cve_cla = c.cve_cla " + 
+				"where con.cve_cont = '"+ claveCont +"'";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Clausula> clausulas = new ArrayList<>();
+			while(rs.next()) {
+				Clausula clausula = new Clausula();
+				clausula.setClaveClausula(rs.getInt("cve_cla"));
+				clausula.setDescripcionClausula(rs.getString("descripcion"));
+				clausulas.add(clausula);
+			}
+			return clausulas;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

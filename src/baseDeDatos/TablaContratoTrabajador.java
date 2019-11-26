@@ -77,4 +77,26 @@ public class TablaContratoTrabajador {
 			return null;
 		}
 	}
+	
+	public List<ContratoTrabajador> getFiltro() {
+		String filtro = "Arquitecto";
+		String sql = "select ap_per, am_per, nom_per, c.cve_cont from contratotra c join persona p"
+				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%";
+		
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<ContratoTrabajador> empleados = new ArrayList<>();
+			while(rs.next()) {
+				ContratoTrabajador empleado = new ContratoTrabajador();
+				
+				empleado.setClaveTrabajador(rs.getInt("cve_cont"));
+				
+				empleados.add(empleado);
+			}
+			return empleados;
+		}catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return null;
+	}
 }

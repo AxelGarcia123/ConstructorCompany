@@ -60,4 +60,54 @@ public class TablaPersona {
 			return null;
 		}
 	}
+	
+	public List<Persona> getFiltroArquitecto() {
+		String filtro = "Arquitecto";
+		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_cont from contratotra c join persona p"
+				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%";
+		
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Persona> people = new ArrayList<>();
+			while(rs.next()) {
+				Persona person = new Persona();
+				
+				person.setClavePer(rs.getInt("cve_per"));
+				person.setApellidoPaternoPer(rs.getString("ap_per"));
+				person.setApellidoMaternoPer(rs.getString("am_per"));
+				person.setNombrePer(rs.getString("nom_per"));
+				
+				people.add(person);
+			}
+			return people;
+		}catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return null;
+	}
+	
+	public List<Persona> getFiltroCliente() {
+		String filtro = "Arquitecto";
+		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_cli from cliente c join persona p"
+				+ " on c.cve_per = p.cve_per";
+		
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Persona> people = new ArrayList<>();
+			while(rs.next()) {
+				Persona person = new Persona();
+				
+				person.setClavePer(rs.getInt("cve_per"));
+				person.setApellidoPaternoPer(rs.getString("ap_per"));
+				person.setApellidoMaternoPer(rs.getString("am_per"));
+				person.setNombrePer(rs.getString("nom_per"));
+				
+				people.add(person);
+			}
+			return people;
+		}catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return null;
+	}
 }

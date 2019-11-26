@@ -11,10 +11,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-public class NewContract extends JPanel {
+public class NewClause extends JPanel {
 	private JTable table;
 
-	public NewContract() {
+	public NewClause() {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		

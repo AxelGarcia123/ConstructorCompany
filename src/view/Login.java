@@ -497,7 +497,6 @@ public class Login extends JFrame implements ActionListener{
 				public void actionPerformed(ActionEvent e) {
 					int claveTrabajador = trabajadores.getClaveTrabajador();
 					if(claveTrabajador != 0) {
-						JOptionPane.showMessageDialog(null, tablaAvance.getAvance(claveTrabajador).getFechaAvance());
 						trabajadores.verAvance(tablaAvance.getAvance(claveTrabajador));
 					}
 					else

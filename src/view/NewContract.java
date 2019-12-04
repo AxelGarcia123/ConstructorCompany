@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import modelo.Contrato;
+import modelo.Persona;
 
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
@@ -22,15 +23,16 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class NewContract extends JPanel implements ActionListener{
 	private JTextField editMetrosCuadrados;
 	private JTextField editHonorarios;
 	private JTextField editCostoObra;
-	private JComboBox editCliente;
-	private JComboBox editArquitecto;
-	private JComboBox editTipoObra;
+	private JComboBox<String> editCliente;
+	private JComboBox<String> editArquitecto;
+	private JComboBox<String> editTipoObra;
 	private RSDateChooser fechaFin;
 	private RSDateChooser fechaInicio;
 	private JButton buttonSiguiente;
@@ -106,7 +108,7 @@ public class NewContract extends JPanel implements ActionListener{
 		lblTipoDeContrato.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblTipoDeContrato);
 		
-		editTipoObra = new JComboBox();
+		editTipoObra = new JComboBox<String>();
 		editTipoObra.addActionListener(this);
 		editTipoObra.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
 		panel_1.add(editTipoObra);
@@ -116,7 +118,7 @@ public class NewContract extends JPanel implements ActionListener{
 		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblCliente);
 		
-		editCliente = new JComboBox();
+		editCliente = new JComboBox<String>();
 		editCliente.addActionListener(this);
 		editCliente.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
 		panel_1.add(editCliente);
@@ -138,7 +140,7 @@ public class NewContract extends JPanel implements ActionListener{
 		lblArquitecto.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblArquitecto);
 		
-		editArquitecto = new JComboBox();
+		editArquitecto = new JComboBox<String>();
 		editArquitecto.addActionListener(this);
 		editArquitecto.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
 		panel_1.add(editArquitecto);
@@ -149,7 +151,7 @@ public class NewContract extends JPanel implements ActionListener{
 		
 		buttonSiguiente = new JButton("Siguiente");
 		buttonSiguiente.setForeground(Color.WHITE);
-		buttonSiguiente.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
+		buttonSiguiente.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		buttonSiguiente.setBackground(new Color(45, 0, 255));
 		buttonSiguiente.setBounds(10, 266, 269, 29);
 		buttonSiguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -157,7 +159,7 @@ public class NewContract extends JPanel implements ActionListener{
 		
 		buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setForeground(Color.WHITE);
-		buttonCancelar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
+		buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		buttonCancelar.setBackground(new Color(45, 0, 255));
 		buttonCancelar.setBounds(10, 266, 269, 29);
 		buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -230,6 +232,35 @@ public class NewContract extends JPanel implements ActionListener{
 		contract.setClaveTrabajador(claveArqui);
 		
 		return contract;
+	}
+	
+	public void llenarTipoContrato(List<Contrato> contratos) {
+		for (Contrato contrato : contratos) {
+			editTipoObra.addItem(contrato.getTipoContrato());
+		}
+		editTipoObra.addItem("Otro");
+	}
+	
+	public void llenarCliente(List<Persona> clientes) {
+		for (Persona persona : clientes) {
+			StringBuilder names = new StringBuilder(persona.getApellidoPaternoPer() + " " + persona.getApellidoMaternoPer() + " "+ persona.getNombrePer());
+			editCliente.addItem(names.toString());
+		}
+	}
+	
+	public void llenarArquitecto(List<Persona> arquitectos) {
+		for (Persona arquitecto : arquitectos) {
+			StringBuilder names = new StringBuilder(arquitecto.getApellidoPaternoPer() + " " + arquitecto.getApellidoMaternoPer() + " "+ arquitecto.getNombrePer());
+			editArquitecto.addItem(names.toString());
+		}
+	}
+	
+	public JComboBox<String> getCampoArquitecto() {
+		return editArquitecto;
+	}
+	
+	public JComboBox<String> getCampoCliente() {
+		return editCliente;
 	}
 	
 	public JButton getButtonSiguiente() {

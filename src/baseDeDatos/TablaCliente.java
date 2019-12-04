@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.Cliente;
 import modelo.Contrato;
 import modelo.Persona;
 
@@ -52,6 +53,22 @@ public class TablaCliente {
 			return people;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	public List<Cliente> getCodigoCliente() {
+		String sql = "select cve_cli from cliente";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Cliente> clientes = new ArrayList<Cliente>();
+			while(rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setClaveCliente(rs.getInt("cve_cli"));
+				clientes.add(cliente);
+			}
+			return clientes;
+		} catch (Exception e) {
 			return null;
 		}
 	}

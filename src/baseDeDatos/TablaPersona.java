@@ -63,8 +63,8 @@ public class TablaPersona {
 	
 	public List<Persona> getFiltroArquitecto() {
 		String filtro = "Arquitecto";
-		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_cont from contratotra c join persona p"
-				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%";
+		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_tra from contratotra c join persona p"
+				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%'";
 		
 		try {
 			ResultSet rs = statement.executeQuery(sql);
@@ -72,7 +72,7 @@ public class TablaPersona {
 			while(rs.next()) {
 				Persona person = new Persona();
 				
-				person.setClavePer(rs.getInt("cve_per"));
+				person.setClavePer(rs.getInt("cve_tra"));
 				person.setApellidoPaternoPer(rs.getString("ap_per"));
 				person.setApellidoMaternoPer(rs.getString("am_per"));
 				person.setNombrePer(rs.getString("nom_per"));
@@ -87,7 +87,6 @@ public class TablaPersona {
 	}
 	
 	public List<Persona> getFiltroCliente() {
-		String filtro = "Arquitecto";
 		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_cli from cliente c join persona p"
 				+ " on c.cve_per = p.cve_per";
 		
@@ -97,7 +96,7 @@ public class TablaPersona {
 			while(rs.next()) {
 				Persona person = new Persona();
 				
-				person.setClavePer(rs.getInt("cve_per"));
+				person.setClavePer(rs.getInt("cve_cli"));
 				person.setApellidoPaternoPer(rs.getString("ap_per"));
 				person.setApellidoMaternoPer(rs.getString("am_per"));
 				person.setNombrePer(rs.getString("nom_per"));

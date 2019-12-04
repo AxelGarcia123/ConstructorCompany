@@ -53,4 +53,21 @@ public class TablaClausula {
 			return null;
 		}
 	}
+	
+	public List<Clausula> getTodasClausulas() {
+		String sql = "select * from clausula";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Clausula> clausulas = new ArrayList<>();
+			while(rs.next()) {
+				Clausula clausula = new Clausula();
+				clausula.setClaveClausula(rs.getInt("cve_cla"));
+				clausula.setDescripcionClausula(rs.getString("descripcion"));
+				clausulas.add(clausula);
+			}
+			return clausulas;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

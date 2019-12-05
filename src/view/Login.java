@@ -48,7 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
-public class Login extends JFrame implements ActionListener{
+public class Login extends JFrame {
 
 	private BaseDeDatos baseDatos;
 	private JPanel contentPane;
@@ -106,13 +106,13 @@ public class Login extends JFrame implements ActionListener{
 	public Login() {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 840, 502);
+		setBounds(100, 100, 1132, 609);
+		setExtendedState(MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
 
 		baseDatos = new BaseDeDatos("constructorcompany", "root", "17650010");
 		baseDatos.setDriver("com.mysql.jdbc.Driver");
@@ -131,119 +131,8 @@ public class Login extends JFrame implements ActionListener{
 		tablaPermisoCont = new TablaPermisoContrato(baseDatos.getConexion());
 		tablaAutorizacion = new TablaAutorizacion(baseDatos.getConexion());
 		tablaClausula = new TablaClausula(baseDatos.getConexion());
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel);
-
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.WHITE);
-		panel_1.add(panel_2, BorderLayout.NORTH);
-		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JLabel lblConstructorCompany = new JLabel("Constructor Company");
-		lblConstructorCompany.setFont(new Font("Roboto", Font.PLAIN, 30));
-		lblConstructorCompany.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(lblConstructorCompany);
-
-		JLabel lblNewLabel = new JLabel("A company for the build of anything");
-		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(lblNewLabel);
-
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_1.add(panel_3, BorderLayout.CENTER);
-		panel_3.setLayout(null);
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(58, 11, 289, 368);
-		panel_3.add(panel_5);
-		panel_5.setLayout(null);
-
-		editUserName = new JTextField();
-		editUserName.setBorder(new LineBorder(new Color(171, 173, 179), 1, true));
-		editUserName.setHorizontalAlignment(SwingConstants.CENTER);
-		editUserName.setFont(new Font("Roboto", Font.PLAIN, 15));
-		editUserName.setBounds(10, 64, 269, 31);
-
-		panel_5.add(editUserName);
-		editUserName.setColumns(10);
-
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setForeground(Color.GRAY);
-		lblUsername.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_perm_identity_black_18dp.png"));
-		lblUsername.setFont(new Font("Roboto", Font.PLAIN, 15));
-		lblUsername.setBounds(10, 11, 269, 31);
-		panel_5.add(lblUsername);
-
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setForeground(Color.GRAY);
-		lblPassword.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_lock_black_18dp.png"));
-		lblPassword.setFont(new Font("Roboto", Font.PLAIN, 15));
-		lblPassword.setBounds(10, 118, 269, 36);
-		panel_5.add(lblPassword);
-
-		forgotPassword = new JLabel("Forgot your password?");
-		forgotPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		forgotPassword.setForeground(Color.GRAY);
-		forgotPassword.setFont(new Font("Roboto", Font.PLAIN, 13));
-		forgotPassword.setBounds(10, 223, 269, 28);
-		forgotPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		Font font = forgotPassword.getFont();
-		Map attributes = font.getAttributes();
-		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		forgotPassword.setFont(font.deriveFont(attributes));
-		panel_5.add(forgotPassword);
-
-		buttonSingIn = new JButton("Sing In ");
-		buttonSingIn.addActionListener(this);
-		buttonSingIn.setForeground(Color.WHITE);
-		buttonSingIn.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 17));
-		buttonSingIn.setBackground(new Color(45, 0, 255));
-		buttonSingIn.setBounds(10, 266, 269, 29);
-		buttonSingIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel_5.add(buttonSingIn);
-
-		singUp = new JLabel("Don't have an account? Sing Up");
-		singUp.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Escuchador funcionando");
-			}
-		});
-		singUp.setHorizontalAlignment(SwingConstants.CENTER);
-		singUp.setForeground(Color.GRAY);
-		singUp.setFont(new Font("Roboto", Font.PLAIN, 13));
-		singUp.setBounds(10, 316, 269, 28);
-		singUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		Font fontUp = singUp.getFont();
-		Map attributesUp = fontUp.getAttributes();
-		attributesUp.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		singUp.setFont(font.deriveFont(attributesUp));
-		panel_5.add(singUp);
-
-		userPassword = new JPasswordField();
-		userPassword.setBounds(10, 175, 269, 30);
-		panel_5.add(userPassword);
-	}
-
-	//Comienzo con el botón del login
-	//AQUÍ ESTÁ TODO EL ESCUCHADOR DE LOS BOTONES
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == buttonSingIn) {
-			setExtendedState(MAXIMIZED_BOTH);
-			contentPane.removeAll();
-			contentPane.setLayout(new BorderLayout(0, 0));
-			menuLateral();
-			repaint();
-		}
+		contentPane.setLayout(new BorderLayout(0, 0));
+		menuLateral();
 	}
 
 	/*MENÚ LATERAL*/
@@ -255,7 +144,7 @@ public class Login extends JFrame implements ActionListener{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					listOfProjects();
+					listOfContracts();
 				}
 			});
 
@@ -295,7 +184,7 @@ public class Login extends JFrame implements ActionListener{
 					iterator = projects.getCounter();
 					carpeta = projects.getTipos().get(projects.getTipos().size() - iterator).getText();
 					if(iterator != 0) {
-						listOfContracts(carpeta.trim());
+						listOfContracts();
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
@@ -315,7 +204,7 @@ public class Login extends JFrame implements ActionListener{
 		}
 	}
 
-	public void listOfContracts(String carpeta) {
+	public void listOfContracts() {
 		contentPane.removeAll();
 		projects = null;
 		menu = null;
@@ -333,7 +222,7 @@ public class Login extends JFrame implements ActionListener{
 		if(contracts == null) {
 			contracts = new Contracts();
 
-			contracts.showProjectContracts(tablaContrato.getFecha(carpeta), tablaCliente.getCliente(carpeta));
+			contracts.showProjectContracts(tablaContrato.getFecha(), tablaCliente.getCliente());
 			contracts.getContrato().addActionListener(new ActionListener() {
 
 				@Override
@@ -342,11 +231,11 @@ public class Login extends JFrame implements ActionListener{
 					cliente = contracts.getNombres().get(contracts.getNombres().size() - iterator).getText();
 
 					if(iterator != 0 && cliente.length() != 0) {
-						nombre = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getNombrePer();
-						paterno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoPaternoPer();
-						materno = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getApellidoMaternoPer();
-						fecha = tablaContrato.getFecha(carpeta).get(contracts.getFechas().size() - iterator).getFechaInicioContrato();
-						claveCli = tablaCliente.getCliente(carpeta).get(contracts.getNombres().size() - iterator).getClavePer();
+						nombre = tablaCliente.getCliente().get(contracts.getNombres().size() - iterator).getNombrePer();
+						paterno = tablaCliente.getCliente().get(contracts.getNombres().size() - iterator).getApellidoPaternoPer();
+						materno = tablaCliente.getCliente().get(contracts.getNombres().size() - iterator).getApellidoMaternoPer();
+						fecha = tablaContrato.getFecha().get(contracts.getFechas().size() - iterator).getFechaInicioContrato();
+						claveCli = tablaCliente.getCliente().get(contracts.getNombres().size() - iterator).getClavePer();
 						detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
 					}
 					else
@@ -430,7 +319,7 @@ public class Login extends JFrame implements ActionListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					listOfContracts(carpeta.trim());
+					listOfContracts();
 				}
 			});
 

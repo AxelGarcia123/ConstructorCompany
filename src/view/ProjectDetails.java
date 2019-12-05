@@ -80,7 +80,7 @@ public class ProjectDetails extends JPanel {
 		panel_1.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new GridLayout(11, 2, 0, 0));
 		
-		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio\nAbajo");
+		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio");
 		lblFechaDeInicio.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 15));
 		lblFechaDeInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblFechaDeInicio);

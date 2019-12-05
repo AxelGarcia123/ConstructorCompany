@@ -55,8 +55,8 @@ public class TablaContrato {
 		}
 	}
 	
-	public List<Contrato> getFecha(String tipoContrato){
-		String sql = "call sp_contratosclientes('" + tipoContrato + "')";
+	public List<Contrato> getFecha(){
+		String sql = "select * from contrato";
 		try {
 			ResultSet rs = statement.executeQuery(sql);
 			List<Contrato> contratos = new ArrayList<>();

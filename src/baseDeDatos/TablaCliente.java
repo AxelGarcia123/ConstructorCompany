@@ -37,8 +37,8 @@ public class TablaCliente {
 //		}
 //	}
 	
-	public List<Persona> getCliente(String tipoContrato){
-		String sql = "call sp_contratosclientes('" + tipoContrato + "')";
+	public List<Persona> getCliente(){
+		String sql = "call sp_contratosclientes()";
 		try {
 			ResultSet rs = statement.executeQuery(sql);
 			List<Persona> people = new ArrayList<>();
@@ -47,7 +47,7 @@ public class TablaCliente {
 				person.setApellidoMaternoPer(rs.getString("am_per"));
 				person.setApellidoPaternoPer(rs.getString("ap_per"));
 				person.setNombrePer(rs.getString("nom_per"));
-				person.setClavePer(rs.getInt("cve_per"));
+				person.setClavePer(rs.getInt("cve_cli"));
 				people.add(person);
 			}
 			return people;

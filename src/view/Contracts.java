@@ -74,6 +74,7 @@ public class Contracts extends JPanel {
 	}
 	
 	public void showProjectContracts(List<Contrato> contratos, List<Persona> personas) {
+		i = 0;
 		for (Contrato contrato : contratos) {
 			JPanel panel_3 = new JPanel();
 			panel_3.setBackground(Color.WHITE);
@@ -105,6 +106,8 @@ public class Contracts extends JPanel {
 			date.add(fecha);
 			panel.add(panel_3);
 			panel.updateUI();
+			
+			i++;
 			
 			for (JButton buttons : contractFiles) {
 				buttons.addActionListener(new ActionListener() {

@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,9 +15,11 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import rojeru_san.componentes.RSDateChooser;
 import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NewEmployee extends JPanel {
-	private JButton buttonSiguiente;
+	private JButton buttonGuardar;
 	private JButton buttonCancelar;
 	private JComboBox entradaLunes;
 	private JComboBox entradaMartes;
@@ -30,16 +33,26 @@ public class NewEmployee extends JPanel {
 	private JComboBox salidaJueves;
 	private JComboBox salidaViernes;
 	private JComboBox salidaSabado;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
+	private JTextField editPaterno;
+	private JTextField editMaterno;
+	private JTextField editNombre;
+	private JTextField editPaterno_1;
+	private JTextField editNumCalle;
+	private JTextField editEntreCalles;
+	private JTextField editEstadoCivil;
+	private JTextField editEmail;
+	private JTextField editTelefono;
+	private JTextField editSueldo;
+	private JTextField editNSS;
+	private RSDateChooser fechaFin;
+	private RSDateChooser fechaInicio;
+	private JLabel textColonia;
+	private JLabel textCiudad;
+	private JComboBox editPuestos;
+	private JComboBox editCodigoPostal;
+	private JComboBox editOrientacion;
+	private JComboBox editGenero;
+	private RSDateChooser fechaNacimiento;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
@@ -63,10 +76,20 @@ public class NewEmployee extends JPanel {
 		panel_1.setBackground(Color.WHITE);
 		add(panel_1, BorderLayout.SOUTH);
 		
-		buttonSiguiente = new JButton("Siguiente");
-		panel_1.add(buttonSiguiente);
+		buttonGuardar = new JButton("Guardar");
+		buttonGuardar.setForeground(Color.WHITE);
+		buttonGuardar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonGuardar.setBackground(new Color(45, 0, 255));
+		buttonGuardar.setBounds(10, 266, 269, 29);
+		buttonGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_1.add(buttonGuardar);
 		
 		buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.setForeground(Color.WHITE);
+		buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonCancelar.setBackground(new Color(45, 0, 255));
+		buttonCancelar.setBounds(10, 266, 269, 29);
+		buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_1.add(buttonCancelar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -170,104 +193,207 @@ public class NewEmployee extends JPanel {
 		panel_5.setLayout(new GridLayout(9, 4, 0, 0));
 		
 		JLabel label_1 = new JLabel("Apellido Paterno:");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_1);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		panel_5.add(textField);
+		editPaterno = new JTextField();
+		editPaterno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editPaterno.setHorizontalAlignment(SwingConstants.CENTER);
+		editPaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editPaterno.setColumns(10);
+		panel_5.add(editPaterno);
 		
 		JLabel label_2 = new JLabel("Apellido Materno:");
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_2);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_5.add(textField_1);
+		editMaterno = new JTextField();
+		editMaterno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editMaterno.setHorizontalAlignment(SwingConstants.CENTER);
+		editMaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editMaterno.setColumns(10);
+		panel_5.add(editMaterno);
 		
 		JLabel label_3 = new JLabel("Nombre:");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_3);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		panel_5.add(textField_2);
+		editNombre = new JTextField();
+		editNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		editNombre.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editNombre.setColumns(10);
+		panel_5.add(editNombre);
 		
 		JLabel label_4 = new JLabel("Calle:");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_4);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		panel_5.add(textField_3);
+		editPaterno_1 = new JTextField();
+		editPaterno_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editPaterno_1.setHorizontalAlignment(SwingConstants.CENTER);
+		editPaterno_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editPaterno_1.setColumns(10);
+		panel_5.add(editPaterno_1);
 		
 		JLabel label_5 = new JLabel("Número de calle");
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_5);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_5.add(textField_4);
+		editNumCalle = new JTextField();
+		editNumCalle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editNumCalle.setHorizontalAlignment(SwingConstants.CENTER);
+		editNumCalle.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editNumCalle.setColumns(10);
+		panel_5.add(editNumCalle);
 		
 		JLabel label_6 = new JLabel("Orientación:");
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_6);
 		
-		JComboBox comboBox = new JComboBox();
-		panel_5.add(comboBox);
+		editOrientacion = new JComboBox();
+		editOrientacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editOrientacion.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_5.add(editOrientacion);
 		
 		JLabel label_7 = new JLabel("Entre calles:");
+		label_7.setHorizontalAlignment(SwingConstants.CENTER);
+		label_7.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_7);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		panel_5.add(textField_5);
+		editEntreCalles = new JTextField();
+		editEntreCalles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editEntreCalles.setHorizontalAlignment(SwingConstants.CENTER);
+		editEntreCalles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editEntreCalles.setColumns(10);
+		panel_5.add(editEntreCalles);
 		
 		JLabel label_8 = new JLabel("Género:");
+		label_8.setHorizontalAlignment(SwingConstants.CENTER);
+		label_8.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_8);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panel_5.add(comboBox_1);
+		editGenero = new JComboBox();
+		editGenero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editGenero.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_5.add(editGenero);
 		
 		JLabel label_9 = new JLabel("Estado civil:");
+		label_9.setHorizontalAlignment(SwingConstants.CENTER);
+		label_9.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_9);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		panel_5.add(textField_6);
+		editEstadoCivil = new JTextField();
+		editEstadoCivil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editEstadoCivil.setHorizontalAlignment(SwingConstants.CENTER);
+		editEstadoCivil.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editEstadoCivil.setColumns(10);
+		panel_5.add(editEstadoCivil);
 		
 		JLabel label_10 = new JLabel("Email:");
+		label_10.setHorizontalAlignment(SwingConstants.CENTER);
+		label_10.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_10);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		panel_5.add(textField_7);
+		editEmail = new JTextField();
+		editEmail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		editEmail.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editEmail.setColumns(10);
+		panel_5.add(editEmail);
 		
 		JLabel label_11 = new JLabel("Teléfono:");
+		label_11.setHorizontalAlignment(SwingConstants.CENTER);
+		label_11.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_11);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		panel_5.add(textField_8);
+		editTelefono = new JTextField();
+		editTelefono.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editTelefono.setHorizontalAlignment(SwingConstants.CENTER);
+		editTelefono.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editTelefono.setColumns(10);
+		panel_5.add(editTelefono);
 		
 		JLabel label_12 = new JLabel("Fecha de nacimiento:");
+		label_12.setHorizontalAlignment(SwingConstants.CENTER);
+		label_12.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_12);
 		
-		RSDateChooser dateChooser = new RSDateChooser();
-		panel_5.add(dateChooser);
+		fechaNacimiento = new RSDateChooser();
+		fechaNacimiento.setFuente(new Font("Segoe UI Semibold", Font.BOLD, 17));
+		panel_5.add(fechaNacimiento);
 		
 		JLabel label_13 = new JLabel("Código postal");
+		label_13.setHorizontalAlignment(SwingConstants.CENTER);
+		label_13.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_13);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		panel_5.add(textField_9);
+		editCodigoPostal = new JComboBox();
+		editCodigoPostal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		editCodigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_5.add(editCodigoPostal);
 		
 		JLabel label_14 = new JLabel("Colonia");
+		label_14.setHorizontalAlignment(SwingConstants.CENTER);
+		label_14.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_14);
 		
-		JLabel label_15 = new JLabel("prueba");
-		panel_5.add(label_15);
+		textColonia = new JLabel("");
+		textColonia.setHorizontalAlignment(SwingConstants.CENTER);
+		textColonia.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_5.add(textColonia);
 		
 		JLabel label_16 = new JLabel("Ciudad:");
+		label_16.setHorizontalAlignment(SwingConstants.CENTER);
+		label_16.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_16);
 		
-		JLabel label_17 = new JLabel("");
-		panel_5.add(label_17);
+		textCiudad = new JLabel("");
+		textCiudad.setHorizontalAlignment(SwingConstants.CENTER);
+		textCiudad.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_5.add(textCiudad);
 		
 		JLabel label_18 = new JLabel("");
 		panel_5.add(label_18);
@@ -291,10 +417,56 @@ public class NewEmployee extends JPanel {
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.WHITE);
 		panel_4.add(panel_6);
-		panel_6.setLayout(new GridLayout(1, 0, 0, 0));
+		panel_6.setLayout(new GridLayout(0, 4, 0, 100));
 		
-		JLabel lblPrueba = new JLabel("Prueba");
+		JLabel lblPrueba = new JLabel("Fecha de inicio:");
+		lblPrueba.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrueba.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_6.add(lblPrueba);
+		
+		fechaInicio = new RSDateChooser();
+		fechaInicio.setFuente(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(fechaInicio);
+		
+		JLabel lblFechaDeFinalizacin = new JLabel("Fecha de finalización");
+		lblFechaDeFinalizacin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFechaDeFinalizacin.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(lblFechaDeFinalizacin);
+		
+		fechaFin = new RSDateChooser();
+		fechaFin.setFuente(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(fechaFin);
+		
+		JLabel lblNewLabel = new JLabel("Puesto del trabajador:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(lblNewLabel);
+		
+		editPuestos = new JComboBox();
+		editPuestos.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(editPuestos);
+		
+		JLabel lblSueldo = new JLabel("Sueldo:");
+		lblSueldo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSueldo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(lblSueldo);
+		
+		editSueldo = new JTextField();
+		editSueldo.setHorizontalAlignment(SwingConstants.CENTER);
+		editSueldo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(editSueldo);
+		editSueldo.setColumns(10);
+		
+		JLabel lblNmeroDeSeguro = new JLabel("Número de seguro social");
+		lblNmeroDeSeguro.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNmeroDeSeguro.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(lblNmeroDeSeguro);
+		
+		editNSS = new JTextField();
+		editNSS.setHorizontalAlignment(SwingConstants.CENTER);
+		editNSS.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(editNSS);
+		editNSS.setColumns(10);
 		
 	}
 }

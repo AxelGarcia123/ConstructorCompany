@@ -693,8 +693,16 @@ public class Login extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int codigo = Integer.parseInt(buscarCodigo.getCodigosPostales().getSelectedItem().toString());
-					buscarCodigo.mostrarColonias(tablaColonia.getColonias(codigo));
-//					buscarCodigo.numeroFilas(tablaColonia.getNumeroColonias(codigo));
+					buscarCodigo.cargarColonias(tablaColonia.getColonias(codigo));
+					AutoCompletion.enable(buscarCodigo.getColonias());
+				}
+			});
+			
+			buscarCodigo.getColonias().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
 				}
 			});
 			buscarCodigo.setVisible(true);

@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Codigo;
 import modelo.Colonia;
 
 import java.awt.Color;
@@ -47,6 +48,7 @@ public class SearchZipCode extends JDialog {
 	 */
 	public SearchZipCode() {
 		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,7 +58,7 @@ public class SearchZipCode extends JDialog {
 			JPanel panel = new JPanel();
 			panel.setBackground(Color.WHITE);
 			contentPanel.add(panel, BorderLayout.WEST);
-			panel.setLayout(new GridLayout(2, 1, 0, 0));
+			panel.setLayout(new GridLayout(2, 1, 0, 50));
 			{
 				JLabel lblCdigoPostal = new JLabel("Código Postal");
 				lblCdigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
@@ -65,6 +67,8 @@ public class SearchZipCode extends JDialog {
 			}
 			{
 				codigoPostal = new JComboBox<String>();
+				codigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+				codigoPostal.setBackground(Color.WHITE);
 				panel.add(codigoPostal);
 			}
 		}
@@ -75,7 +79,7 @@ public class SearchZipCode extends JDialog {
 				panelCalles = new JPanel();
 				panelCalles.setBackground(Color.WHITE);
 				scrollPane.setViewportView(panelCalles);
-				panelCalles.setLayout(new GridLayout(1, 1, 0, 0));
+				panelCalles.setLayout(new GridLayout(700, 1, 0, 0));
 			}
 		}
 		{
@@ -107,13 +111,32 @@ public class SearchZipCode extends JDialog {
 		}
 	}
 	
-	public void mostrarCalles(List<Colonia> colonias) {
+	public void cargarCodigosPostales(List<Codigo> codigosPostales) {
+		for (Codigo codigo : codigosPostales) {
+			codigoPostal.addItem(String.valueOf(codigo.getCodigoPostal()));
+		}
+	}
+	
+	public void mostrarColonias(List<Colonia> colonias) {
 		for (Colonia colonia : colonias) {
 			JLabel colony = new JLabel(colonia.getNombreColonia());
 			colony.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 			colony.setHorizontalAlignment(SwingConstants.CENTER);
 			colony.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			panelCalles.add(colony);
+			panelCalles.updateUI();
 		}
+	}
+	
+	public JComboBox<String> getCodigosPostales() {
+		return codigoPostal;
+	}
+	
+//	public void numeroFilas(List<Integer> filas) {
+//		panelCalles.setLayout(new GridLayout(filas.get(0), 1, 0, 0));
+//	}
+	
+	public JPanel getPanelCalles() {
+		return panelCalles;
 	}
 }

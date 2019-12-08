@@ -29,6 +29,8 @@ import baseDeDatos.TablaAutorizacion;
 import baseDeDatos.TablaAvance;
 import baseDeDatos.TablaClausula;
 import baseDeDatos.TablaCliente;
+import baseDeDatos.TablaCodigo;
+import baseDeDatos.TablaColonia;
 import baseDeDatos.TablaContrato;
 import baseDeDatos.TablaContratoTrabajador;
 import baseDeDatos.TablaPermiso;
@@ -52,13 +54,7 @@ public class Login extends JFrame {
 
 	private BaseDeDatos baseDatos;
 	private JPanel contentPane;
-	private JTextField editUserName;
-	private JLabel singUp;
-	private JButton buttonSingIn;
-	private JPasswordField userPassword;
-	private JLabel forgotPassword;
 	private int iterator = 0;
-	private String carpeta = "";
 	private String cliente = "";
 	private String nombre = "";
 	private String paterno = "";
@@ -76,6 +72,9 @@ public class Login extends JFrame {
 	private NewContract nuevoContrato;
 	private NewClause nuevaClausula;
 	private AddNewClause addClause;
+	private NewEmployee nuevoEmpleado;
+	private EmployeeCategory categoriaEmpleados;
+	private SearchZipCode buscarCodigo;
 	private Contrato contrato;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
@@ -89,6 +88,8 @@ public class Login extends JFrame {
 	private TablaPermisoContrato tablaPermisoCont;
 	private TablaAutorizacion tablaAutorizacion;
 	private TablaClausula tablaClausula;
+	private TablaCodigo tablaCodigo;
+	private TablaColonia tablaColonia;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -131,6 +132,8 @@ public class Login extends JFrame {
 		tablaPermisoCont = new TablaPermisoContrato(baseDatos.getConexion());
 		tablaAutorizacion = new TablaAutorizacion(baseDatos.getConexion());
 		tablaClausula = new TablaClausula(baseDatos.getConexion());
+		tablaCodigo = new TablaCodigo(baseDatos.getConexion());
+		tablaColonia = new TablaColonia(baseDatos.getConexion());
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
 	}
@@ -145,6 +148,14 @@ public class Login extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					listOfContracts();
+				}
+			});
+			
+			menu.getButtonEmployees().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaEmpleado();
 				}
 			});
 
@@ -171,6 +182,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 
@@ -182,7 +196,6 @@ public class Login extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					iterator = projects.getCounter();
-					carpeta = projects.getTipos().get(projects.getTipos().size() - iterator).getText();
 					if(iterator != 0) {
 						listOfContracts();
 					}
@@ -216,6 +229,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -268,6 +284,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 
@@ -340,6 +359,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -373,6 +395,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -418,6 +443,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -463,6 +491,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -507,6 +538,9 @@ public class Login extends JFrame {
 		clausula = null;
 		nuevoContrato = null;
 		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -546,6 +580,8 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		nuevaClausula = null;
 		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
 		menuLateral();
 		repaint();
 		
@@ -572,6 +608,96 @@ public class Login extends JFrame {
 			
 			contentPane.add(nuevaClausula, BorderLayout.CENTER);
 			setVisible(true);
+		}
+	}
+	
+	public void categoriaEmpleado() {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		menuLateral();
+		repaint();
+		
+		if(categoriaEmpleados == null) {
+			categoriaEmpleados = new EmployeeCategory();
+			
+			categoriaEmpleados.showTypesOfEmployees(tablaTrabajador.getPuestoTrabajador());
+			
+			categoriaEmpleados.getNuevoEmpleado().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoEmpleado();
+				}
+			});
+			
+			contentPane.add(categoriaEmpleados, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void nuevoEmpleado() {
+		contentPane.removeAll();
+		projects = null;
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		menuLateral();
+		repaint();
+		
+		if(nuevoEmpleado == null) {
+			nuevoEmpleado = new NewEmployee();
+			
+			nuevoEmpleado.llenarPuestos(tablaTrabajador.getPuestoTrabajador());
+			AutoCompletion.enable(nuevoEmpleado.getPuesto());
+			nuevoEmpleado.getButtonCodigoPostal().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					buscarCodigo();
+				}
+			});
+			
+			contentPane.add(nuevoEmpleado, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void buscarCodigo() {
+		if(buscarCodigo == null) {
+			buscarCodigo = new SearchZipCode();
+			buscarCodigo.cargarCodigosPostales(tablaCodigo.getCodigosPostales());
+			AutoCompletion.enable(buscarCodigo.getCodigosPostales());
+			buscarCodigo.getCodigosPostales().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int codigo = Integer.parseInt(buscarCodigo.getCodigosPostales().getSelectedItem().toString());
+					buscarCodigo.mostrarColonias(tablaColonia.getColonias(codigo));
+//					buscarCodigo.numeroFilas(tablaColonia.getNumeroColonias(codigo));
+				}
+			});
+			buscarCodigo.setVisible(true);
 		}
 	}
 }

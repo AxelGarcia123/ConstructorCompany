@@ -99,4 +99,21 @@ public class TablaContratoTrabajador {
 		}
 		return null;
 	}
+	
+	public List<ContratoTrabajador> getPuestoTrabajador() {
+		String sql = "select puesto_tra from contratotra group by puesto_tra";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<ContratoTrabajador> empleados = new ArrayList<ContratoTrabajador>();
+			while(rs.next()) {
+				ContratoTrabajador empleado = new ContratoTrabajador();
+				empleado.setPuestoTrabajador(rs.getString("puesto_tra"));
+				empleados.add(empleado);
+			}
+			return empleados;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

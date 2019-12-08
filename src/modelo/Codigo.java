@@ -4,7 +4,7 @@ public class Codigo {
 	private int codigoPostal;
 	private int claveCiudad;
 	
-	private Codigo() {
+	public Codigo() {
 		
 	}
 	

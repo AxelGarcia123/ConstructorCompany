@@ -6,8 +6,14 @@ import java.awt.Cursor;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import modelo.ContratoTrabajador;
+import modelo.PuedoHacer;
+
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import java.awt.GridLayout;
@@ -16,9 +22,11 @@ import javax.swing.JTextField;
 import rojeru_san.componentes.RSDateChooser;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
-public class NewEmployee extends JPanel {
+public class NewEmployee extends JPanel implements ActionListener{
 	private JButton buttonGuardar;
 	private JButton buttonCancelar;
 	private JComboBox entradaLunes;
@@ -36,7 +44,7 @@ public class NewEmployee extends JPanel {
 	private JTextField editPaterno;
 	private JTextField editMaterno;
 	private JTextField editNombre;
-	private JTextField editPaterno_1;
+	private JTextField editCalle;
 	private JTextField editNumCalle;
 	private JTextField editEntreCalles;
 	private JTextField editEstadoCivil;
@@ -48,11 +56,11 @@ public class NewEmployee extends JPanel {
 	private RSDateChooser fechaInicio;
 	private JLabel textColonia;
 	private JLabel textCiudad;
-	private JComboBox editPuestos;
-	private JComboBox editCodigoPostal;
-	private JComboBox editOrientacion;
-	private JComboBox editGenero;
+	private JComboBox<String> editPuestos;
+	private JComboBox<String> editOrientacion;
+	private JComboBox<String> editGenero;
 	private RSDateChooser fechaNacimiento;
+	private JButton buttonCodigoPostal;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
@@ -69,7 +77,7 @@ public class NewEmployee extends JPanel {
 		
 		JLabel lblNuevoEmpleado = new JLabel("                                                                     Nuevo empleado                                                                                ");
 		lblNuevoEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNuevoEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNuevoEmpleado.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
 		panel.add(lblNuevoEmpleado);
 		
 		JPanel panel_1 = new JPanel();
@@ -198,10 +206,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_1);
 		
 		editPaterno = new JTextField();
-		editPaterno.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editPaterno.addActionListener(this);
 		editPaterno.setHorizontalAlignment(SwingConstants.CENTER);
 		editPaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editPaterno.setColumns(10);
@@ -213,10 +218,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_2);
 		
 		editMaterno = new JTextField();
-		editMaterno.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editMaterno.addActionListener(this);
 		editMaterno.setHorizontalAlignment(SwingConstants.CENTER);
 		editMaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editMaterno.setColumns(10);
@@ -228,10 +230,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_3);
 		
 		editNombre = new JTextField();
-		editNombre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editNombre.addActionListener(this);
 		editNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		editNombre.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editNombre.setColumns(10);
@@ -242,15 +241,12 @@ public class NewEmployee extends JPanel {
 		label_4.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_4);
 		
-		editPaterno_1 = new JTextField();
-		editPaterno_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		editPaterno_1.setHorizontalAlignment(SwingConstants.CENTER);
-		editPaterno_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		editPaterno_1.setColumns(10);
-		panel_5.add(editPaterno_1);
+		editCalle = new JTextField();
+		editCalle.addActionListener(this);
+		editCalle.setHorizontalAlignment(SwingConstants.CENTER);
+		editCalle.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editCalle.setColumns(10);
+		panel_5.add(editCalle);
 		
 		JLabel label_5 = new JLabel("Número de calle");
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -258,10 +254,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_5);
 		
 		editNumCalle = new JTextField();
-		editNumCalle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editNumCalle.addActionListener(this);
 		editNumCalle.setHorizontalAlignment(SwingConstants.CENTER);
 		editNumCalle.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editNumCalle.setColumns(10);
@@ -272,11 +265,10 @@ public class NewEmployee extends JPanel {
 		label_6.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_6);
 		
-		editOrientacion = new JComboBox();
-		editOrientacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editOrientacion = new JComboBox<String>();
+		editOrientacion.setBackground(Color.WHITE);
+		editOrientacion.setModel(new DefaultComboBoxModel<String>(new String[] {"Norte", "Sur", "Este", "Oeste"}));
+		editOrientacion.addActionListener(this);
 		editOrientacion.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(editOrientacion);
 		
@@ -286,10 +278,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_7);
 		
 		editEntreCalles = new JTextField();
-		editEntreCalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editEntreCalles.addActionListener(this);
 		editEntreCalles.setHorizontalAlignment(SwingConstants.CENTER);
 		editEntreCalles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEntreCalles.setColumns(10);
@@ -300,11 +289,10 @@ public class NewEmployee extends JPanel {
 		label_8.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_8);
 		
-		editGenero = new JComboBox();
-		editGenero.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editGenero = new JComboBox<String>();
+		editGenero.setBackground(Color.WHITE);
+		editGenero.setModel(new DefaultComboBoxModel<String>(new String[] {"Masculino", "Femenino"}));
+		editGenero.addActionListener(this);
 		editGenero.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(editGenero);
 		
@@ -314,10 +302,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_9);
 		
 		editEstadoCivil = new JTextField();
-		editEstadoCivil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editEstadoCivil.addActionListener(this);
 		editEstadoCivil.setHorizontalAlignment(SwingConstants.CENTER);
 		editEstadoCivil.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEstadoCivil.setColumns(10);
@@ -329,10 +314,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_10);
 		
 		editEmail = new JTextField();
-		editEmail.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editEmail.addActionListener(this);
 		editEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		editEmail.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEmail.setColumns(10);
@@ -344,10 +326,7 @@ public class NewEmployee extends JPanel {
 		panel_5.add(label_11);
 		
 		editTelefono = new JTextField();
-		editTelefono.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		editTelefono.addActionListener(this);
 		editTelefono.setHorizontalAlignment(SwingConstants.CENTER);
 		editTelefono.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editTelefono.setColumns(10);
@@ -367,13 +346,12 @@ public class NewEmployee extends JPanel {
 		label_13.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_5.add(label_13);
 		
-		editCodigoPostal = new JComboBox();
-		editCodigoPostal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		editCodigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(editCodigoPostal);
+		buttonCodigoPostal = new JButton("Buscar código postal");
+		buttonCodigoPostal.setForeground(Color.WHITE);
+		buttonCodigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonCodigoPostal.setBackground(new Color(45, 0, 255));
+		buttonCodigoPostal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_5.add(buttonCodigoPostal);
 		
 		JLabel label_14 = new JLabel("Colonia");
 		label_14.setHorizontalAlignment(SwingConstants.CENTER);
@@ -442,7 +420,9 @@ public class NewEmployee extends JPanel {
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_6.add(lblNewLabel);
 		
-		editPuestos = new JComboBox();
+		editPuestos = new JComboBox<String>();
+		editPuestos.setBackground(Color.WHITE);
+		editPuestos.addActionListener(this);
 		editPuestos.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_6.add(editPuestos);
 		
@@ -452,6 +432,7 @@ public class NewEmployee extends JPanel {
 		panel_6.add(lblSueldo);
 		
 		editSueldo = new JTextField();
+		editSueldo.addActionListener(this);
 		editSueldo.setHorizontalAlignment(SwingConstants.CENTER);
 		editSueldo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_6.add(editSueldo);
@@ -463,10 +444,169 @@ public class NewEmployee extends JPanel {
 		panel_6.add(lblNmeroDeSeguro);
 		
 		editNSS = new JTextField();
+		editNSS.addActionListener(this);
 		editNSS.setHorizontalAlignment(SwingConstants.CENTER);
 		editNSS.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		panel_6.add(editNSS);
 		editNSS.setColumns(10);
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == editPaterno) {
+			if(editPaterno.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Apellido Panterno\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editMaterno.requestFocus();
+		}
+		
+		if(e.getSource() == editMaterno) {
+			if(editMaterno.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Materno Panterno\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editNombre.requestFocus();
+		}
+		
+		if(e.getSource() == editNombre) {
+			if(editNombre.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Nombre\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editCalle.requestFocus();
+		}
+		
+		if(e.getSource() == editCalle) {
+			if(editCalle.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Calle\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editEntreCalles.requestFocus();
+		}
+		
+		if(e.getSource() == editNumCalle) {
+			if(editNumCalle.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Número de calle\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editOrientacion.requestFocus();
+		}
+		
+		if(e.getSource() == editOrientacion) {
+			editEntreCalles.requestFocus();
+		}
+		
+		if(e.getSource() == editEntreCalles) {
+			if(editEntreCalles.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Entre calles\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editGenero.requestFocus();
+		}
+		
+		if(e.getSource() == editGenero) {
+			editEstadoCivil.requestFocus();
+		}
+		
+		if(e.getSource() == editEstadoCivil) {
+			if(editEstadoCivil.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Estado civil\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editEmail.requestFocus();
+		}
+		
+		if(e.getSource() == editEmail) {
+			if(editEmail.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Email\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editTelefono.requestFocus();
+		}
+		
+		if(e.getSource() == editTelefono) {
+			if(editTelefono.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Teléfono\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				fechaNacimiento.requestFocus();
+		}
+		
+		if(e.getSource() == fechaNacimiento) {
+			buttonCodigoPostal.requestFocus();
+		}
+		
+		if(e.getSource() == fechaInicio) {
+			fechaFin.requestFocus();
+		}
+		
+		if(e.getSource() == fechaFin) {
+			editPuestos.requestFocus();
+		}
+		
+		if(e.getSource() == editSueldo) {
+			if(editSueldo.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Sueldo\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				editNSS.requestFocus();
+		}
+		
+		if(e.getSource() == editNSS) {
+			if(editNSS.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "El campo \"Número de seguro social\" no puede quedar vacio.", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+			else
+				entradaLunes.requestFocus();
+		}
+		
+		if(e.getSource() == entradaLunes) {
+			salidaLunes.requestFocus();
+		}
+		
+		if(e.getSource() == salidaLunes) {
+			entradaMartes.requestFocus();
+		}
+		
+		if(e.getSource() == entradaMartes) {
+			salidaMartes.requestFocus();
+		}
+		
+		if(e.getSource() == salidaMartes) {
+			entradaMiercoles.requestFocus();
+		}
+		
+		if(e.getSource() == entradaMiercoles) {
+			salidaJueves.requestFocus();
+		}
+		
+		if(e.getSource() == salidaJueves) {
+			entradaViernes.requestFocus();
+		}
+		
+		if(e.getSource() == entradaViernes) {
+			salidaViernes.requestFocus();
+		}
+		
+		if(e.getSource() == salidaViernes) {
+			entradaSabado.requestFocus();
+		}
+		
+		if(e.getSource() == entradaSabado) {
+			salidaSabado.requestFocus();
+		}
+		
+		if(e.getSource() == salidaSabado) {
+			buttonGuardar.requestFocus();
+		}
+	}
+	
+	public void llenarPuestos(List<ContratoTrabajador> empleados) {
+		for (ContratoTrabajador empleado : empleados) 
+			editPuestos.addItem(empleado.getPuestoTrabajador());
+		editPuestos.addItem("Otro");
+	}
+	
+	public JButton getButtonGuardar() {
+		return buttonGuardar;
+	}
+	
+	public JButton getButtonCodigoPostal() {
+		return buttonCodigoPostal;
+	}
+	
+	public JComboBox<String> getPuesto() {
+		return editPuestos;
 	}
 }

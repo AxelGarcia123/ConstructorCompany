@@ -27,6 +27,7 @@ import baseDeDatos.BaseDeDatos;
 import baseDeDatos.TablaActividad;
 import baseDeDatos.TablaAutorizacion;
 import baseDeDatos.TablaAvance;
+import baseDeDatos.TablaCiudad;
 import baseDeDatos.TablaClausula;
 import baseDeDatos.TablaCliente;
 import baseDeDatos.TablaCodigo;
@@ -48,6 +49,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -59,6 +62,8 @@ public class Login extends JFrame {
 	private String nombre = "";
 	private String paterno = "";
 	private String materno = "";
+	private String colonia = "";
+	private int codigo = 0;
 	private Date fecha = null;
 	private int claveCli = 0;
 	private Projects projects;
@@ -90,6 +95,7 @@ public class Login extends JFrame {
 	private TablaClausula tablaClausula;
 	private TablaCodigo tablaCodigo;
 	private TablaColonia tablaColonia;
+	private TablaCiudad tablaCiudad;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -134,6 +140,7 @@ public class Login extends JFrame {
 		tablaClausula = new TablaClausula(baseDatos.getConexion());
 		tablaCodigo = new TablaCodigo(baseDatos.getConexion());
 		tablaColonia = new TablaColonia(baseDatos.getConexion());
+		tablaCiudad = new TablaCiudad(baseDatos.getConexion());
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
 	}
@@ -692,7 +699,7 @@ public class Login extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int codigo = Integer.parseInt(buscarCodigo.getCodigosPostales().getSelectedItem().toString());
+					codigo = Integer.parseInt(buscarCodigo.getCodigosPostales().getSelectedItem().toString());
 					buscarCodigo.cargarColonias(tablaColonia.getColonias(codigo));
 					AutoCompletion.enable(buscarCodigo.getColonias());
 				}
@@ -702,6 +709,60 @@ public class Login extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					colonia = buscarCodigo.getColonias().getSelectedItem().toString();
+				}
+			});
+			
+			buscarCodigo.getButtonSeleccionar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoEmpleado.getTextColonia().setText(colonia);
+					nuevoEmpleado.getTextCiudad().setText(String.valueOf(tablaCiudad.getCiudad(codigo).getNombreCiudad()));
+					buscarCodigo.dispose();
+					buscarCodigo = null;
+				}
+			});
+			
+			buscarCodigo.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosing(WindowEvent e) {
+					buscarCodigo = null;					
+				}
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					buscarCodigo = null;
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
 					
 				}
 			});

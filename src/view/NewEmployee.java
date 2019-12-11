@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import modelo.ContratoTrabajador;
+import modelo.Persona;
 import modelo.PuedoHacer;
 
 import javax.swing.ImageIcon;
@@ -22,6 +23,9 @@ import javax.swing.JTextField;
 import rojeru_san.componentes.RSDateChooser;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -29,18 +33,18 @@ import javax.swing.DefaultComboBoxModel;
 public class NewEmployee extends JPanel implements ActionListener{
 	private JButton buttonGuardar;
 	private JButton buttonCancelar;
-	private JComboBox entradaLunes;
-	private JComboBox entradaMartes;
-	private JComboBox entradaMiercoles;
-	private JComboBox entradaJueves;
-	private JComboBox entradaViernes;
-	private JComboBox entradaSabado;
-	private JComboBox salidaLunes;
-	private JComboBox salidaMartes;
-	private JComboBox salidaMiércoles;
-	private JComboBox salidaJueves;
-	private JComboBox salidaViernes;
-	private JComboBox salidaSabado;
+	private JComboBox<String> entradaLunes;
+	private JComboBox<String> entradaMartes;
+	private JComboBox<String> entradaMiercoles;
+	private JComboBox<String> entradaJueves;
+	private JComboBox<String> entradaViernes;
+	private JComboBox<String> entradaSabado;
+	private JComboBox<String> salidaLunes;
+	private JComboBox<String> salidaMartes;
+	private JComboBox<String> salidaMiercoles;
+	private JComboBox<String> salidaJueves;
+	private JComboBox<String> salidaViernes;
+	private JComboBox<String> salidaSabado;
 	private JTextField editPaterno;
 	private JTextField editMaterno;
 	private JTextField editNombre;
@@ -150,44 +154,92 @@ public class NewEmployee extends JPanel implements ActionListener{
 		lblHoraDeEntrada.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		panel_3.add(lblHoraDeEntrada);
 		
-		entradaLunes = new JComboBox();
+		entradaLunes = new JComboBox<String>();
+		entradaLunes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaLunes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaLunes);
 		
-		entradaMartes = new JComboBox();
+		entradaMartes = new JComboBox<String>();
+		entradaMartes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaMartes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaMartes);
 		
-		entradaMiercoles = new JComboBox();
+		entradaMiercoles = new JComboBox<String>();
+		entradaMiercoles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaMiercoles.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaMiercoles);
 		
-		entradaJueves = new JComboBox();
+		entradaJueves = new JComboBox<String>();
+		entradaJueves.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaJueves.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaJueves);
 		
-		entradaViernes = new JComboBox();
+		entradaViernes = new JComboBox<String>();
+		entradaViernes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaViernes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaViernes);
 		
-		entradaSabado = new JComboBox();
+		entradaSabado = new JComboBox<String>();
+		entradaSabado.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		entradaSabado.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(entradaSabado);
 		
 		JLabel lblHoraDeSalida = new JLabel("Hora de salida:");
 		lblHoraDeSalida.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		panel_3.add(lblHoraDeSalida);
 		
-		salidaLunes = new JComboBox();
+		salidaLunes = new JComboBox<String>();
+		salidaLunes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaLunes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(salidaLunes);
 		
-		salidaMartes = new JComboBox();
+		salidaMartes = new JComboBox<String>();
+		salidaMartes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaMartes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(salidaMartes);
 		
-		salidaMiércoles = new JComboBox();
-		panel_3.add(salidaMiércoles);
+		salidaMiercoles = new JComboBox<String>();
+		salidaMiercoles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaMiercoles.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
+		panel_3.add(salidaMiercoles);
 		
-		salidaJueves = new JComboBox();
+		salidaJueves = new JComboBox<String>();
+		salidaJueves.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaJueves.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(salidaJueves);
 		
-		salidaViernes = new JComboBox();
+		salidaViernes = new JComboBox<String>();
+		salidaViernes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaViernes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(salidaViernes);
 		
-		salidaSabado = new JComboBox();
+		salidaSabado = new JComboBox<String>();
+		salidaSabado.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		salidaSabado.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
+				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
+				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
 		panel_3.add(salidaSabado);
 		
 		JPanel panel_4 = new JPanel();
@@ -592,10 +644,59 @@ public class NewEmployee extends JPanel implements ActionListener{
 		}
 	}
 	
+	public Persona getNewPerson() {
+		Persona person = new Persona();
+		person.setApellidoPaternoPer(editPaterno.getText());
+		person.setApellidoMaternoPer(editMaterno.getText());
+		person.setNombrePer(editNombre.getText());
+		person.setCallePer(editCalle.getText());
+		person.setNumeroPer(Integer.parseInt(editNumCalle.getText()));
+		person.setOrientacionPer(editOrientacion.getSelectedItem().toString());
+		person.setEntreCallesPer(editEntreCalles.getText());
+		person.setGeneroPer(editGenero.getSelectedItem().toString());
+		person.setEstadoCivilPer(editEstadoCivil.getText());
+		person.setMailPer(editEmail.getText());
+		person.setTelefono(Integer.parseInt(editTelefono.getText()));
+		person.setFechaNacimientoPer(getDateFormat(fechaNacimiento.getDatoFecha()));
+		
+		return person;
+	}
+	
+	public ContratoTrabajador getNewEmployee() {
+		ContratoTrabajador employee = new ContratoTrabajador();
+		employee.setFechaInicioTrabajador(getDateFormat(fechaInicio.getDatoFecha()));
+		employee.setFechaFinTrabajador(getDateFormat(fechaFin.getDatoFecha()));
+		employee.setPuestoTrabajador(editPuestos.getSelectedItem().toString());
+		employee.setSueldoTrabajador(Integer.parseInt(editSueldo.getText()));
+		employee.setNumeroSSTrabajador(editNSS.getText());
+		
+		return employee;
+	}
+	
 	public void llenarPuestos(List<ContratoTrabajador> empleados) {
 		for (ContratoTrabajador empleado : empleados) 
 			editPuestos.addItem(empleado.getPuestoTrabajador());
 		editPuestos.addItem("Otro");
+	}
+	
+	public java.sql.Date getDateFormat(Date fechaNacimiento) {
+		String formatoFecha = "yyyyMMdd";
+		Date fecha = fechaNacimiento;
+		
+		SimpleDateFormat formateador = new SimpleDateFormat(formatoFecha);
+		String prueba1 = String.valueOf(formateador.format(fecha));
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Date parsed = null;
+		try {
+			parsed = format.parse(prueba1);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+        
+        return sql;
 	}
 	
 	public JButton getButtonGuardar() {
@@ -608,5 +709,13 @@ public class NewEmployee extends JPanel implements ActionListener{
 	
 	public JComboBox<String> getPuesto() {
 		return editPuestos;
+	}
+	
+	public JLabel getTextColonia() {
+		return textColonia;
+	}
+	
+	public JLabel getTextCiudad() {
+		return textCiudad;
 	}
 }

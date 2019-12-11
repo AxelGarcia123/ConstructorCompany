@@ -118,26 +118,19 @@ public class SearchZipCode extends JDialog {
 		}
 	}
 	
-//	public void mostrarColonias(List<Colonia> colonias) {
-//		for (Colonia colonia : colonias) {
-//			JLabel colony = new JLabel(colonia.getNombreColonia());
-//			colony.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-//			colony.setHorizontalAlignment(SwingConstants.CENTER);
-//			colony.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//			panelCalles.add(colony);
-//			panelCalles.updateUI();
-//		}
-//	}
-	
 	public JComboBox<String> getCodigosPostales() {
 		return codigoPostal;
 	}
 	
-//	public void numeroFilas(List<Integer> filas) {
-//		panelCalles.setLayout(new GridLayout(filas.get(0), 1, 0, 0));
-//	}
-	
 	public JComboBox<String> getColonias() {
 		return editColonias;
+	}
+	
+	public JButton getButtonSeleccionar() {
+		return buttonSeleccionar;
+	}
+	
+	public JButton getButtoCancelar() {
+		return buttonCancelar;
 	}
 }

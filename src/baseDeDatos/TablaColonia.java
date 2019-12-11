@@ -54,18 +54,18 @@ public class TablaColonia {
 		}
 	}
 	
-	public List<Integer> getNumeroColonias(int codigoPostal) {
-		String sql = "call sp_numerocolonias('"+ codigoPostal +"')";
+	public int getClaveColonia(int codigoPostal, String colonia) {
+		String sql = "select cve_col from colonia where cp_cod = '"+ codigoPostal + "'"
+				+ " and nom_col like '%"+ colonia + "%'";
 		try {
 			ResultSet rs = statement.executeQuery(sql);
-			List<Integer> filas = new ArrayList<Integer>();
-			while(rs.next()) {
-				filas.add(rs.getInt("count(nom_col)"));
-			}
-			return filas;
+			if(rs.next()) 
+				return rs.getInt("cve_col");
+			else
+				return 0;
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			return null;
+			return 0;
 		}
 	}
 }

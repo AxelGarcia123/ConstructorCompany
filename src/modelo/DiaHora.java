@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class DiaHora {
 	private int numDiaHora;
-	private Date diaDiaHora;
+	private String diaDiaHora;
 	private Time horaEntDiaHora;
 	private Time horaSalidaDiaHora;
 	private String tipoDiaHora;
@@ -15,7 +15,7 @@ public class DiaHora {
 		
 	}
 	
-	public DiaHora(int numDiaHora, Date diaDiaHora, Time horaEntDiaHora, Time horaSalidaDiaHora, String tipoDiaHora,
+	public DiaHora(int numDiaHora, String diaDiaHora, Time horaEntDiaHora, Time horaSalidaDiaHora, String tipoDiaHora,
 			int folioHora) {
 		super();
 		this.numDiaHora = numDiaHora;
@@ -34,11 +34,11 @@ public class DiaHora {
 		this.numDiaHora = numDiaHora;
 	}
 
-	public Date getDiaDiaHora() {
+	public String getDiaDiaHora() {
 		return diaDiaHora;
 	}
 
-	public void setDiaDiaHora(Date diaDiaHora) {
+	public void setDiaDiaHora(String diaDiaHora) {
 		this.diaDiaHora = diaDiaHora;
 	}
 

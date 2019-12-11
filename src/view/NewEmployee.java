@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import modelo.ContratoTrabajador;
+import modelo.DiaHora;
 import modelo.Persona;
 import modelo.PuedoHacer;
 
@@ -65,6 +66,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 	private JComboBox<String> editGenero;
 	private RSDateChooser fechaNacimiento;
 	private JButton buttonCodigoPostal;
+	private JComboBox<String> editTipoHorario;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
@@ -502,6 +504,16 @@ public class NewEmployee extends JPanel implements ActionListener{
 		panel_6.add(editNSS);
 		editNSS.setColumns(10);
 		
+		JLabel lblTipoDeHorario = new JLabel("Tipo de horario:");
+		lblTipoDeHorario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipoDeHorario.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		panel_6.add(lblTipoDeHorario);
+		
+		editTipoHorario = new JComboBox<String>();
+		editTipoHorario.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		editTipoHorario.setBackground(Color.WHITE);
+		panel_6.add(editTipoHorario);
+		
 	}
 
 	@Override
@@ -673,10 +685,50 @@ public class NewEmployee extends JPanel implements ActionListener{
 		return employee;
 	}
 	
-	public void llenarPuestos(List<ContratoTrabajador> empleados) {
-		for (ContratoTrabajador empleado : empleados) 
-			editPuestos.addItem(empleado.getPuestoTrabajador());
-		editPuestos.addItem("Otro");
+	public DiaHora getTime(int i) {
+		DiaHora date = new DiaHora();
+		
+		switch(i) {
+			case 1:
+				date.setDiaDiaHora("Lunes");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaLunes.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaLunes.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			case 2:
+				date.setDiaDiaHora("Martes");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaMartes.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaMartes.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			case 3:
+				date.setDiaDiaHora("Miércoles");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaMiercoles.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaMiercoles.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			case 4:
+				date.setDiaDiaHora("Jueves");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaJueves.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaJueves.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			case 5:
+				date.setDiaDiaHora("Viernes");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaViernes.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaViernes.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			case 6:
+				date.setDiaDiaHora("Sábado");
+				date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaSabado.getSelectedItem().toString()));
+				date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaSabado.getSelectedItem().toString()));
+				date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
+				break;
+			default:
+				
+		}
+		return date;
 	}
 	
 	public java.sql.Date getDateFormat(Date fechaNacimiento) {
@@ -699,6 +751,18 @@ public class NewEmployee extends JPanel implements ActionListener{
         return sql;
 	}
 	
+	public void llenarPuestos(List<ContratoTrabajador> empleados) {
+		for (ContratoTrabajador empleado : empleados) 
+			editPuestos.addItem(empleado.getPuestoTrabajador());
+		editPuestos.addItem("Otro");
+	}
+	
+	public void llenarDiaHora(List<DiaHora> tipos) {
+		for (DiaHora diaHora : tipos) 
+			editTipoHorario.addItem(diaHora.getDiaDiaHora());
+		editTipoHorario.addItem("Otro");
+	}
+	
 	public JButton getButtonGuardar() {
 		return buttonGuardar;
 	}
@@ -709,6 +773,10 @@ public class NewEmployee extends JPanel implements ActionListener{
 	
 	public JComboBox<String> getPuesto() {
 		return editPuestos;
+	}
+	
+	public JComboBox<String> getDiaHora() {
+		return editTipoHorario;
 	}
 	
 	public JLabel getTextColonia() {

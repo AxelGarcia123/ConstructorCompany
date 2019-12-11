@@ -34,6 +34,7 @@ import baseDeDatos.TablaCodigo;
 import baseDeDatos.TablaColonia;
 import baseDeDatos.TablaContrato;
 import baseDeDatos.TablaContratoTrabajador;
+import baseDeDatos.TablaDiaHora;
 import baseDeDatos.TablaPermiso;
 import baseDeDatos.TablaPermisoContrato;
 import baseDeDatos.TablaPersona;
@@ -96,6 +97,7 @@ public class Login extends JFrame {
 	private TablaCodigo tablaCodigo;
 	private TablaColonia tablaColonia;
 	private TablaCiudad tablaCiudad;
+	private TablaDiaHora tablaDiaHora;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -141,6 +143,7 @@ public class Login extends JFrame {
 		tablaCodigo = new TablaCodigo(baseDatos.getConexion());
 		tablaColonia = new TablaColonia(baseDatos.getConexion());
 		tablaCiudad = new TablaCiudad(baseDatos.getConexion());
+		tablaDiaHora = new TablaDiaHora(baseDatos.getConexion());
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
 	}
@@ -677,11 +680,23 @@ public class Login extends JFrame {
 			
 			nuevoEmpleado.llenarPuestos(tablaTrabajador.getPuestoTrabajador());
 			AutoCompletion.enable(nuevoEmpleado.getPuesto());
+			
+			nuevoEmpleado.llenarDiaHora(tablaDiaHora.getTipoDiaHora());
+			AutoCompletion.enable(nuevoEmpleado.getDiaHora());
+			
 			nuevoEmpleado.getButtonCodigoPostal().addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					buscarCodigo();
+				}
+			});
+			
+			nuevoEmpleado.getButtonGuardar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
 				}
 			});
 			

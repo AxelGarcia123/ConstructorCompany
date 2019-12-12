@@ -43,7 +43,6 @@ public class TablaDiaHora {
 			while(rs.next()) {
 				DiaHora tipo = new DiaHora();
 				tipo.setTipoDiaHora(rs.getString("tipo_diahor"));
-				
 				tipos.add(tipo);
 			}
 			return tipos;

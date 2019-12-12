@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.font.TextAttribute;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ import baseDeDatos.TablaPersona;
 import baseDeDatos.TablaStatusContrato;
 import baseDeDatos.TablaTrabajadorActividad;
 import modelo.Contrato;
+import modelo.DiaHora;
 import baseDeDatos.BaseDeDatos;
 import modelo.AutoCompletion;
 
@@ -696,7 +699,17 @@ public class Login extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					List<DiaHora> horario = new ArrayList<DiaHora>();
+					for(int i = 0; i < 6; i++) {
+						horario.add(nuevoEmpleado.getTime(i + 1));
+					}
+					try {
+						tablaTrabajador.guardarNuevoEmpleado(nuevoEmpleado.getNewPerson(), nuevoEmpleado.getNewEmployee(), tablaColonia.getClaveColonia(codigo, colonia), horario);
+						JOptionPane.showMessageDialog(null, "Empleado registrado");
+					} catch (SQLException e1) {
+						System.out.println(e.toString() + " Del código Java");
+						e1.printStackTrace();
+					}
 				}
 			});
 			

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.ContratoTrabajador;
+import modelo.DiaHora;
 import modelo.Persona;
 
 public class TablaContratoTrabajador {
@@ -23,19 +24,45 @@ public class TablaContratoTrabajador {
 			e.toString();
 		} 
 	}
-	
-//	public String guardar(Empleado empleado) {
-//		String sql = "insert into empleado values(null,'" + empleado.getPaterno() + "','" + empleado.getMaterno() + "','" + 
-//				empleado.getNombre() + "','" + empleado.getCargo() + "')";
-//		try {
-//			statement.executeUpdate(sql);
-//			return "Producto registrado";
-//		} catch (SQLException e) {
-//			System.out.println(e.toString());
-//			return sql.toString();
-//		}
-//	}
-	
+
+	public void guardarNuevoEmpleado(Persona person, ContratoTrabajador employee, /*DiaHora date,*/ int colonia, List<DiaHora> horario) throws SQLException {
+		conexion.setAutoCommit(false);
+		int claveTra = 0;
+		int folio_hor = 0;
+		String sql = "call sp_nuevoregistro(1,'"+ person.getApellidoPaternoPer() +"', '" + person.getApellidoMaternoPer() + "', '"
+				+ person.getNombrePer() + "', '"+ person.getCallePer() + "', '"+ person.getNumeroPer() +"', '" + person.getOrientacionPer()
+				+ "', '"+ person.getEntreCallesPer() + "', '"+ person.getGeneroPer() + "', ' "+ person.getEstadoCivilPer() + "', '" 
+				+ person.getMailPer() + "', '"+ person.getTelefono() + "', '"+ person.getFechaNacimientoPer() + "', '"
+				+ colonia + "', '"+ employee.getFechaInicioTrabajador() + "', '"+ employee.getFechaFinTrabajador() + "', '"
+				+ employee.getPuestoTrabajador() + "', '"+ employee.getSueldoTrabajador() + "', '"+ employee.getNumeroSSTrabajador()+ "')";
+		try {
+			statement.executeUpdate(sql);
+			
+			sql = "select max(cve_tra) from contratotra";
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next())
+				claveTra = rs.getInt("cve_tra");
+			
+			sql = "insert into horario values(null, curdate(), '"+ claveTra + "'";
+			statement.executeUpdate(sql);
+			sql = "select max(folio_hor) from horario";
+			rs = statement.executeQuery(sql);
+			if(rs.next())
+				folio_hor = rs.getInt("folio_hor");
+			
+			for (DiaHora diaHora : horario) {
+				sql = "insert into diahora values(null, '"+ diaHora.getDiaDiaHora() + "', '"+ diaHora.getHoraEntDiaHora() + "', '"
+						+ diaHora.getHoraSalidaDiaHora() + "', '"+ diaHora.getTipoDiaHora() + "', '"+ folio_hor + "')";
+				statement.executeUpdate(sql);
+			}
+			
+			conexion.commit();
+		} catch (SQLException e) {
+			conexion.rollback();
+			System.out.println(e.toString());
+		}
+	}
+
 	public StringBuilder getArquitecto(int clave) {
 		String sql = "select ap_per, am_per, nom_per from contratotra c join persona p "
 				+ "on c.cve_per = p.cve_per "
@@ -53,7 +80,7 @@ public class TablaContratoTrabajador {
 			return null;
 		}
 	}
-	
+
 	public List<ContratoTrabajador> getDetallesTrabajadorPuesto(int clave, String actividad) {
 		String sql = "select t.cve_traact, ap_per, am_per, nom_per, puesto_tra from trabajadoractividad t join actrealizar act " + 
 				"	on t.num_actrea = act.num_actrea join actividad a " + 
@@ -77,20 +104,20 @@ public class TablaContratoTrabajador {
 			return null;
 		}
 	}
-	
+
 	public List<ContratoTrabajador> getFiltro() {
 		String filtro = "Arquitecto";
 		String sql = "select ap_per, am_per, nom_per, c.cve_cont from contratotra c join persona p"
 				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%";
-		
+
 		try {
 			ResultSet rs = statement.executeQuery(sql);
 			List<ContratoTrabajador> empleados = new ArrayList<>();
 			while(rs.next()) {
 				ContratoTrabajador empleado = new ContratoTrabajador();
-				
+
 				empleado.setClaveTrabajador(rs.getInt("cve_cont"));
-				
+
 				empleados.add(empleado);
 			}
 			return empleados;
@@ -99,7 +126,7 @@ public class TablaContratoTrabajador {
 		}
 		return null;
 	}
-	
+
 	public List<ContratoTrabajador> getPuestoTrabajador() {
 		String sql = "select puesto_tra from contratotra group by puesto_tra";
 		try {

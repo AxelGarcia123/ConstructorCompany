@@ -24,7 +24,7 @@ public class TablaPersona {
 		} 
 	}
 	
-//	public String guardar(Empleado empleado) {
+//	public String guardarNuevoEmpleado(Empleado empleado) {
 //		String sql = "insert into empleado values(null,'" + empleado.getPaterno() + "','" + empleado.getMaterno() + "','" + 
 //				empleado.getNombre() + "','" + empleado.getCargo() + "')";
 //		try {

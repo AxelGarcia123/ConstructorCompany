@@ -85,7 +85,7 @@ public class SearchZipCode extends JDialog {
 				buttonSeleccionar = new JButton("Seleccionar");
 				buttonSeleccionar.setActionCommand("OK");
 				buttonSeleccionar.setForeground(Color.WHITE);
-				buttonSeleccionar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+				buttonSeleccionar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 				buttonSeleccionar.setBackground(new Color(45, 0, 255));
 				buttonSeleccionar.setBounds(10, 266, 269, 29);
 				buttonSeleccionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -96,7 +96,7 @@ public class SearchZipCode extends JDialog {
 				buttonCancelar = new JButton("Cancelar");
 				buttonCancelar.setActionCommand("Cancel");
 				buttonCancelar.setForeground(Color.WHITE);
-				buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+				buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 				buttonCancelar.setBackground(new Color(45, 0, 255));
 				buttonCancelar.setBounds(10, 266, 269, 29);
 				buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

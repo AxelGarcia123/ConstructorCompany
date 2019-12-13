@@ -23,8 +23,6 @@ import javax.swing.JButton;
 
 public class NewClause extends JPanel {
 	private JTable table;
-	private JButton buttonSiguiente;
-	private JButton buttonCancelar;
 	private JButton buttonAgregarClausula;
 	private JButton buttonNuevaClausula;
 	private JTable table_1;
@@ -52,27 +50,6 @@ public class NewClause extends JPanel {
 		lblClausulasAgregadas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClausulasAgregadas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_3.add(lblClausulasAgregadas);
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_2.add(panel_5, BorderLayout.SOUTH);
-
-		buttonSiguiente = new JButton("Siguiente");
-		buttonSiguiente.setForeground(Color.WHITE);
-		buttonSiguiente.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		buttonSiguiente.setBackground(new Color(45, 0, 255));
-		buttonSiguiente.setBounds(10, 266, 269, 29);
-		buttonSiguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		panel_5.add(buttonSiguiente);
-
-		buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.setForeground(Color.WHITE);
-		buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		buttonCancelar.setBackground(new Color(45, 0, 255));
-		buttonCancelar.setBounds(10, 266, 269, 29);
-		buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel_5.add(buttonCancelar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel_2.add(scrollPane, BorderLayout.CENTER);
@@ -163,13 +140,5 @@ public class NewClause extends JPanel {
 
 	public JButton getBotonAgregarNuevaClausula() {
 		return buttonNuevaClausula;
-	}
-
-	public JButton getBotonSiguiente() {
-		return buttonSiguiente;
-	}
-
-	public JButton getBotonCancelar() {
-		return buttonCancelar;
 	}
 }

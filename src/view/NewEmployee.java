@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import rojeru_san.componentes.RSDateChooser;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,6 +68,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 	private RSDateChooser fechaNacimiento;
 	private JButton buttonCodigoPostal;
 	private JComboBox<String> editTipoHorario;
+	private JButton buttonRegresar;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
@@ -75,10 +78,11 @@ public class NewEmployee extends JPanel implements ActionListener{
 		panel.setBackground(Color.WHITE);
 		add(panel, BorderLayout.NORTH);
 
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
-		button.setContentAreaFilled(false);
-		panel.add(button);
+		buttonRegresar = new JButton("");
+		buttonRegresar.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
+		buttonRegresar.setContentAreaFilled(false);
+		buttonRegresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel.add(buttonRegresar);
 
 		JLabel lblNuevoEmpleado = new JLabel("                                                                     Nuevo empleado                                                                                ");
 		lblNuevoEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -719,6 +723,11 @@ public class NewEmployee extends JPanel implements ActionListener{
 
 		return employee;
 	}
+	
+	public java.sql.Time getTiempo(String tiempo) {
+		String[] horario = tiempo.split(":");
+		return new java.sql.Time(Integer.parseInt(horario[0]), Integer.parseInt(horario[1]), 00);
+	}
 
 	public DiaHora getTime(int i) {
 		DiaHora date = new DiaHora();
@@ -726,44 +735,83 @@ public class NewEmployee extends JPanel implements ActionListener{
 		switch(i) {
 		case 1:
 			date.setDiaDiaHora("Lunes");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaLunes.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaLunes.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaLunes.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaLunes.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		case 2:
 			date.setDiaDiaHora("Martes");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaMartes.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaMartes.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaMartes.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaMartes.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		case 3:
 			date.setDiaDiaHora("Miércoles");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaMiercoles.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaMiercoles.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaMiercoles.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaMiercoles.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		case 4:
 			date.setDiaDiaHora("Jueves");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaJueves.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaJueves.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaJueves.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaJueves.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		case 5:
 			date.setDiaDiaHora("Viernes");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaViernes.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaViernes.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaViernes.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaViernes.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		case 6:
 			date.setDiaDiaHora("Sábado");
-			date.setHoraEntDiaHora(java.sql.Time.valueOf(entradaSabado.getSelectedItem().toString()));
-			date.setHoraSalidaDiaHora(java.sql.Time.valueOf(salidaSabado.getSelectedItem().toString()));
+			date.setHoraEntDiaHora(getTiempo(entradaSabado.getSelectedItem().toString()));
+			date.setHoraSalidaDiaHora(getTiempo(salidaSabado.getSelectedItem().toString()));
 			date.setTipoDiaHora(editTipoHorario.getSelectedItem().toString());
 			break;
 		default:
 
 		}
 		return date;
+	}
+	
+	public boolean camposVacios() {
+		Date date, date1, date2;
+		date = fechaNacimiento.getDatoFecha();
+		date1 = fechaInicio.getDatoFecha();
+		date2 = fechaFin.getDatoFecha();
+		String fechaNac = "", fechaIni = "", fechaFin = "";
+		
+		if(date != null && date1 != null && date2 != null) {
+			fechaNac = "dato";
+			fechaIni = "dato";
+			fechaFin = "dato";
+		}
+		else {
+			
+		}
+		
+		return editPaterno.getText().isEmpty() || editMaterno.getText().isEmpty() || editNombre.getText().isEmpty() || editCalle.getText().isEmpty() ||
+				editNumCalle.getText().isEmpty() || editEntreCalles.getText().isEmpty() || editEstadoCivil.getText().isEmpty() || editEmail.getText().isEmpty() ||
+				editTelefono.getText().isEmpty() || fechaNac.isEmpty() || fechaIni.isEmpty() || fechaFin.isEmpty() || editSueldo.getText().isEmpty() || 
+				editNSS.getText().isEmpty();
+	}
+	
+	public void limpiarCampos() {
+		fechaNacimiento.setDatoFecha(null);
+		fechaInicio.setDatoFecha(null);
+		fechaFin.setDatoFecha(null);
+		editPaterno.setText(null);
+		editMaterno.setText(null); 
+		editNombre.setText(null);
+		editCalle.setText(null);
+		editNumCalle.setText(null); 
+		editEntreCalles.setText(null);
+		editEstadoCivil.setText(null);
+		editEmail.setText(null);
+		editTelefono.setText(null);
+		editSueldo.setText(null);
+		editNSS.setText(null);
 	}
 
 	public java.sql.Date getDateFormat(Date fechaNacimiento) {
@@ -828,5 +876,13 @@ public class NewEmployee extends JPanel implements ActionListener{
 
 	public JLabel getTextCiudad() {
 		return textCiudad;
+	}
+	
+	public JButton getButtonRegresar() {
+		return buttonRegresar;
+	}
+	
+	public JButton getButtonCancelar() {
+		return buttonCancelar;
 	}
 }

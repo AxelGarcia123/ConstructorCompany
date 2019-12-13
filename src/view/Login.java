@@ -699,17 +699,38 @@ public class Login extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					List<DiaHora> horario = new ArrayList<DiaHora>();
-					for(int i = 0; i < 6; i++) {
-						horario.add(nuevoEmpleado.getTime(i + 1));
+					if(!nuevoEmpleado.camposVacios()) {
+						List<DiaHora> horario = new ArrayList<DiaHora>();
+						for(int i = 0; i < 6; i++) {
+							horario.add(nuevoEmpleado.getTime(i + 1));
+						}
+						try {
+							tablaTrabajador.guardarNuevoEmpleado(nuevoEmpleado.getNewPerson(), nuevoEmpleado.getNewEmployee(), tablaColonia.getClaveColonia(codigo, colonia), horario);
+							JOptionPane.showMessageDialog(null, "Empleado registrado");
+						} catch (SQLException e1) {
+							System.out.println(e.toString() + " Del código Java");
+							e1.printStackTrace();
+						}
+						nuevoEmpleado.limpiarCampos();
 					}
-					try {
-						tablaTrabajador.guardarNuevoEmpleado(nuevoEmpleado.getNewPerson(), nuevoEmpleado.getNewEmployee(), tablaColonia.getClaveColonia(codigo, colonia), horario);
-						JOptionPane.showMessageDialog(null, "Empleado registrado");
-					} catch (SQLException e1) {
-						System.out.println(e.toString() + " Del código Java");
-						e1.printStackTrace();
-					}
+					else
+						JOptionPane.showMessageDialog(null, "¡Hay campos que no pueden quedar vacios!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
+			
+			nuevoEmpleado.getButtonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaEmpleado();
+				}
+			});
+			
+			nuevoEmpleado.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaEmpleado();
 				}
 			});
 			

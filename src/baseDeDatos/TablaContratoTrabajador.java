@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import modelo.ContratoTrabajador;
 import modelo.DiaHora;
 import modelo.Persona;
@@ -40,15 +42,17 @@ public class TablaContratoTrabajador {
 			
 			sql = "select max(cve_tra) from contratotra";
 			ResultSet rs = statement.executeQuery(sql);
-			if(rs.next())
-				claveTra = rs.getInt("cve_tra");
-			
-			sql = "insert into horario values(null, curdate(), '"+ claveTra + "'";
+			if(rs.next()) 
+				claveTra = rs.getInt("max(cve_tra)");
+			JOptionPane.showMessageDialog(null, claveTra);
+			System.out.println("Antes de insertar en horario");
+			sql = "insert into horario values(null, curdate(), '"+ claveTra + "')";
 			statement.executeUpdate(sql);
+			System.out.println("Después de poner horario");
 			sql = "select max(folio_hor) from horario";
 			rs = statement.executeQuery(sql);
 			if(rs.next())
-				folio_hor = rs.getInt("folio_hor");
+				folio_hor = rs.getInt("max(folio_hor)");
 			
 			for (DiaHora diaHora : horario) {
 				sql = "insert into diahora values(null, '"+ diaHora.getDiaDiaHora() + "', '"+ diaHora.getHoraEntDiaHora() + "', '"

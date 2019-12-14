@@ -66,6 +66,21 @@ public class TablaContratoTrabajador {
 			System.out.println(e.toString());
 		}
 	}
+	
+	public List<Integer> getClavesArquitectos() {
+		String sql = "select cve_tra from contratotra where puesto_tra like '%Arquitect%'";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Integer> claves = new ArrayList<Integer>();
+			while(rs.next()) {
+				claves.add(rs.getInt("cve_tra"));
+			}
+			return claves;
+		} catch (Exception e) {
+			System.out.println(e.toString() + " al obtener las claves de los trabajadores");
+			return null;
+		}
+	}
 
 	public StringBuilder getArquitecto(int clave) {
 		String sql = "select ap_per, am_per, nom_per from contratotra c join persona p "

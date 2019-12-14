@@ -32,9 +32,9 @@ public class Projects extends JPanel {
 	private List<JLabel> projectsNames;
 	private int counter = 0;
 	private int iterator = 0;
-	private JButton verProyecto;
+	private JButton buttonVerProyecto;
 	private JButton buttonRegresar;
-	private JButton buttonNuevoProyecto;
+	private JButton buttonNewProject;
 	
 	public Projects() {
 		setBackground(Color.WHITE);
@@ -67,11 +67,21 @@ public class Projects extends JPanel {
 		panel_2.setBackground(Color.WHITE);
 		add(panel_2, BorderLayout.SOUTH);
 		
-		verProyecto = new JButton("Ver proyecto");
-		panel_2.add(verProyecto);
+		buttonVerProyecto = new JButton("Ver proyecto");
+		buttonVerProyecto.setForeground(Color.WHITE);
+		buttonVerProyecto.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonVerProyecto.setBackground(new Color(45, 0, 255));
+		buttonVerProyecto.setBounds(10, 266, 269, 29);
+		buttonVerProyecto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_2.add(buttonVerProyecto);
 		
-		buttonNuevoProyecto = new JButton("Nuevo proyecto");
-		panel_2.add(buttonNuevoProyecto);
+		buttonNewProject = new JButton("Nuevo proyecto");
+		buttonNewProject.setForeground(Color.WHITE);
+		buttonNewProject.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonNewProject.setBackground(new Color(45, 0, 255));
+		buttonNewProject.setBounds(10, 266, 269, 29);
+		buttonNewProject.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_2.add(buttonNewProject);
 	}
 	
 	public void showProjectFolders(List<Contrato> contratos) {
@@ -122,7 +132,7 @@ public class Projects extends JPanel {
 	}
 	
 	public JButton getProyecto() {
-		return verProyecto;
+		return buttonVerProyecto;
 	}
 	
 	public List<JLabel> getTipos() {
@@ -130,6 +140,6 @@ public class Projects extends JPanel {
 	}
 	
 	public JButton getNuevoProyecto() {
-		return buttonNuevoProyecto;
+		return buttonNewProject;
 	}
 }

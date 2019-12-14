@@ -67,9 +67,19 @@ public class Contracts extends JPanel {
 		add(panel_2, BorderLayout.SOUTH);
 		
 		buttonVerContrato = new JButton("Ver contrato");
+		buttonVerContrato.setForeground(Color.WHITE);
+		buttonVerContrato.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonVerContrato.setBackground(new Color(45, 0, 255));
+		buttonVerContrato.setBounds(10, 266, 269, 29);
+		buttonVerContrato.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_2.add(buttonVerContrato);	
 		
 		buttonNuevoProyecto = new JButton("Nuevo proyecto");
+		buttonNuevoProyecto.setForeground(Color.WHITE);
+		buttonNuevoProyecto.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
+		buttonNuevoProyecto.setBackground(new Color(45, 0, 255));
+		buttonNuevoProyecto.setBounds(10, 266, 269, 29);
+		buttonNuevoProyecto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_2.add(buttonNuevoProyecto);
 	}
 	
@@ -145,5 +155,9 @@ public class Contracts extends JPanel {
 	
 	public JButton getBotonRegresar() {
 		return buttonRegresar;
+	}
+	
+	public JButton getButtonNuevoContrato() {
+		return buttonNuevoProyecto;
 	}
 }

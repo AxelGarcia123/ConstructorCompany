@@ -70,7 +70,6 @@ public class Login extends JFrame {
 	private int codigo = 0;
 	private Date fecha = null;
 	private int claveCli = 0;
-	private Projects projects;
 	private LateralMenu menu;
 	private Contracts contracts;
 	private ProjectDetails details;
@@ -78,13 +77,12 @@ public class Login extends JFrame {
 	private Authorization autorizacion;
 	private Trabajadores trabajadores;
 	private Clause clausula;
-	private NewContract nuevoContrato;
 	private NewClause nuevaClausula;
 	private AddNewClause addClause;
 	private NewEmployee nuevoEmpleado;
 	private EmployeeCategory categoriaEmpleados;
 	private SearchZipCode buscarCodigo;
-	private Contrato contrato;
+	private NuevoContrato nuevoContrato;
 	private TablaContrato tablaContrato;
 	private TablaCliente tablaCliente;
 	private TablaStatusContrato tablaStatus;
@@ -183,9 +181,50 @@ public class Login extends JFrame {
 	}
 
 	/*LISTADO DE TODOS LOS PROYECTOS*/
-	public void listOfProjects() {
+//	public void listOfProjects() {
+//		contentPane.removeAll();
+//		projects = null;
+//		menu = null;
+//		contracts = null;
+//		details = null;
+//		activities = null;
+//		trabajadores = null;
+//		autorizacion = null;
+//		clausula = null;
+//		nuevoContrato = null;
+//		nuevaClausula = null;
+//		addClause = null;
+//		nuevoEmpleado = null;
+//		categoriaEmpleados = null;
+//		nuevoContrato = null;
+//		menuLateral();
+//		repaint();
+//
+//		if(projects == null) {
+//			projects = new Projects();
+//			projects.showProjectFolders(tablaContrato.getContratos());
+//			projects.getProyecto().addActionListener(new ActionListener() {
+//
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					iterator = projects.getCounter();
+//					if(iterator != 0) {
+//						listOfContracts();
+//					}
+//					else
+//						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+//				}
+//			});
+//
+//			contentPane.add(projects, BorderLayout.CENTER);
+//			setVisible(true);
+//		}
+//	}
+	
+	
+	/*NUEVO CONTRATO*/
+	public void nuevoContrato() {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -198,41 +237,33 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
-
-		if(projects == null) {
-			projects = new Projects();
-			projects.showProjectFolders(tablaContrato.getContratos());
-			projects.getProyecto().addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					iterator = projects.getCounter();
-					if(iterator != 0) {
-						listOfContracts();
-					}
-					else
-						JOptionPane.showMessageDialog(null, "Elige una carpeta");
-				}
-			});
+		
+		if(nuevoContrato == null) {
+			nuevoContrato = new NuevoContrato();
 			
-			projects.getNuevoProyecto().addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					nuevoContrato();
-				}
-			});
-
-			contentPane.add(projects, BorderLayout.CENTER);
+			nuevoContrato.llenarTipoContrato(tablaContrato.getContratos());
+			AutoCompletion.enable(nuevoContrato.getCampoContrato());
+			
+			nuevoContrato.llenarCliente(tablaPersona.getFiltroCliente());
+			AutoCompletion.enable(nuevoContrato.getCampoCliente());
+			
+			nuevoContrato.llenarArquitecto(tablaPersona.getArquitectosDisponibles(tablaTrabajador.getClavesArquitectos()));
+			AutoCompletion.enable(nuevoContrato.getCampoArquitecto());
+			
+			nuevoContrato.llenarActividades(tablaActividad.getActividades());
+			nuevoContrato.llenarPermisos(tablaPermiso.getTipoPermisos());
+			nuevoContrato.llenarClausulas(tablaClausula.getTodasClausulas());
+			
+			contentPane.add(nuevoContrato, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
 
 	public void listOfContracts() {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -245,6 +276,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -272,11 +304,11 @@ public class Login extends JFrame {
 				}
 			});
 			
-			contracts.getBotonRegresar().addActionListener(new ActionListener() {
+			contracts.getButtonNuevoContrato().addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					listOfProjects();
+					nuevoContrato();
 				}
 			});
 
@@ -287,7 +319,6 @@ public class Login extends JFrame {
 
 	public void detailsContract(String nombre, String paterno, String materno, Date fecha, int clave, String cliente) {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -300,6 +331,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 
@@ -362,7 +394,6 @@ public class Login extends JFrame {
 
 	public void mostrarActividades(int clave) {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -375,6 +406,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -398,7 +430,6 @@ public class Login extends JFrame {
 	
 	public void mostrarTrabajadores(int clave) {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -411,6 +442,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -446,7 +478,6 @@ public class Login extends JFrame {
 	
 	public void autorizacion(int clave) {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -459,6 +490,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -494,7 +526,6 @@ public class Login extends JFrame {
 	
 	public void clausulas(int clave) {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -507,6 +538,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -539,50 +571,8 @@ public class Login extends JFrame {
 		}
 	}
 	
-	public void nuevoContrato() {
-		contentPane.removeAll();
-		projects = null;
-		menu = null;
-		contracts = null;
-		details = null;
-		activities = null;
-		trabajadores = null;
-		autorizacion = null;
-		clausula = null;
-		nuevoContrato = null;
-		nuevaClausula = null;
-		addClause = null;
-		nuevoEmpleado = null;
-		categoriaEmpleados = null;
-		menuLateral();
-		repaint();
-		
-		if(nuevoContrato == null) {
-			nuevoContrato = new NewContract();
-			nuevoContrato.llenarTipoContrato(tablaContrato.getContratos());
-			nuevoContrato.llenarCliente(tablaPersona.getFiltroCliente());
-			nuevoContrato.llenarArquitecto(tablaPersona.getFiltroArquitecto());
-			AutoCompletion.enable(nuevoContrato.getCampoCliente());
-			AutoCompletion.enable(nuevoContrato.getCampoArquitecto());
-			
-			nuevoContrato.getButtonSiguiente().addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					contrato = nuevoContrato.getNuevoContrato(nuevoContrato.getCampoCliente().getSelectedIndex() + 1, nuevoContrato.getCampoArquitecto().getSelectedIndex() + 1);
-					newClause();
-				}
-			});
-			
-			
-			contentPane.add(nuevoContrato, BorderLayout.CENTER);
-			setVisible(true);
-		}
-	}
-	
 	public void newClause() {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -595,6 +585,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -626,7 +617,6 @@ public class Login extends JFrame {
 	
 	public void categoriaEmpleado() {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -639,6 +629,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		
@@ -662,7 +653,6 @@ public class Login extends JFrame {
 	
 	public void nuevoEmpleado() {
 		contentPane.removeAll();
-		projects = null;
 		menu = null;
 		contracts = null;
 		details = null;
@@ -675,6 +665,7 @@ public class Login extends JFrame {
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
+		nuevoContrato = null;
 		menuLateral();
 		repaint();
 		

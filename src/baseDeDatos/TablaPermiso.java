@@ -57,4 +57,24 @@ public class TablaPermiso {
 			return null;
 		}
 	}
+	
+	public List<Permiso> getTipoPermisos() {
+		String sql = "select tipo_perm, cve_perm from permiso group by cve_perm";
+		
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Permiso> permisos = new ArrayList<Permiso>();
+			while(rs.next()) {
+				Permiso permiso = new Permiso();
+				permiso.setClavePermiso(rs.getInt("cve_perm"));
+				permiso.setTipoPermiso(rs.getString("tipo_perm"));
+				
+				permisos.add(permiso);
+			}
+			return permisos;
+		} catch (Exception e) {
+			System.out.println(e.toString() + " es de la tabla permiso");
+			return null;
+		}
+	}
 }

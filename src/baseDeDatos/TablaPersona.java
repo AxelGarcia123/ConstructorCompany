@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.ContratoTrabajador;
 import modelo.Persona;
 import modelo.TrabajadorActividad;
 
@@ -61,29 +62,27 @@ public class TablaPersona {
 		}
 	}
 	
-	public List<Persona> getFiltroArquitecto() {
-		String filtro = "Arquitecto";
-		String sql = "select p.cve_per, ap_per, am_per, nom_per, c.cve_tra from contratotra c join persona p"
-				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%'";
-		
-		try {
-			ResultSet rs = statement.executeQuery(sql);
-			List<Persona> people = new ArrayList<>();
-			while(rs.next()) {
-				Persona person = new Persona();
-				
-				person.setClavePer(rs.getInt("cve_tra"));
-				person.setApellidoPaternoPer(rs.getString("ap_per"));
-				person.setApellidoMaternoPer(rs.getString("am_per"));
-				person.setNombrePer(rs.getString("nom_per"));
-				
-				people.add(person);
+	public List<Persona> getArquitectosDisponibles(List<Integer> claves) {
+		List<Persona> arquitectos = new ArrayList<Persona>();
+		for (Integer integer : claves) {
+			String sql = "call sp_cantproyectosarquitecto('"+ integer + "')";
+			
+			try {
+				ResultSet rs = statement.executeQuery(sql);
+				if(rs.next()) {
+					Persona person = new Persona();
+					person.setClavePer(rs.getInt("cve_tra"));
+					person.setApellidoPaternoPer(rs.getString("ap_per"));
+					person.setApellidoMaternoPer(rs.getString("am_per"));
+					person.setNombrePer(rs.getString("nom_per"));
+					
+					arquitectos.add(person);
+				}
+			} catch (Exception e) {
+				System.out.println(e.toString() + " en arquitectos disponibles");
 			}
-			return people;
-		}catch (Exception e) {
-			System.out.println(e.toString());
 		}
-		return null;
+		return arquitectos;
 	}
 	
 	public List<Persona> getFiltroCliente() {

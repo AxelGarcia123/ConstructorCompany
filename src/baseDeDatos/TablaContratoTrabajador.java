@@ -44,11 +44,8 @@ public class TablaContratoTrabajador {
 			ResultSet rs = statement.executeQuery(sql);
 			if(rs.next()) 
 				claveTra = rs.getInt("max(cve_tra)");
-			JOptionPane.showMessageDialog(null, claveTra);
-			System.out.println("Antes de insertar en horario");
 			sql = "insert into horario values(null, curdate(), '"+ claveTra + "')";
 			statement.executeUpdate(sql);
-			System.out.println("Después de poner horario");
 			sql = "select max(folio_hor) from horario";
 			rs = statement.executeQuery(sql);
 			if(rs.next())
@@ -59,8 +56,8 @@ public class TablaContratoTrabajador {
 						+ diaHora.getHoraSalidaDiaHora() + "', '"+ diaHora.getTipoDiaHora() + "', '"+ folio_hor + "')";
 				statement.executeUpdate(sql);
 			}
-			
 			conexion.commit();
+			JOptionPane.showMessageDialog(null, "Empleado registrado");
 		} catch (SQLException e) {
 			conexion.rollback();
 			System.out.println(e.toString());

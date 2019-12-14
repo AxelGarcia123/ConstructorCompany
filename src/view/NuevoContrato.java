@@ -13,6 +13,7 @@ import modelo.Actividad;
 import modelo.ActividadRealizar;
 import modelo.Clausula;
 import modelo.Contrato;
+import modelo.ContratoClausula;
 import modelo.Permiso;
 import modelo.PermisoContrato;
 import modelo.Persona;
@@ -58,7 +59,6 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	private JButton buttonAgregarNuevoPermiso;
 	private JButton buttonAgregarClausula;
 	private JButton buttonAgregarNuevaClausula;
-	private JTextField editStatusPermiso;
 	private JButton buttonAgregarActividad;
 	private JButton buttonAgregarNuevaActividad;
 	private JPanel panelBotonesActividad;
@@ -96,12 +96,18 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	private JList<String> listActividadesAgregadas;
 	private JButton buttonGuardar;
 	private JButton buttonCancelar;
+	private List<Actividad> actividadesAuxiliar;
+	private List<Permiso> permisosAuxiliar;
+	private List<Clausula> clausulasAuxiliar;
 	private List<PermisoContrato> permisosAgregados;
 	private List<String> permisosSeleccionados;
-	private List<String> clausulasAgregadas;
+	private List<ContratoClausula> clausulasAgregadas;
+	private List<String> clausulasSeleccionadas;
 	private List<String> nuevasClausulas;
 	private List<Actividad> actividadesAgregadas;
 	private List<ActividadRealizar> actividadesRealizar;
+	private List<Persona> cliente;
+	private List<Persona> arquitecto;
 
 	public NuevoContrato() {
 		setBackground(Color.WHITE);
@@ -302,17 +308,6 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		fechaFinPermiso = new RSDateChooser();
 		fechaFinPermiso.setFuente(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		panelDatosPer.add(fechaFinPermiso);
-
-		JLabel lblStatusDelPermiso = new JLabel("Status del permiso");
-		lblStatusDelPermiso.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatusDelPermiso.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 20));
-		panelDatosPer.add(lblStatusDelPermiso);
-
-		editStatusPermiso = new JTextField();
-		editStatusPermiso.addActionListener(this);
-		editStatusPermiso.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		panelDatosPer.add(editStatusPermiso);
-		editStatusPermiso.setColumns(10);
 
 		JScrollPane scrollPane_2 = new JScrollPane();
 		panelCentralPer.add(scrollPane_2, BorderLayout.EAST);
@@ -538,10 +533,11 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 		permisosAgregados = new ArrayList<PermisoContrato>();
 		permisosSeleccionados = new ArrayList<String>();
-		clausulasAgregadas = new ArrayList<String>();
+		clausulasAgregadas = new ArrayList<ContratoClausula>();
 		nuevasClausulas = new ArrayList<String>();
 		actividadesAgregadas = new ArrayList<Actividad>();
 		actividadesRealizar = new ArrayList<ActividadRealizar>();
+		clausulasSeleccionadas = new ArrayList<String>();
 	}
 
 	@Override
@@ -575,6 +571,10 @@ public class NuevoContrato extends JPanel implements ActionListener{
 			editArquitecto.requestFocus();
 		}
 		
+		if(e.getSource() == editArquitecto) {
+			
+		}
+		
 		if(e.getSource() == buttonAgregarPermiso) {
 			agregarPermiso();
 		}
@@ -588,11 +588,49 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		}
 	}
 	
+	public Contrato crearNuevoContrato() {
+		Contrato contract = new Contrato();
+		contract.setFechaInicioContrato(getDateFormat(fechaInicio.getDatoFecha()));
+		contract.setFechaFinContrato(getDateFormat(fechaFin.getDatoFecha()));
+		contract.setTipoContrato(editTipoContrato.getSelectedItem().toString());
+		contract.setMetrosCuadradosContrato(Integer.parseInt(editMetrosCuadrados.getText()));
+		contract.setHonorariosArquitectoContrato(Integer.parseInt(editHonorarios.getText()));
+		contract.setCostoObraContrato(Integer.parseInt(editCostoObra.getText()));
+		
+		for (Persona arquitect : arquitecto) {
+			StringBuilder nombreArq = new StringBuilder(arquitect.getApellidoPaternoPer() + " " + arquitect.getApellidoMaternoPer() + " "+ arquitect.getNombrePer());
+			if(editArquitecto.getSelectedItem().toString().equals(nombreArq.toString())) {
+				contract.setClaveTrabajador(arquitect.getClavePer());
+				break;
+			}
+		}
+		
+		for (Persona clientes : cliente) {
+			StringBuilder nombreCli = new StringBuilder(clientes.getApellidoPaternoPer() + " " + clientes.getApellidoMaternoPer() + " "+ clientes.getNombrePer());
+			if(editCliente.getSelectedItem().toString().equals(nombreCli.toString())) {
+				contract.setClaveCliente(clientes.getClavePer());
+				break;
+			}
+		}
+		
+		return contract;
+	}
+	
 	public void agregarPermiso() {
 		PermisoContrato permCont = new PermisoContrato();
 		permCont.setCostoPermContrato(Integer.parseInt(editCostoPermiso.getText()));
 		permCont.setFechaInicioPermContrato(getDateFormat(fechaInicioPermiso.getDatoFecha()));
 		permCont.setFechaFinPermContrato(getDateFormat(fechaFinPermiso.getDatoFecha()));
+		
+		for (Permiso permiso : permisosAuxiliar) {
+			if(listPermisosExistentes.getSelectedValue().toString().equals(permiso.getTipoPermiso())) {
+				permCont.setClavePermiso(permiso.getClavePermiso());
+				break;
+			}
+			else
+				System.out.println("No encuentra el permiso");
+		}
+		
 		permisosSeleccionados.add(listPermisosExistentes.getSelectedValue().toString());
 		llenarPermisosAgregados(permisosSeleccionados);
 		
@@ -600,8 +638,18 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	}
 	
 	public void agregarClausula() {
-		clausulasAgregadas.add(listClausulasExistentes.getSelectedValue().toString());
-		llenarClausulasAgregadas(clausulasAgregadas);
+		ContratoClausula cla = new ContratoClausula();
+		
+		for (Clausula clausula : clausulasAuxiliar) {
+			if(listClausulasExistentes.getSelectedValue().toString().equals(clausula.getDescripcionClausula().substring(0, 80))) {
+				cla.setClaveClausula(clausula.getClaveClausula());
+				break;
+			}
+		}
+		
+		clausulasSeleccionadas.add(listClausulasExistentes.getSelectedValue().toString());
+		clausulasAgregadas.add(cla);
+		llenarClausulasAgregadas(clausulasSeleccionadas);
 	}
 	
 	public void agregarActividad() {
@@ -611,6 +659,13 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		act.setName(listActividadesExistentes.getSelectedValue().toString());
 		actividadesAgregadas.add(act);
 		
+		for (Actividad actividad : actividadesAuxiliar) {
+			if(listActividadesExistentes.getSelectedValue().toString().equals(actividad.getName())) {
+				actrea.setActivityKey(actividad.getKey());
+				break;
+			}
+		}
+		
 		actrea.setCantidad(Integer.parseInt(editCantidadRealizar.getText()));
 		actividadesRealizar.add(actrea);
 		
@@ -619,6 +674,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	/*AGREGANDO DATOS AL JLIST DE ACTIVIDADES*/
 	public void llenarActividades(List<Actividad> actividades) {
+		actividadesAuxiliar = actividades;
 		listActividadesExistentes.setModel(modelListAct(actividades));
 	}
 
@@ -635,6 +691,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	/*AGREGANDO DATOS AL JLIST DE PERMISOS*/
 	public void llenarPermisos(List<Permiso> permisos) {
+		permisosAuxiliar = permisos;
 		listPermisosExistentes.setModel(modelListPerm(permisos));
 	}
 
@@ -650,6 +707,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	/*AGREGANDO DATOS AL JLIST DE CLAUSULAS*/
 	public void llenarClausulas(List<Clausula> clausulas) {
+		clausulasAuxiliar = clausulas;
 		listClausulasExistentes.setModel(modelListCla(clausulas));
 	}
 
@@ -713,6 +771,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	}
 
 	public void llenarCliente(List<Persona> clientes) {
+		cliente = clientes;
 		for (Persona persona : clientes) {
 			StringBuilder names = new StringBuilder(persona.getApellidoPaternoPer() + " " + persona.getApellidoMaternoPer() + " "+ persona.getNombrePer());
 			editCliente.addItem(names.toString());
@@ -721,6 +780,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	}
 
 	public void llenarArquitecto(List<Persona> arquitectos) {
+		arquitecto = arquitectos;
 		for (Persona arquitecto : arquitectos) {
 			StringBuilder names = new StringBuilder(arquitecto.getApellidoPaternoPer() + " " + arquitecto.getApellidoMaternoPer() + " "+ arquitecto.getNombrePer());
 			editArquitecto.addItem(names.toString());
@@ -759,11 +819,34 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		return editTipoContrato;
 	}
 	
-	public List<PermisoContrato> getPermisoContrato() {
+	/*SON LOS PERMISOS PARA LA TABLA PEMISOCONTRATO (YA EXISTENTES)*/
+	public List<PermisoContrato> getPermisosAgregados() {
 		return permisosAgregados;
 	}
 	
 	public List<String> getPermisosSeleccionados() {
 		return permisosSeleccionados;
+	}
+	
+	/*SON LAS CLAUSULAS PARA LA TABLA CONTRATOCLAUSULA (YA EXISTENTES)*/
+	public List<ContratoClausula> getClausulasSeleccionadas() {
+		return clausulasAgregadas;
+	}
+	
+	/*SON LAS ACTIVIDADES PARA LA TABLA ACTREALIZAR (YA EXISTENTES)*/
+	public List<ActividadRealizar> getActividadesAgregadas() {
+		return actividadesRealizar;
+	}
+	
+	public JButton getButtonGuardar() {
+		return buttonGuardar;
+	}
+	
+	public JButton getButtonCancelar() {
+		return buttonCancelar;
+	}
+	
+	public JButton getButtonAgregarNuevaActividad() {
+		return buttonAgregarNuevaActividad;
 	}
 }

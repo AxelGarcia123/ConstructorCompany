@@ -99,6 +99,7 @@ public class Login extends JFrame {
 	private TablaColonia tablaColonia;
 	private TablaCiudad tablaCiudad;
 	private TablaDiaHora tablaDiaHora;
+	private NuevaActividadEmergente actividadEmergente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -161,9 +162,9 @@ public class Login extends JFrame {
 					listOfContracts();
 				}
 			});
-			
+
 			menu.getButtonEmployees().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					categoriaEmpleado();
@@ -181,47 +182,47 @@ public class Login extends JFrame {
 	}
 
 	/*LISTADO DE TODOS LOS PROYECTOS*/
-//	public void listOfProjects() {
-//		contentPane.removeAll();
-//		projects = null;
-//		menu = null;
-//		contracts = null;
-//		details = null;
-//		activities = null;
-//		trabajadores = null;
-//		autorizacion = null;
-//		clausula = null;
-//		nuevoContrato = null;
-//		nuevaClausula = null;
-//		addClause = null;
-//		nuevoEmpleado = null;
-//		categoriaEmpleados = null;
-//		nuevoContrato = null;
-//		menuLateral();
-//		repaint();
-//
-//		if(projects == null) {
-//			projects = new Projects();
-//			projects.showProjectFolders(tablaContrato.getContratos());
-//			projects.getProyecto().addActionListener(new ActionListener() {
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					iterator = projects.getCounter();
-//					if(iterator != 0) {
-//						listOfContracts();
-//					}
-//					else
-//						JOptionPane.showMessageDialog(null, "Elige una carpeta");
-//				}
-//			});
-//
-//			contentPane.add(projects, BorderLayout.CENTER);
-//			setVisible(true);
-//		}
-//	}
-	
-	
+	//	public void listOfProjects() {
+	//		contentPane.removeAll();
+	//		projects = null;
+	//		menu = null;
+	//		contracts = null;
+	//		details = null;
+	//		activities = null;
+	//		trabajadores = null;
+	//		autorizacion = null;
+	//		clausula = null;
+	//		nuevoContrato = null;
+	//		nuevaClausula = null;
+	//		addClause = null;
+	//		nuevoEmpleado = null;
+	//		categoriaEmpleados = null;
+	//		nuevoContrato = null;
+	//		menuLateral();
+	//		repaint();
+	//
+	//		if(projects == null) {
+	//			projects = new Projects();
+	//			projects.showProjectFolders(tablaContrato.getContratos());
+	//			projects.getProyecto().addActionListener(new ActionListener() {
+	//
+	//				@Override
+	//				public void actionPerformed(ActionEvent e) {
+	//					iterator = projects.getCounter();
+	//					if(iterator != 0) {
+	//						listOfContracts();
+	//					}
+	//					else
+	//						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+	//				}
+	//			});
+	//
+	//			contentPane.add(projects, BorderLayout.CENTER);
+	//			setVisible(true);
+	//		}
+	//	}
+
+
 	/*NUEVO CONTRATO*/
 	public void nuevoContrato() {
 		contentPane.removeAll();
@@ -232,31 +233,64 @@ public class Login extends JFrame {
 		trabajadores = null;
 		autorizacion = null;
 		clausula = null;
-		nuevoContrato = null;
 		nuevaClausula = null;
 		addClause = null;
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+
 		menuLateral();
 		repaint();
-		
+
 		if(nuevoContrato == null) {
 			nuevoContrato = new NuevoContrato();
-			
+
 			nuevoContrato.llenarTipoContrato(tablaContrato.getContratos());
 			AutoCompletion.enable(nuevoContrato.getCampoContrato());
-			
+
 			nuevoContrato.llenarCliente(tablaPersona.getFiltroCliente());
 			AutoCompletion.enable(nuevoContrato.getCampoCliente());
-			
+
 			nuevoContrato.llenarArquitecto(tablaPersona.getArquitectosDisponibles(tablaTrabajador.getClavesArquitectos()));
 			AutoCompletion.enable(nuevoContrato.getCampoArquitecto());
-			
+
 			nuevoContrato.llenarActividades(tablaActividad.getActividades());
 			nuevoContrato.llenarPermisos(tablaPermiso.getTipoPermisos());
 			nuevoContrato.llenarClausulas(tablaClausula.getTodasClausulas());
-			
+
+			nuevoContrato.getButtonAgregarNuevaActividad().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showActivity();
+				}
+			});
+
+			nuevoContrato.getButtonGuardar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						tablaContrato.guardarNuevoContrato(nuevoContrato.getActividadesAgregadas(), 
+								nuevoContrato.getClausulasSeleccionadas(), nuevoContrato.getPermisosAgregados(), 
+								nuevoContrato.crearNuevoContrato());
+						JOptionPane.showMessageDialog(null, "Contrato creado exitósamente");
+						listOfContracts();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
+
+			nuevoContrato.getButtonCancelar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					listOfContracts();
+				}
+			});
+
 			contentPane.add(nuevoContrato, BorderLayout.CENTER);
 			setVisible(true);
 		}
@@ -279,7 +313,7 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(contracts == null) {
 			contracts = new Contracts();
 
@@ -303,9 +337,9 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
 				}
 			});
-			
+
 			contracts.getButtonNuevoContrato().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					nuevoContrato();
@@ -378,9 +412,9 @@ public class Login extends JFrame {
 					clausulas(contract.getClaveContrato());
 				}
 			});
-			
+
 			details.getBotonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					listOfContracts();
@@ -409,14 +443,14 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(activities == null) {
 			activities = new Activities();
 
 			activities.showActivities(tablaActividad.getDetailsActivities(clave), tablaTraAct.getDetailsTrabajadorAct(clave));
-			
+
 			activities.getBotonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
@@ -427,7 +461,7 @@ public class Login extends JFrame {
 			setVisible(true);
 		}
 	}
-	
+
 	public void mostrarTrabajadores(int clave) {
 		contentPane.removeAll();
 		menu = null;
@@ -445,13 +479,13 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(trabajadores == null) {
 			trabajadores = new Trabajadores();
-			
+
 			trabajadores.showTrabajadores(tablaActividad.getDetailsActivities(clave), tablaPersona.getDetallesTrabajadorAct(clave), tablaTraAct.getDetailsTrabajadorAct(clave));
 			trabajadores.getVerAvance().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int claveTrabajador = trabajadores.getClaveTrabajador();
@@ -462,20 +496,20 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
-			
+
 			trabajadores.getBotonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
 				}
 			});
-			
+
 			contentPane.add(trabajadores, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void autorizacion(int clave) {
 		contentPane.removeAll();
 		menu = null;
@@ -493,13 +527,13 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(autorizacion == null) {
 			autorizacion = new Authorization();
 			autorizacion.showAutorizaciones(tablaPermisoCont.getPermisoContrato(clave), tablaPermiso.getPermiso(clave));
-			
+
 			autorizacion.getVerStatus().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int clavePermisoCont = autorizacion.getClavePermisoCont();
@@ -510,20 +544,20 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
-			
+
 			autorizacion.getBotonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
 				}
 			});
-			
+
 			contentPane.add(autorizacion, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void clausulas(int clave) {
 		contentPane.removeAll();
 		menu = null;
@@ -541,13 +575,13 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(clausula == null) {
 			clausula = new Clause();
-			
+
 			clausula.showClausulas(tablaClausula.getClausulas(clave));
 			clausula.getDescripcion().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int bandera = clausula.getClavePermiso();
@@ -557,20 +591,20 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "¡No ha seleccionado ninguna fila!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
-			
+
 			clausula.getBotonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					detailsContract(nombre, paterno, materno, fecha, claveCli, cliente);
 				}
 			});
-			
+
 			contentPane.add(clausula, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void newClause() {
 		contentPane.removeAll();
 		menu = null;
@@ -588,33 +622,33 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(nuevaClausula == null) {
 			nuevaClausula = new NewClause();
 			nuevaClausula.showClausulas(tablaClausula.getTodasClausulas());
 			nuevaClausula.getBotonAgregarClausula().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					nuevaClausula.showNuevasClausulas(Integer.parseInt(nuevaClausula.getClaveClausula()));
 				}
 			});
-			
+
 			nuevaClausula.getBotonAgregarNuevaClausula().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					addClause = new AddNewClause();
-					
+
 					addClause.setVisible(true);
 				}
 			});
-			
+
 			contentPane.add(nuevaClausula, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void categoriaEmpleado() {
 		contentPane.removeAll();
 		menu = null;
@@ -632,25 +666,25 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(categoriaEmpleados == null) {
 			categoriaEmpleados = new EmployeeCategory();
-			
+
 			categoriaEmpleados.showTypesOfEmployees(tablaTrabajador.getPuestoTrabajador());
-			
+
 			categoriaEmpleados.getNuevoEmpleado().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					nuevoEmpleado();
 				}
 			});
-			
+
 			contentPane.add(categoriaEmpleados, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void nuevoEmpleado() {
 		contentPane.removeAll();
 		menu = null;
@@ -668,26 +702,26 @@ public class Login extends JFrame {
 		nuevoContrato = null;
 		menuLateral();
 		repaint();
-		
+
 		if(nuevoEmpleado == null) {
 			nuevoEmpleado = new NewEmployee();
-			
+
 			nuevoEmpleado.llenarPuestos(tablaTrabajador.getPuestoTrabajador());
 			AutoCompletion.enable(nuevoEmpleado.getPuesto());
-			
+
 			nuevoEmpleado.llenarDiaHora(tablaDiaHora.getTipoDiaHora());
 			AutoCompletion.enable(nuevoEmpleado.getDiaHora());
-			
+
 			nuevoEmpleado.getButtonCodigoPostal().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					buscarCodigo();
 				}
 			});
-			
+
 			nuevoEmpleado.getButtonGuardar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(!nuevoEmpleado.camposVacios()) {
@@ -708,35 +742,35 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "¡Hay campos que no pueden quedar vacios!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
-			
+
 			nuevoEmpleado.getButtonRegresar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					categoriaEmpleado();
 				}
 			});
-			
+
 			nuevoEmpleado.getButtonCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					categoriaEmpleado();
 				}
 			});
-			
+
 			contentPane.add(nuevoEmpleado, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
-	
+
 	public void buscarCodigo() {
 		if(buscarCodigo == null) {
 			buscarCodigo = new SearchZipCode();
 			buscarCodigo.cargarCodigosPostales(tablaCodigo.getCodigosPostales());
 			AutoCompletion.enable(buscarCodigo.getCodigosPostales());
 			buscarCodigo.getCodigosPostales().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					codigo = Integer.parseInt(buscarCodigo.getCodigosPostales().getSelectedItem().toString());
@@ -744,17 +778,17 @@ public class Login extends JFrame {
 					AutoCompletion.enable(buscarCodigo.getColonias());
 				}
 			});
-			
+
 			buscarCodigo.getColonias().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					colonia = buscarCodigo.getColonias().getSelectedItem().toString();
 				}
 			});
-			
+
 			buscarCodigo.getButtonSeleccionar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					nuevoEmpleado.getTextColonia().setText(colonia);
@@ -763,50 +797,104 @@ public class Login extends JFrame {
 					buscarCodigo = null;
 				}
 			});
-			
+
 			buscarCodigo.addWindowListener(new WindowListener() {
-				
+
 				@Override
 				public void windowOpened(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowIconified(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowDeiconified(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowDeactivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowClosing(WindowEvent e) {
 					buscarCodigo = null;					
 				}
-				
+
 				@Override
 				public void windowClosed(WindowEvent e) {
 					buscarCodigo = null;
 				}
-				
+
 				@Override
 				public void windowActivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 			buscarCodigo.setVisible(true);
+		}
+	}
+
+	public void showActivity() {
+		if(actividadEmergente == null) {
+			actividadEmergente = new NuevaActividadEmergente();
+
+			actividadEmergente.llenarUnidadMedida(tablaActividad.getUnidadesDeMedida());
+			AutoCompletion.enable(actividadEmergente.getUnidadMedida());
+
+			addWindowListener(new WindowListener() {
+
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowClosing(WindowEvent e) {
+					actividadEmergente = null;					
+				}
+
+				@Override
+				public void windowClosed(WindowEvent e) {
+					actividadEmergente = null;
+				}
+
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			actividadEmergente.setVisible(true);
 		}
 	}
 }

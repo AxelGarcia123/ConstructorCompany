@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import modelo.ActividadRealizar;
 import modelo.Contrato;
+import modelo.ContratoClausula;
+import modelo.PermisoContrato;
 
 public class TablaContrato {
 	private Connection conexion;
@@ -23,21 +28,49 @@ public class TablaContrato {
 			e.toString();
 		} 
 	}
-	
-	public String guardar(Contrato contrato) throws SQLException {
-		conexion.setAutoCommit(false);
+
+	public void guardarNuevoContrato(List<ActividadRealizar> actividades, List<ContratoClausula> clausulas, 
+			List<PermisoContrato> permisos, Contrato contrato) throws SQLException {
 		
-		String sql = "insert into contrato values(null, curdate(), '" + contrato.getFechaInicioContrato() + "','" + 
-				contrato.getFechaFinContrato() + "','" + contrato.getTipoContrato() + "','"+ contrato.getMetrosCuadradosContrato() +"')";
+		conexion.setAutoCommit(false);
+		int claveCont = 0;
+
+		String sql = "call sp_nuevocontrato('" + contrato.getFechaInicioContrato() + "','" + 
+				contrato.getFechaFinContrato() + "','" + contrato.getTipoContrato() + "','"+ contrato.getMetrosCuadradosContrato() +"',' "+
+				+ contrato.getHonorariosArquitectoContrato() + "', '"+ contrato.getCostoObraContrato() + "', '"+
+				+ contrato.getClaveCliente() + "', '"+ contrato.getClaveTrabajador() + "')";
 		try {
 			statement.executeUpdate(sql);
-			return "Producto registrado";
+
+			sql = "select max(cve_cont) from contrato";
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next())
+				claveCont = rs.getInt("max(cve_cont)");
+
+			for (ContratoClausula clausula : clausulas) {
+				sql = "call sp_clausulas('" + claveCont + "', '"+ clausula.getClaveClausula() + "')";
+				statement.executeUpdate(sql);
+			}
+
+			for (ActividadRealizar actividad : actividades) {
+				sql = "call sp_actividades('"+ claveCont + "', '"+ actividad.getActivityKey() + "', '"+ actividad.getCantidad() + "')";
+				statement.executeUpdate(sql);
+			}
+
+			for (PermisoContrato permisoContrato : permisos) {
+				sql = "call sp_permisos('"+ claveCont + "', '"+ permisoContrato.getClavePermiso() + "', '"+ permisoContrato.getCostoPermContrato() +
+						"', '"+ permisoContrato.getFechaInicioPermContrato() + "', '" + permisoContrato.getFechaFinPermContrato() + "')";
+				statement.executeUpdate(sql);
+			}
+
+			conexion.commit();
+
 		} catch (SQLException e) {
+			conexion.rollback();
 			System.out.println(e.toString());
-			return sql.toString();
 		}
 	}
-	
+
 	public List<Contrato> getContratos(){
 		String sql = "select * from tipoproyecto";
 		try {
@@ -54,7 +87,7 @@ public class TablaContrato {
 			return null;
 		}
 	}
-	
+
 	public List<Contrato> getFecha(){
 		String sql = "select * from contrato";
 		try {
@@ -71,7 +104,7 @@ public class TablaContrato {
 			return null;
 		}
 	}
-	
+
 	public Contrato getDetailsProject(String nombre, String paterno, String materno, Date fecha, int clave) {
 		String sql = "call sp_projectDetails('"+ nombre + "', '"+ paterno +"', '"+ materno + "', '"+ fecha + "', '"+ clave + "')";
 		try {

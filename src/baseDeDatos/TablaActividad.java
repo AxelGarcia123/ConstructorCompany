@@ -60,6 +60,22 @@ public class TablaActividad {
 		}
 	}
 	
+	public List<String> getUnidadesDeMedida() {
+		String sql = "select umedida_act from actividad group by umedida_act";
+		
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<String> medidas = new ArrayList<String>();
+			while(rs.next()) 
+				medidas.add(rs.getString("umedida_act"));
+			return medidas;
+		} catch (Exception e) {
+			System.out.println(e.toString() + ". Error al mostrar las medidas de actividades");
+			return null;
+			// TODO: handle exception
+		}
+	}
+	
 	public List<Actividad> getActividades() {
 		String sql = "select * from actividad";
 		try {

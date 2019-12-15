@@ -121,10 +121,10 @@ public class TablaContratoTrabajador {
 		}
 	}
 
-	public List<ContratoTrabajador> getFiltro() {
+	public List<ContratoTrabajador> getFiltros() {
 		String filtro = "Arquitecto";
 		String sql = "select ap_per, am_per, nom_per, c.cve_cont from contratotra c join persona p"
-				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"%";
+				+ " on c.cve_per = p.cve_per where puesto_tra like '%" + filtro +"'%";
 
 		try {
 			ResultSet rs = statement.executeQuery(sql);

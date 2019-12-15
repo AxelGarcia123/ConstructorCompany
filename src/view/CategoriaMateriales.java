@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -113,6 +114,7 @@ public class CategoriaMateriales extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						counter++;
+						System.out.println(counter);
 					}
 				});
 			}

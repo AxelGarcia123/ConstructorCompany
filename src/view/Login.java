@@ -112,7 +112,8 @@ public class Login extends JFrame {
 	private NuevoCliente nuevoCliente;
 	private Clientes clientes;
 	private CategoriaMateriales categoriaMaterial;
-
+	private MaterialView materials;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -225,6 +226,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -323,6 +325,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -389,6 +392,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -447,6 +451,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -525,6 +530,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -564,6 +570,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -615,6 +622,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -666,6 +674,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -716,6 +725,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -763,6 +773,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -802,7 +813,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
-		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -1200,6 +1211,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -1239,6 +1251,7 @@ public class Login extends JFrame {
 		nuevoCliente = null;
 		clientes = null;
 		categoriaMaterial = null;
+		materials = null;
 		menuLateral();
 		repaint();
 
@@ -1252,8 +1265,7 @@ public class Login extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					iterator = categoriaMaterial.getCounter();
 					String categoria = categoriaMaterial.getTipos().get(categoriaMaterial.getTipos().size() - iterator).getText();
-
-					if(iterator != 0 && cliente.length() != 0) {
+					if(iterator != 0 && categoria.length() != 0) {
 						tipoDeMateriales(categoria);
 					}
 					else
@@ -1267,6 +1279,33 @@ public class Login extends JFrame {
 	}
 
 	public void tipoDeMateriales(String categoria) {
-
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		menuLateral();
+		repaint();
+		
+		if(materials == null) {
+			materials = new MaterialView();
+			
+			materials.showMaterials(tablaMaterial.getNombreMateriales(categoria.trim()));
+			
+			contentPane.add(materials, BorderLayout.CENTER);
+			setVisible(true);
+		}
 	}
 }

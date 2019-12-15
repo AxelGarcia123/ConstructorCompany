@@ -35,6 +35,25 @@ public class TablaMaterial {
 //		}
 //	}
 	
+	public List<Material> getNombreMateriales(String nombre) {
+		String sql = "select nom_mat, cve_mat from material where tipo_mat = '"+ nombre +"'"; 
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Material> materiales = new ArrayList<Material>();
+			while(rs.next()) {
+				Material material = new Material();
+				material.setNombreMaterial(rs.getString("nom_mat"));
+				material.setClaveMaterial(rs.getInt("cve_mat"));
+				
+				materiales.add(material);
+			}
+			return materiales;
+		} catch (Exception e) {
+			System.out.println(e.toString() + ". En tipo de materiales");
+			return null;
+		}
+	}
+	
 	public List<Material> getTiposMateriales() {
 		String sql = "select tipo_mat from material group by tipo_mat";
 		try {

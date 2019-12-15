@@ -18,7 +18,6 @@ public class LateralMenu extends JPanel {
 	private JButton buttonProjects;
 	private JButton buttonEmployees;
 	private JButton buttonClients;
-	private JButton buttonScheduleAppointment;
 	private JButton buttonAppoiment;
 	private JButton buttonMaterials;
 	private JButton buttonBuyMoreMaterials;
@@ -81,15 +80,6 @@ public class LateralMenu extends JPanel {
 		buttonClients.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonClients.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.add(buttonClients);
-		
-		buttonScheduleAppointment = new JButton("Agendar cita");
-		buttonScheduleAppointment.setHorizontalAlignment(SwingConstants.LEFT);
-		buttonScheduleAppointment.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_post_add_black_18dp.png"));
-		buttonScheduleAppointment.setContentAreaFilled(false);
-		buttonScheduleAppointment.setBorderPainted(false);
-		buttonScheduleAppointment.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		buttonScheduleAppointment.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel.add(buttonScheduleAppointment);
 		
 		buttonAppoiment = new JButton("Citas");
 		buttonAppoiment.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_calendar_today_black_18dp.png"));
@@ -166,10 +156,6 @@ public class LateralMenu extends JPanel {
 	
 	public JButton getButtonClients() {
 		return buttonClients;
-	}
-	
-	public JButton getButtonScheduleAppointment() {
-		return buttonScheduleAppointment;
 	}
 	
 	public JButton getButtonAppoiment() {

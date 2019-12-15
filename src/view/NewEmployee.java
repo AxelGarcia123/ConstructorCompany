@@ -69,6 +69,10 @@ public class NewEmployee extends JPanel implements ActionListener{
 	private JButton buttonCodigoPostal;
 	private JComboBox<String> editTipoHorario;
 	private JButton buttonRegresar;
+	private JPanel panelDatosPersonales;
+	private JPanel panelDatosEmpleado;
+	private JPanel panelHorasTrabajo;
+	private JPanel panelAlmacenador;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
@@ -117,47 +121,47 @@ public class NewEmployee extends JPanel implements ActionListener{
 		scrollPane.setViewportView(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_2.add(panel_3, BorderLayout.SOUTH);
-		panel_3.setLayout(new GridLayout(3, 7, 0, 0));
+		panelHorasTrabajo = new JPanel();
+		panelHorasTrabajo.setBackground(Color.WHITE);
+		panel_2.add(panelHorasTrabajo, BorderLayout.SOUTH);
+		panelHorasTrabajo.setLayout(new GridLayout(3, 7, 0, 0));
 
 		JLabel label = new JLabel("");
-		panel_3.add(label);
+		panelHorasTrabajo.add(label);
 
 		JLabel lblLunes = new JLabel("Lunes");
 		lblLunes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		lblLunes.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(lblLunes);
+		panelHorasTrabajo.add(lblLunes);
 
 		JLabel lblMartes = new JLabel("Martes");
 		lblMartes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		lblMartes.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(lblMartes);
+		panelHorasTrabajo.add(lblMartes);
 
 		JLabel lblMircoles = new JLabel("Miércoles");
 		lblMircoles.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMircoles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblMircoles);
+		panelHorasTrabajo.add(lblMircoles);
 
 		JLabel lblJueves = new JLabel("Jueves");
 		lblJueves.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJueves.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblJueves);
+		panelHorasTrabajo.add(lblJueves);
 
 		JLabel lblViernes = new JLabel("Viernes");
 		lblViernes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViernes.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblViernes);
+		panelHorasTrabajo.add(lblViernes);
 
 		JLabel lblSbado = new JLabel("Sábado");
 		lblSbado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSbado.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblSbado);
+		panelHorasTrabajo.add(lblSbado);
 
 		JLabel lblHoraDeEntrada = new JLabel("Hora de entrada:");
 		lblHoraDeEntrada.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblHoraDeEntrada);
+		panelHorasTrabajo.add(lblHoraDeEntrada);
 
 		entradaLunes = new JComboBox<String>();
 		entradaLunes.setBackground(Color.WHITE);
@@ -165,7 +169,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaLunes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaLunes);
+		panelHorasTrabajo.add(entradaLunes);
 
 		entradaMartes = new JComboBox<String>();
 		entradaMartes.setBackground(Color.WHITE);
@@ -173,7 +177,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaMartes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaMartes);
+		panelHorasTrabajo.add(entradaMartes);
 
 		entradaMiercoles = new JComboBox<String>();
 		entradaMiercoles.setBackground(Color.WHITE);
@@ -181,7 +185,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaMiercoles.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaMiercoles);
+		panelHorasTrabajo.add(entradaMiercoles);
 
 		entradaJueves = new JComboBox<String>();
 		entradaJueves.setBackground(Color.WHITE);
@@ -189,7 +193,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaJueves.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaJueves);
+		panelHorasTrabajo.add(entradaJueves);
 
 		entradaViernes = new JComboBox<String>();
 		entradaViernes.setBackground(Color.WHITE);
@@ -197,7 +201,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaViernes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaViernes);
+		panelHorasTrabajo.add(entradaViernes);
 
 		entradaSabado = new JComboBox<String>();
 		entradaSabado.setBackground(Color.WHITE);
@@ -205,12 +209,12 @@ public class NewEmployee extends JPanel implements ActionListener{
 		entradaSabado.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(entradaSabado);
+		panelHorasTrabajo.add(entradaSabado);
 
 		JLabel lblHoraDeSalida = new JLabel("Hora de salida:");
 		lblHoraDeSalida.setBackground(Color.WHITE);
 		lblHoraDeSalida.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		panel_3.add(lblHoraDeSalida);
+		panelHorasTrabajo.add(lblHoraDeSalida);
 
 		salidaLunes = new JComboBox<String>();
 		salidaLunes.setBackground(Color.WHITE);
@@ -218,7 +222,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaLunes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaLunes);
+		panelHorasTrabajo.add(salidaLunes);
 
 		salidaMartes = new JComboBox<String>();
 		salidaMartes.setBackground(Color.WHITE);
@@ -226,7 +230,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaMartes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaMartes);
+		panelHorasTrabajo.add(salidaMartes);
 
 		salidaMiercoles = new JComboBox<String>();
 		salidaMiercoles.setBackground(Color.WHITE);
@@ -234,7 +238,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaMiercoles.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaMiercoles);
+		panelHorasTrabajo.add(salidaMiercoles);
 
 		salidaJueves = new JComboBox<String>();
 		salidaJueves.setBackground(Color.WHITE);
@@ -242,7 +246,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaJueves.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaJueves);
+		panelHorasTrabajo.add(salidaJueves);
 
 		salidaViernes = new JComboBox<String>();
 		salidaViernes.setBackground(Color.WHITE);
@@ -250,7 +254,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaViernes.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaViernes);
+		panelHorasTrabajo.add(salidaViernes);
 
 		salidaSabado = new JComboBox<String>();
 		salidaSabado.setBackground(Color.WHITE);
@@ -258,278 +262,278 @@ public class NewEmployee extends JPanel implements ActionListener{
 		salidaSabado.setModel(new DefaultComboBoxModel<String>(new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", 
 				"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", 
 				"15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"}));
-		panel_3.add(salidaSabado);
+		panelHorasTrabajo.add(salidaSabado);
 
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.WHITE);
-		panel_2.add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new GridLayout(2, 1, 0, 0));
+		panelAlmacenador = new JPanel();
+		panelAlmacenador.setBackground(Color.WHITE);
+		panel_2.add(panelAlmacenador, BorderLayout.CENTER);
+		panelAlmacenador.setLayout(new GridLayout(2, 1, 0, 0));
 
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_4.add(panel_5);
-		panel_5.setLayout(new GridLayout(9, 4, 0, 0));
+		panelDatosPersonales = new JPanel();
+		panelDatosPersonales.setBackground(Color.WHITE);
+		panelAlmacenador.add(panelDatosPersonales);
+		panelDatosPersonales.setLayout(new GridLayout(9, 4, 0, 0));
 
 		JLabel label_1 = new JLabel("Apellido Paterno:");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_1);
+		panelDatosPersonales.add(label_1);
 
 		editPaterno = new JTextField();
 		editPaterno.addActionListener(this);
 		editPaterno.setHorizontalAlignment(SwingConstants.CENTER);
 		editPaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editPaterno.setColumns(10);
-		panel_5.add(editPaterno);
+		panelDatosPersonales.add(editPaterno);
 
 		JLabel label_2 = new JLabel("Apellido Materno:");
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_2);
+		panelDatosPersonales.add(label_2);
 
 		editMaterno = new JTextField();
 		editMaterno.addActionListener(this);
 		editMaterno.setHorizontalAlignment(SwingConstants.CENTER);
 		editMaterno.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editMaterno.setColumns(10);
-		panel_5.add(editMaterno);
+		panelDatosPersonales.add(editMaterno);
 
 		JLabel label_3 = new JLabel("Nombre:");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_3);
+		panelDatosPersonales.add(label_3);
 
 		editNombre = new JTextField();
 		editNombre.addActionListener(this);
 		editNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		editNombre.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editNombre.setColumns(10);
-		panel_5.add(editNombre);
+		panelDatosPersonales.add(editNombre);
 
 		JLabel label_4 = new JLabel("Calle:");
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
 		label_4.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_4);
+		panelDatosPersonales.add(label_4);
 
 		editCalle = new JTextField();
 		editCalle.addActionListener(this);
 		editCalle.setHorizontalAlignment(SwingConstants.CENTER);
 		editCalle.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editCalle.setColumns(10);
-		panel_5.add(editCalle);
+		panelDatosPersonales.add(editCalle);
 
 		JLabel label_5 = new JLabel("Número de calle");
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
 		label_5.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_5);
+		panelDatosPersonales.add(label_5);
 
 		editNumCalle = new JTextField();
 		editNumCalle.addActionListener(this);
 		editNumCalle.setHorizontalAlignment(SwingConstants.CENTER);
 		editNumCalle.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editNumCalle.setColumns(10);
-		panel_5.add(editNumCalle);
+		panelDatosPersonales.add(editNumCalle);
 
 		JLabel label_6 = new JLabel("Orientación:");
 		label_6.setHorizontalAlignment(SwingConstants.CENTER);
 		label_6.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_6);
+		panelDatosPersonales.add(label_6);
 
 		editOrientacion = new JComboBox<String>();
 		editOrientacion.setBackground(Color.WHITE);
 		editOrientacion.setModel(new DefaultComboBoxModel<String>(new String[] {"Norte", "Sur", "Este", "Oeste"}));
 		editOrientacion.addActionListener(this);
 		editOrientacion.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(editOrientacion);
+		panelDatosPersonales.add(editOrientacion);
 
 		JLabel label_7 = new JLabel("Entre calles:");
 		label_7.setHorizontalAlignment(SwingConstants.CENTER);
 		label_7.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_7);
+		panelDatosPersonales.add(label_7);
 
 		editEntreCalles = new JTextField();
 		editEntreCalles.addActionListener(this);
 		editEntreCalles.setHorizontalAlignment(SwingConstants.CENTER);
 		editEntreCalles.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEntreCalles.setColumns(10);
-		panel_5.add(editEntreCalles);
+		panelDatosPersonales.add(editEntreCalles);
 
 		JLabel label_8 = new JLabel("Género:");
 		label_8.setHorizontalAlignment(SwingConstants.CENTER);
 		label_8.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_8);
+		panelDatosPersonales.add(label_8);
 
 		editGenero = new JComboBox<String>();
 		editGenero.setBackground(Color.WHITE);
 		editGenero.setModel(new DefaultComboBoxModel<String>(new String[] {"Masculino", "Femenino"}));
 		editGenero.addActionListener(this);
 		editGenero.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(editGenero);
+		panelDatosPersonales.add(editGenero);
 
 		JLabel label_9 = new JLabel("Estado civil:");
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_9);
+		panelDatosPersonales.add(label_9);
 
 		editEstadoCivil = new JTextField();
 		editEstadoCivil.addActionListener(this);
 		editEstadoCivil.setHorizontalAlignment(SwingConstants.CENTER);
 		editEstadoCivil.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEstadoCivil.setColumns(10);
-		panel_5.add(editEstadoCivil);
+		panelDatosPersonales.add(editEstadoCivil);
 
 		JLabel label_10 = new JLabel("Email:");
 		label_10.setHorizontalAlignment(SwingConstants.CENTER);
 		label_10.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_10);
+		panelDatosPersonales.add(label_10);
 
 		editEmail = new JTextField();
 		editEmail.addActionListener(this);
 		editEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		editEmail.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editEmail.setColumns(10);
-		panel_5.add(editEmail);
+		panelDatosPersonales.add(editEmail);
 
 		JLabel label_11 = new JLabel("Teléfono:");
 		label_11.setHorizontalAlignment(SwingConstants.CENTER);
 		label_11.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_11);
+		panelDatosPersonales.add(label_11);
 
 		editTelefono = new JTextField();
 		editTelefono.addActionListener(this);
 		editTelefono.setHorizontalAlignment(SwingConstants.CENTER);
 		editTelefono.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editTelefono.setColumns(10);
-		panel_5.add(editTelefono);
+		panelDatosPersonales.add(editTelefono);
 
 		JLabel label_12 = new JLabel("Fecha de nacimiento:");
 		label_12.setHorizontalAlignment(SwingConstants.CENTER);
 		label_12.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_12);
+		panelDatosPersonales.add(label_12);
 
 		fechaNacimiento = new RSDateChooser();
 		fechaNacimiento.setFuente(new Font("Segoe UI Semibold", Font.BOLD, 17));
-		panel_5.add(fechaNacimiento);
+		panelDatosPersonales.add(fechaNacimiento);
 
 		JLabel label_13 = new JLabel("Código postal");
 		label_13.setHorizontalAlignment(SwingConstants.CENTER);
 		label_13.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_13);
+		panelDatosPersonales.add(label_13);
 
 		buttonCodigoPostal = new JButton("Buscar código postal");
 		buttonCodigoPostal.setForeground(Color.WHITE);
 		buttonCodigoPostal.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		buttonCodigoPostal.setBackground(new Color(45, 0, 255));
 		buttonCodigoPostal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel_5.add(buttonCodigoPostal);
+		panelDatosPersonales.add(buttonCodigoPostal);
 
 		JLabel label_14 = new JLabel("Colonia");
 		label_14.setHorizontalAlignment(SwingConstants.CENTER);
 		label_14.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_14);
+		panelDatosPersonales.add(label_14);
 
 		textColonia = new JLabel("");
 		textColonia.setHorizontalAlignment(SwingConstants.CENTER);
 		textColonia.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(textColonia);
+		panelDatosPersonales.add(textColonia);
 
 		JLabel label_16 = new JLabel("Ciudad:");
 		label_16.setHorizontalAlignment(SwingConstants.CENTER);
 		label_16.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(label_16);
+		panelDatosPersonales.add(label_16);
 
 		textCiudad = new JLabel("");
 		textCiudad.setHorizontalAlignment(SwingConstants.CENTER);
 		textCiudad.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_5.add(textCiudad);
+		panelDatosPersonales.add(textCiudad);
 
 		JLabel label_18 = new JLabel("");
-		panel_5.add(label_18);
+		panelDatosPersonales.add(label_18);
 
 		JLabel label_19 = new JLabel("");
-		panel_5.add(label_19);
+		panelDatosPersonales.add(label_19);
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.WHITE);
-		panel_5.add(separator);
+		panelDatosPersonales.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
-		panel_5.add(separator_1);
+		panelDatosPersonales.add(separator_1);
 
 		JSeparator separator_2 = new JSeparator();
-		panel_5.add(separator_2);
+		panelDatosPersonales.add(separator_2);
 
 		JSeparator separator_3 = new JSeparator();
-		panel_5.add(separator_3);
+		panelDatosPersonales.add(separator_3);
 
-		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(Color.WHITE);
-		panel_4.add(panel_6);
-		panel_6.setLayout(new GridLayout(0, 4, 0, 100));
+		panelDatosEmpleado = new JPanel();
+		panelDatosEmpleado.setBackground(Color.WHITE);
+		panelAlmacenador.add(panelDatosEmpleado);
+		panelDatosEmpleado.setLayout(new GridLayout(0, 4, 0, 100));
 
 		JLabel lblPrueba = new JLabel("Fecha de inicio:");
 		lblPrueba.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrueba.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblPrueba);
+		panelDatosEmpleado.add(lblPrueba);
 
 		fechaInicio = new RSDateChooser();
 		fechaInicio.setFuente(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(fechaInicio);
+		panelDatosEmpleado.add(fechaInicio);
 
 		JLabel lblFechaDeFinalizacin = new JLabel("Fecha de finalización");
 		lblFechaDeFinalizacin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFechaDeFinalizacin.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblFechaDeFinalizacin);
+		panelDatosEmpleado.add(lblFechaDeFinalizacin);
 
 		fechaFin = new RSDateChooser();
 		fechaFin.setFuente(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(fechaFin);
+		panelDatosEmpleado.add(fechaFin);
 
 		JLabel lblNewLabel = new JLabel("Puesto del trabajador:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblNewLabel);
+		panelDatosEmpleado.add(lblNewLabel);
 
 		editPuestos = new JComboBox<String>();
 		editPuestos.setBackground(Color.WHITE);
 		editPuestos.addActionListener(this);
 		editPuestos.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(editPuestos);
+		panelDatosEmpleado.add(editPuestos);
 
 		JLabel lblSueldo = new JLabel("Sueldo:");
 		lblSueldo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSueldo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblSueldo);
+		panelDatosEmpleado.add(lblSueldo);
 
 		editSueldo = new JTextField();
 		editSueldo.addActionListener(this);
 		editSueldo.setHorizontalAlignment(SwingConstants.CENTER);
 		editSueldo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(editSueldo);
+		panelDatosEmpleado.add(editSueldo);
 		editSueldo.setColumns(10);
 
 		JLabel lblNmeroDeSeguro = new JLabel("Número de seguro social");
 		lblNmeroDeSeguro.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNmeroDeSeguro.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblNmeroDeSeguro);
+		panelDatosEmpleado.add(lblNmeroDeSeguro);
 
 		editNSS = new JTextField();
 		editNSS.addActionListener(this);
 		editNSS.setHorizontalAlignment(SwingConstants.CENTER);
 		editNSS.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(editNSS);
+		panelDatosEmpleado.add(editNSS);
 		editNSS.setColumns(10);
 
 		JLabel lblTipoDeHorario = new JLabel("Tipo de horario:");
 		lblTipoDeHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipoDeHorario.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
-		panel_6.add(lblTipoDeHorario);
+		panelDatosEmpleado.add(lblTipoDeHorario);
 
 		editTipoHorario = new JComboBox<String>();
 		editTipoHorario.addActionListener(this);
 		editTipoHorario.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		editTipoHorario.setBackground(Color.WHITE);
-		panel_6.add(editTipoHorario);
+		panelDatosEmpleado.add(editTipoHorario);
 
 	}
 

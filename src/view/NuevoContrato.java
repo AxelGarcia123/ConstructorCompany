@@ -529,6 +529,8 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		panelCentral.add(lblCantidadARealizar);
 
 		editCantidadRealizar = new JTextField();
+		editCantidadRealizar.setHorizontalAlignment(SwingConstants.CENTER);
+		editCantidadRealizar.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 16));
 		editCantidadRealizar.addActionListener(this);
 		panelCentral.add(editCantidadRealizar);
 		editCantidadRealizar.setColumns(10);
@@ -782,6 +784,10 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	private DefaultListModel modelListClaNue(List<Clausula> clausulas){
 		DefaultListModel model = new DefaultListModel<>();
+		
+		for (String clausula : clausulasSeleccionadas) {
+			model.addElement(clausula);
+		}
 
 		for (Clausula clausula : clausulas) {
 			if(clausula.getDescripcionClausula().length() > 80) {
@@ -802,6 +808,11 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	private DefaultListModel modelListPerNue(List<Permiso> permisos){
 		DefaultListModel model = new DefaultListModel<>();
+		
+		for (String permiso : permisosSeleccionados) {
+			model.addElement(permiso);
+		}
+		
 		for (Permiso permiso : permisos) {
 			model.addElement(permiso.getTipoPermiso());
 		}
@@ -816,6 +827,11 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 	private DefaultListModel modelListActNue(List<Actividad> actividades){
 		DefaultListModel model = new DefaultListModel<>();
+		
+		for (Actividad actividad : actividadesAgregadas) {
+			model.addElement(actividad.getName());
+		}
+		
 		for (Actividad actividad : actividades) {
 			model.addElement(actividad.getName());
 		}
@@ -923,5 +939,13 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	
 	public JButton getButtonAgregarNuevaActividad() {
 		return buttonAgregarNuevaActividad;
+	}
+	
+	public JButton getButtonAgregarNuevaClausula() {
+		return buttonAgregarNuevaClausula;
+	}
+	
+	public JButton getButtonAgregarNuevoPermiso() {
+		return buttonAgregarNuevoPermiso;
 	}
 }

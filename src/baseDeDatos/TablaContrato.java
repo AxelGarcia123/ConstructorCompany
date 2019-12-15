@@ -9,9 +9,12 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import modelo.Actividad;
 import modelo.ActividadRealizar;
+import modelo.Clausula;
 import modelo.Contrato;
 import modelo.ContratoClausula;
+import modelo.Permiso;
 import modelo.PermisoContrato;
 
 public class TablaContrato {
@@ -30,10 +33,14 @@ public class TablaContrato {
 	}
 
 	public void guardarNuevoContrato(List<ActividadRealizar> actividades, List<ContratoClausula> clausulas, 
-			List<PermisoContrato> permisos, Contrato contrato) throws SQLException {
+			List<PermisoContrato> permisos, Contrato contrato, List<Actividad> nuevasActividades,
+			List<Clausula> nuevasClausulas, List<Permiso> nuevosPermisos, List<PermisoContrato> nuevoPermCont,
+			List<ActividadRealizar> nuevoActRea) throws SQLException {
 		
 		conexion.setAutoCommit(false);
 		int claveCont = 0;
+		int i = 0;
+		int j = 0;
 
 		String sql = "call sp_nuevocontrato('" + contrato.getFechaInicioContrato() + "','" + 
 				contrato.getFechaFinContrato() + "','" + contrato.getTipoContrato() + "','"+ contrato.getMetrosCuadradosContrato() +"',' "+
@@ -62,12 +69,72 @@ public class TablaContrato {
 						"', '"+ permisoContrato.getFechaInicioPermContrato() + "', '" + permisoContrato.getFechaFinPermContrato() + "')";
 				statement.executeUpdate(sql);
 			}
+			
+			if(!nuevasActividades.isEmpty()) {
+				if(!nuevosPermisos.isEmpty()) {
+					if(!nuevasClausulas.isEmpty()) {
+						i = 0;
+						j = 0;
+						for (Permiso permiso : nuevosPermisos) {
+							sql = "call sp_nuevopermiso('"+ claveCont + "', '"+ permiso.getTipoPermiso() + "', '"
+									+ permiso.getDescripcionPermiso() + "', '"+ nuevoPermCont.get(i).getCostoPermContrato()
+									+ "', '"+ nuevoPermCont.get(i).getFechaInicioPermContrato() + "', '"
+									+ nuevoPermCont.get(i).getFechaFinPermContrato() + "')";
+							
+							statement.executeUpdate(sql);
+							i++;
+						}
+						
+						for (Actividad actividad : nuevasActividades) {
+							sql = "call sp_nuevaactividad('"+ claveCont + "', '"+ actividad.getName() + "', '"+ actividad.getDescription() +
+									"', '"+ actividad.getUnitOfMeasure() + "', '"+ nuevoActRea.get(j).getCantidad() + "')";
+							statement.executeUpdate(sql);
+							j++;
+						}
+						
+						for (Clausula clausula : nuevasClausulas) {
+							sql = "call sp_nuevaclausula('"+ claveCont + "', '"+ clausula.getDescripcionClausula() + "')";
+							statement.executeUpdate(sql);
+						}
+					}
+					else {
+						i = 0;
+						j = 0;
+						for (Permiso permiso : nuevosPermisos) {
+							sql = "call sp_nuevopermiso('"+ claveCont + "', '"+ permiso.getTipoPermiso() + "', '"
+									+ permiso.getDescripcionPermiso() + "', '"+ nuevoPermCont.get(i).getCostoPermContrato()
+									+ "', '"+ nuevoPermCont.get(i).getFechaInicioPermContrato() + "', '"
+									+ nuevoPermCont.get(i).getFechaFinPermContrato() + "')";
+							
+							statement.executeUpdate(sql);
+							i++;
+						}
+						
+						for (Actividad actividad : nuevasActividades) {
+							sql = "call sp_nuevaactividad('"+ claveCont + "', '"+ actividad.getName() + "', '"+ actividad.getDescription() +
+									"', '"+ actividad.getUnitOfMeasure() + "', '"+ nuevoActRea.get(j).getCantidad() + "')";
+							statement.executeUpdate(sql);
+							j++;
+						}
+					}
+				}
+				else {
+					i = 0;
+					j = 0;
+					for (Actividad actividad : nuevasActividades) {
+						sql = "call sp_nuevaactividad('"+ claveCont + "', '"+ actividad.getName() + "', '"+ actividad.getDescription() +
+								"', '"+ actividad.getUnitOfMeasure() + "', '"+ nuevoActRea.get(j).getCantidad() + "')";
+						statement.executeUpdate(sql);
+						j++;
+					}
+				}
+			}
 
 			conexion.commit();
 
 		} catch (SQLException e) {
 			conexion.rollback();
-			System.out.println(e.toString());
+			System.out.println(e.toString() + ". Error al crear un contrato nuevo");
 		}
 	}
 

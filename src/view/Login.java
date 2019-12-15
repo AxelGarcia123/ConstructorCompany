@@ -43,8 +43,11 @@ import baseDeDatos.TablaPersona;
 import baseDeDatos.TablaStatusContrato;
 import baseDeDatos.TablaTrabajadorActividad;
 import modelo.Contrato;
+import modelo.ContratoClausula;
 import modelo.DiaHora;
+import modelo.PermisoContrato;
 import baseDeDatos.BaseDeDatos;
+import modelo.ActividadRealizar;
 import modelo.AutoCompletion;
 
 import javax.swing.JButton;
@@ -61,6 +64,8 @@ public class Login extends JFrame {
 
 	private BaseDeDatos baseDatos;
 	private JPanel contentPane;
+	private List<ActividadRealizar> addActRea;
+	private List<PermisoContrato> permCont;
 	private int iterator = 0;
 	private String cliente = "";
 	private String nombre = "";
@@ -100,6 +105,8 @@ public class Login extends JFrame {
 	private TablaCiudad tablaCiudad;
 	private TablaDiaHora tablaDiaHora;
 	private NuevaActividadEmergente actividadEmergente;
+	private NuevaClausulaEmergente clausulaEmergente;
+	private NuevoPermisoEmergente permisoEmergente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -148,6 +155,8 @@ public class Login extends JFrame {
 		tablaDiaHora = new TablaDiaHora(baseDatos.getConexion());
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
+		addActRea = new ArrayList<ActividadRealizar>();
+		permCont = new ArrayList<PermisoContrato>();
 	}
 
 	/*MENÚ LATERAL*/
@@ -238,9 +247,13 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
-
 		menuLateral();
 		repaint();
+		
+		if(!addActRea.isEmpty())
+			addActRea.clear();
+		if(!permCont.isEmpty())
+			permCont.clear();
 
 		if(nuevoContrato == null) {
 			nuevoContrato = new NuevoContrato();
@@ -265,6 +278,22 @@ public class Login extends JFrame {
 					showActivity();
 				}
 			});
+			
+			nuevoContrato.getButtonAgregarNuevaClausula().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showClause();
+				}
+			});
+			
+			nuevoContrato.getButtonAgregarNuevoPermiso().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showPermission();
+				}
+			});
 
 			nuevoContrato.getButtonGuardar().addActionListener(new ActionListener() {
 
@@ -273,7 +302,9 @@ public class Login extends JFrame {
 					try {
 						tablaContrato.guardarNuevoContrato(nuevoContrato.getActividadesAgregadas(), 
 								nuevoContrato.getClausulasSeleccionadas(), nuevoContrato.getPermisosAgregados(), 
-								nuevoContrato.crearNuevoContrato());
+								nuevoContrato.crearNuevoContrato(), nuevoContrato.getNuevasActividades(),
+								nuevoContrato.getNuevasClausulas(), nuevoContrato.getNuevosPermisos(),
+								permCont, addActRea);
 						JOptionPane.showMessageDialog(null, "Contrato creado exitósamente");
 						listOfContracts();
 					} catch (SQLException e1) {
@@ -866,6 +897,7 @@ public class Login extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					nuevoContrato.getNuevasActividades().add(actividadEmergente.nuevaActividad());
 					nuevoContrato.llenarActividadesNuevas();
+					addActRea.add(actividadEmergente.nuevaActividadRealizar());
 					actividadEmergente.dispose();
 					actividadEmergente= null;
 				}
@@ -924,6 +956,149 @@ public class Login extends JFrame {
 			});
 
 			actividadEmergente.setVisible(true);
+		}
+	}
+	
+	public void showClause() {
+		if(clausulaEmergente == null) {
+			clausulaEmergente = new NuevaClausulaEmergente();
+
+			clausulaEmergente.getButtonAgregar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoContrato.getNuevasClausulas().add(clausulaEmergente.getNuevaClausula());
+					nuevoContrato.llenarClausulasNuevas();
+					clausulaEmergente.dispose();
+					clausulaEmergente = null;
+				}
+			});
+			
+			clausulaEmergente.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					clausulaEmergente.dispose();
+					clausulaEmergente = null;
+				}
+			});
+
+			clausulaEmergente.addWindowListener(new WindowListener() {
+
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowClosing(WindowEvent e) {
+					clausulaEmergente = null;					
+				}
+
+				@Override
+				public void windowClosed(WindowEvent e) {
+					clausulaEmergente = null;
+				}
+
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			clausulaEmergente.setVisible(true);
+		}
+	}
+	
+	public void showPermission() {
+		if(permisoEmergente == null) {
+			permisoEmergente = new NuevoPermisoEmergente();
+
+			permisoEmergente.getButtonAgregar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoContrato.getNuevosPermisos().add(permisoEmergente.nuevoPermiso());
+					nuevoContrato.llenarPermisosNuevos();
+					permCont.add(permisoEmergente.nuevoPermisoContrato());
+					permisoEmergente.dispose();
+					permisoEmergente = null;
+				}
+			});
+			
+			permisoEmergente.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					permisoEmergente.dispose();
+					permisoEmergente = null;
+				}
+			});
+
+			permisoEmergente.addWindowListener(new WindowListener() {
+
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowClosing(WindowEvent e) {
+					permisoEmergente = null;					
+				}
+
+				@Override
+				public void windowClosed(WindowEvent e) {
+					permisoEmergente = null;
+				}
+
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			permisoEmergente.setVisible(true);
 		}
 	}
 }

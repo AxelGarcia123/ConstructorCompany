@@ -37,6 +37,7 @@ import baseDeDatos.TablaColonia;
 import baseDeDatos.TablaContrato;
 import baseDeDatos.TablaContratoTrabajador;
 import baseDeDatos.TablaDiaHora;
+import baseDeDatos.TablaMaterial;
 import baseDeDatos.TablaPermiso;
 import baseDeDatos.TablaPermisoContrato;
 import baseDeDatos.TablaPersona;
@@ -104,9 +105,13 @@ public class Login extends JFrame {
 	private TablaColonia tablaColonia;
 	private TablaCiudad tablaCiudad;
 	private TablaDiaHora tablaDiaHora;
+	private TablaMaterial tablaMaterial;
 	private NuevaActividadEmergente actividadEmergente;
 	private NuevaClausulaEmergente clausulaEmergente;
 	private NuevoPermisoEmergente permisoEmergente;
+	private NuevoCliente nuevoCliente;
+	private Clientes clientes;
+	private CategoriaMateriales categoriaMaterial;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -153,6 +158,7 @@ public class Login extends JFrame {
 		tablaColonia = new TablaColonia(baseDatos.getConexion());
 		tablaCiudad = new TablaCiudad(baseDatos.getConexion());
 		tablaDiaHora = new TablaDiaHora(baseDatos.getConexion());
+		tablaMaterial = new TablaMaterial(baseDatos.getConexion());
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
 		addActRea = new ArrayList<ActividadRealizar>();
@@ -180,57 +186,26 @@ public class Login extends JFrame {
 				}
 			});
 
+			menu.getButtonClients().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					cliente();
+				}
+			});
+			
+			menu.getButtonMaterials().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaMateriales();
+				}
+			});
+
 			contentPane.add(menu, BorderLayout.WEST);
 			setVisible(true);
 		}
 	}
-
-	/*CREACIÓN DE UN NUEVO USUARIO*/
-	public void nuevoUsuario() {
-
-	}
-
-	/*LISTADO DE TODOS LOS PROYECTOS*/
-	//	public void listOfProjects() {
-	//		contentPane.removeAll();
-	//		projects = null;
-	//		menu = null;
-	//		contracts = null;
-	//		details = null;
-	//		activities = null;
-	//		trabajadores = null;
-	//		autorizacion = null;
-	//		clausula = null;
-	//		nuevoContrato = null;
-	//		nuevaClausula = null;
-	//		addClause = null;
-	//		nuevoEmpleado = null;
-	//		categoriaEmpleados = null;
-	//		nuevoContrato = null;
-	//		menuLateral();
-	//		repaint();
-	//
-	//		if(projects == null) {
-	//			projects = new Projects();
-	//			projects.showProjectFolders(tablaContrato.getContratos());
-	//			projects.getProyecto().addActionListener(new ActionListener() {
-	//
-	//				@Override
-	//				public void actionPerformed(ActionEvent e) {
-	//					iterator = projects.getCounter();
-	//					if(iterator != 0) {
-	//						listOfContracts();
-	//					}
-	//					else
-	//						JOptionPane.showMessageDialog(null, "Elige una carpeta");
-	//				}
-	//			});
-	//
-	//			contentPane.add(projects, BorderLayout.CENTER);
-	//			setVisible(true);
-	//		}
-	//	}
-
 
 	/*NUEVO CONTRATO*/
 	public void nuevoContrato() {
@@ -247,9 +222,12 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
-		
+
 		if(!addActRea.isEmpty())
 			addActRea.clear();
 		if(!permCont.isEmpty())
@@ -278,17 +256,17 @@ public class Login extends JFrame {
 					showActivity();
 				}
 			});
-			
+
 			nuevoContrato.getButtonAgregarNuevaClausula().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					showClause();
 				}
 			});
-			
+
 			nuevoContrato.getButtonAgregarNuevoPermiso().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					showPermission();
@@ -327,6 +305,72 @@ public class Login extends JFrame {
 		}
 	}
 
+	public void nuevoCliente() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		menuLateral();
+		repaint();
+
+		if(nuevoCliente == null) {
+			nuevoCliente = new NuevoCliente();
+
+
+			nuevoCliente.getButtonCodigoPostal().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					buscarCodigo(1);
+				}
+			});
+
+			nuevoCliente.getButtonGuardar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(!nuevoCliente.camposVacios()) {
+						try {
+							tablaCliente.guardarNuevoCliente(nuevoCliente.getNewPerson(), tablaColonia.getClaveColonia(codigo, colonia));
+							JOptionPane.showMessageDialog(null, "El cliente ha sido registrado exitósamente");
+							cliente();
+
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					else
+						JOptionPane.showMessageDialog(null, "¡Hay campos que no pueden quedar vacios!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
+			
+			nuevoCliente.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					cliente();
+				}
+			});
+
+			contentPane.add(nuevoCliente, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+
 	public void listOfContracts() {
 		contentPane.removeAll();
 		menu = null;
@@ -342,6 +386,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -397,6 +444,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -472,6 +522,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -508,6 +561,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -556,6 +612,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -604,6 +663,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -651,6 +713,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -695,6 +760,9 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -731,6 +799,10 @@ public class Login extends JFrame {
 		nuevoEmpleado = null;
 		categoriaEmpleados = null;
 		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		categoriaMaterial = null;
 		menuLateral();
 		repaint();
 
@@ -747,7 +819,7 @@ public class Login extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					buscarCodigo();
+					buscarCodigo(0);
 				}
 			});
 
@@ -795,7 +867,7 @@ public class Login extends JFrame {
 		}
 	}
 
-	public void buscarCodigo() {
+	public void buscarCodigo(int bandera) {
 		if(buscarCodigo == null) {
 			buscarCodigo = new SearchZipCode();
 			buscarCodigo.cargarCodigosPostales(tablaCodigo.getCodigosPostales());
@@ -822,15 +894,23 @@ public class Login extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					nuevoEmpleado.getTextColonia().setText(colonia);
-					nuevoEmpleado.getTextCiudad().setText(String.valueOf(tablaCiudad.getCiudad(codigo).getNombreCiudad()));
-					buscarCodigo.dispose();
-					buscarCodigo = null;
+					if(bandera == 0) {
+						nuevoEmpleado.getTextColonia().setText(colonia);
+						nuevoEmpleado.getTextCiudad().setText(String.valueOf(tablaCiudad.getCiudad(codigo).getNombreCiudad()));
+						buscarCodigo.dispose();
+						buscarCodigo = null;
+					}
+					else {
+						nuevoCliente.getTextColonia().setText(colonia);
+						nuevoCliente.getTextCiudad().setText(String.valueOf(tablaCiudad.getCiudad(codigo).getNombreCiudad()));
+						buscarCodigo.dispose();
+						buscarCodigo = null;
+					}
 				}
 			});
-			
+
 			buscarCodigo.getButtoCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					buscarCodigo.dispose();
@@ -902,9 +982,9 @@ public class Login extends JFrame {
 					actividadEmergente= null;
 				}
 			});
-			
+
 			actividadEmergente.getButtonCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					actividadEmergente.dispose();
@@ -958,7 +1038,7 @@ public class Login extends JFrame {
 			actividadEmergente.setVisible(true);
 		}
 	}
-	
+
 	public void showClause() {
 		if(clausulaEmergente == null) {
 			clausulaEmergente = new NuevaClausulaEmergente();
@@ -973,9 +1053,9 @@ public class Login extends JFrame {
 					clausulaEmergente = null;
 				}
 			});
-			
+
 			clausulaEmergente.getButtonCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					clausulaEmergente.dispose();
@@ -1029,7 +1109,7 @@ public class Login extends JFrame {
 			clausulaEmergente.setVisible(true);
 		}
 	}
-	
+
 	public void showPermission() {
 		if(permisoEmergente == null) {
 			permisoEmergente = new NuevoPermisoEmergente();
@@ -1045,9 +1125,9 @@ public class Login extends JFrame {
 					permisoEmergente = null;
 				}
 			});
-			
+
 			permisoEmergente.getButtonCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					permisoEmergente.dispose();
@@ -1099,6 +1179,76 @@ public class Login extends JFrame {
 			});
 
 			permisoEmergente.setVisible(true);
+		}
+	}
+
+	public void cliente() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		menuLateral();
+		repaint();
+
+		if(clientes == null) {
+			clientes = new Clientes();
+
+			clientes.showClientes(tablaCliente.getClientesCli(), tablaCliente.getClientesPer());
+
+			clientes.getButtonNuevoCliente().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoCliente();
+				}
+			});
+
+			contentPane.add(clientes, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void categoriaMateriales() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevoContrato = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		menuLateral();
+		repaint();
+		
+		if(categoriaMaterial == null) {
+			categoriaMaterial = new CategoriaMateriales();
+			
+			categoriaMaterial.showTipoMaterial(tablaMaterial.getTiposMateriales());
+			
+			contentPane.add(categoriaMaterial, BorderLayout.CENTER);
+			setVisible(true);
 		}
 	}
 }

@@ -3,6 +3,10 @@ package baseDeDatos;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Material;
 
 public class TablaMaterial {
 	private Connection conexion;
@@ -30,4 +34,22 @@ public class TablaMaterial {
 //			return sql.toString();
 //		}
 //	}
+	
+	public List<Material> getTiposMateriales() {
+		String sql = "select tipo_mat from material group by tipo_mat";
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			List<Material> materiales = new ArrayList<Material>();
+			while(rs.next()) {
+				Material material = new Material();
+				material.setTipoMaterial(rs.getString("tipo_mat"));
+				
+				materiales.add(material);
+			}
+			return materiales;
+		} catch (Exception e) {
+			System.out.println(e.toString() + ". En tipo de materiales");
+			return null;
+		}
+	}
 }

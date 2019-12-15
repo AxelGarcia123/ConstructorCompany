@@ -73,29 +73,31 @@ public class NewEmployee extends JPanel implements ActionListener{
 	private JPanel panelDatosEmpleado;
 	private JPanel panelHorasTrabajo;
 	private JPanel panelAlmacenador;
+	private JPanel panelSur;
+	private JPanel panelTitulo;
 
 	public NewEmployee() {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		add(panel, BorderLayout.NORTH);
+		panelTitulo = new JPanel();
+		panelTitulo.setBackground(Color.WHITE);
+		add(panelTitulo, BorderLayout.NORTH);
 
 		buttonRegresar = new JButton("");
 		buttonRegresar.setIcon(new ImageIcon("C:\\Users\\User\\Documents\\POO\\ConstructorCompany\\Images\\baseline_keyboard_backspace_black_24dp.png"));
 		buttonRegresar.setContentAreaFilled(false);
 		buttonRegresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel.add(buttonRegresar);
+		panelTitulo.add(buttonRegresar);
 
 		JLabel lblNuevoEmpleado = new JLabel("                                                                     Nuevo empleado                                                                                ");
 		lblNuevoEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNuevoEmpleado.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		panel.add(lblNuevoEmpleado);
+		panelTitulo.add(lblNuevoEmpleado);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		add(panel_1, BorderLayout.SOUTH);
+		panelSur = new JPanel();
+		panelSur.setBackground(Color.WHITE);
+		add(panelSur, BorderLayout.SOUTH);
 
 		buttonGuardar = new JButton("Guardar");
 		buttonGuardar.setForeground(Color.WHITE);
@@ -103,7 +105,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		buttonGuardar.setBackground(new Color(45, 0, 255));
 		buttonGuardar.setBounds(10, 266, 269, 29);
 		buttonGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel_1.add(buttonGuardar);
+		panelSur.add(buttonGuardar);
 
 		buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setForeground(Color.WHITE);
@@ -111,7 +113,7 @@ public class NewEmployee extends JPanel implements ActionListener{
 		buttonCancelar.setBackground(new Color(45, 0, 255));
 		buttonCancelar.setBounds(10, 266, 269, 29);
 		buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panel_1.add(buttonCancelar);
+		panelSur.add(buttonCancelar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);

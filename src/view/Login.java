@@ -193,9 +193,9 @@ public class Login extends JFrame {
 					cliente();
 				}
 			});
-			
+
 			menu.getButtonMaterials().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					categoriaMateriales();
@@ -357,9 +357,9 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(null, "¡Hay campos que no pueden quedar vacios!", "¡ERROR!", JOptionPane.ERROR_MESSAGE);
 				}
 			});
-			
+
 			nuevoCliente.getButtonCancelar().addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					cliente();
@@ -1220,7 +1220,7 @@ public class Login extends JFrame {
 			setVisible(true);
 		}
 	}
-	
+
 	public void categoriaMateriales() {
 		contentPane.removeAll();
 		menu = null;
@@ -1241,14 +1241,32 @@ public class Login extends JFrame {
 		categoriaMaterial = null;
 		menuLateral();
 		repaint();
-		
+
 		if(categoriaMaterial == null) {
 			categoriaMaterial = new CategoriaMateriales();
-			
+
 			categoriaMaterial.showTipoMaterial(tablaMaterial.getTiposMateriales());
-			
+			categoriaMaterial.getVerCategoria().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					iterator = categoriaMaterial.getCounter();
+					String categoria = categoriaMaterial.getTipos().get(categoriaMaterial.getTipos().size() - iterator).getText();
+
+					if(iterator != 0 && cliente.length() != 0) {
+						tipoDeMateriales(categoria);
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+				}
+			});
+
 			contentPane.add(categoriaMaterial, BorderLayout.CENTER);
 			setVisible(true);
 		}
+	}
+
+	public void tipoDeMateriales(String categoria) {
+
 	}
 }

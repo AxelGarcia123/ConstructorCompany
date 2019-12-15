@@ -797,6 +797,15 @@ public class Login extends JFrame {
 					buscarCodigo = null;
 				}
 			});
+			
+			buscarCodigo.getButtoCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					buscarCodigo.dispose();
+					buscarCodigo = null;
+				}
+			});
 
 			buscarCodigo.addWindowListener(new WindowListener() {
 
@@ -851,7 +860,27 @@ public class Login extends JFrame {
 			actividadEmergente.llenarUnidadMedida(tablaActividad.getUnidadesDeMedida());
 			AutoCompletion.enable(actividadEmergente.getUnidadMedida());
 
-			addWindowListener(new WindowListener() {
+			actividadEmergente.getButtonAgregar().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevoContrato.getNuevasActividades().add(actividadEmergente.nuevaActividad());
+					nuevoContrato.llenarActividadesNuevas();
+					actividadEmergente.dispose();
+					actividadEmergente= null;
+				}
+			});
+			
+			actividadEmergente.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					actividadEmergente.dispose();
+					actividadEmergente= null;
+				}
+			});
+
+			actividadEmergente.addWindowListener(new WindowListener() {
 
 				@Override
 				public void windowOpened(WindowEvent e) {

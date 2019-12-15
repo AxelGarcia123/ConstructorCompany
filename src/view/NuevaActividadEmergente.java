@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Actividad;
 import modelo.Persona;
 
 import java.awt.Color;
@@ -144,6 +145,15 @@ public class NuevaActividadEmergente extends JDialog {
 		}
 	}
 	
+	public Actividad nuevaActividad() {
+		Actividad activity = new Actividad();
+		activity.setName(editActividad.getText());
+		activity.setDescription(editDescripcion.getText());
+		activity.setUnitOfMeasure(editUnidadMedida.getSelectedItem().toString());
+		
+		return activity;
+	}
+	
 	public void llenarUnidadMedida(List<String> medidas) {
 		for (String string : medidas) {
 			editUnidadMedida.addItem(string);
@@ -153,5 +163,13 @@ public class NuevaActividadEmergente extends JDialog {
 	
 	public JComboBox<String> getUnidadMedida() {
 		return editUnidadMedida;
+	}
+	
+	public JButton getButtonAgregar() {
+		return buttonAgregar;
+	}
+	
+	public JButton getButtonCancelar() {
+		return buttonCancelar;
 	}
 }

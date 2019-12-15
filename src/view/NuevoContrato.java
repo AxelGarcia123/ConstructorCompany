@@ -97,15 +97,17 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	private JButton buttonGuardar;
 	private JButton buttonCancelar;
 	private List<Actividad> actividadesAuxiliar;
-	private List<Permiso> permisosAuxiliar;
-	private List<Clausula> clausulasAuxiliar;
-	private List<PermisoContrato> permisosAgregados;
-	private List<String> permisosSeleccionados;
-	private List<ContratoClausula> clausulasAgregadas;
-	private List<String> clausulasSeleccionadas;
-	private List<String> nuevasClausulas;
 	private List<Actividad> actividadesAgregadas;
 	private List<ActividadRealizar> actividadesRealizar;
+	private List<Actividad> nuevaActividad;
+	private List<Permiso> permisosAuxiliar;
+	private List<PermisoContrato> permisosAgregados;
+	private List<Permiso> nuevoPermiso;
+	private List<ContratoClausula> clausulasAgregadas;
+	private List<Clausula> nuevaClausula;
+	private List<Clausula> clausulasAuxiliar;
+	private List<String> clausulasSeleccionadas;
+	private List<String> permisosSeleccionados;
 	private List<Persona> cliente;
 	private List<Persona> arquitecto;
 
@@ -533,11 +535,14 @@ public class NuevoContrato extends JPanel implements ActionListener{
 
 		permisosAgregados = new ArrayList<PermisoContrato>();
 		permisosSeleccionados = new ArrayList<String>();
+		nuevoPermiso = new ArrayList<Permiso>();
 		clausulasAgregadas = new ArrayList<ContratoClausula>();
-		nuevasClausulas = new ArrayList<String>();
+		clausulasSeleccionadas = new ArrayList<String>();
+		nuevaClausula = new ArrayList<Clausula>();
 		actividadesAgregadas = new ArrayList<Actividad>();
 		actividadesRealizar = new ArrayList<ActividadRealizar>();
-		clausulasSeleccionadas = new ArrayList<String>();
+		nuevaActividad = new ArrayList<Actividad>();
+		
 	}
 
 	@Override
@@ -672,7 +677,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		llenarActividadesAg(actividadesAgregadas);
 	}
 
-	/*AGREGANDO DATOS AL JLIST DE ACTIVIDADES*/
+	/*AGREGANDO DATOS AL JLIST DE ACTIVIDADES WEST*/
 	public void llenarActividades(List<Actividad> actividades) {
 		actividadesAuxiliar = actividades;
 		listActividadesExistentes.setModel(modelListAct(actividades));
@@ -689,7 +694,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		return model;
 	}
 
-	/*AGREGANDO DATOS AL JLIST DE PERMISOS*/
+	/*AGREGANDO DATOS AL JLIST DE PERMISOS WEST*/
 	public void llenarPermisos(List<Permiso> permisos) {
 		permisosAuxiliar = permisos;
 		listPermisosExistentes.setModel(modelListPerm(permisos));
@@ -705,7 +710,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		return model;
 	}
 
-	/*AGREGANDO DATOS AL JLIST DE CLAUSULAS*/
+	/*AGREGANDO DATOS AL JLIST DE CLAUSULAS WEST*/
 	public void llenarClausulas(List<Clausula> clausulas) {
 		clausulasAuxiliar = clausulas;
 		listClausulasExistentes.setModel(modelListCla(clausulas));
@@ -715,14 +720,18 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		DefaultListModel model = new DefaultListModel<>();
 
 		for (Clausula clausula : clausulas) {
-			String clausulaExistente = clausula.getDescripcionClausula().substring(0, 80);
-			model.addElement(clausulaExistente);
+			if(clausula.getDescripcionClausula().length() > 80) {
+				String clausulaExistente = clausula.getDescripcionClausula().substring(0, 80);
+				model.addElement(clausulaExistente);
+			}
+			else
+				model.addElement(clausula.getDescripcionClausula());
 		}
 
 		return model;
 	}
 	
-	/*CLAUSULAS AGREGADAS*/
+	/*EAST*/
 	public void llenarClausulasAgregadas(List<String> clausulas) {
 		listClausulasAgregadas.setModel(modelListClaAg(clausulas));
 	}
@@ -737,6 +746,7 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		return model;
 	}
 	
+	/*EAST*/
 	public void llenarPermisosAgregados(List<String> permisos) {
 		listPermisosAgregados.setModel(modelListPerAg(permisos));
 	}
@@ -750,11 +760,61 @@ public class NuevoContrato extends JPanel implements ActionListener{
 		return model;
 	}
 	
+	/*EAST*/
 	public void llenarActividadesAg(List<Actividad> actividades) {
 		listActividadesAgregadas.setModel(modelListActAg(actividades));
 	}
 
 	private DefaultListModel modelListActAg(List<Actividad> actividades){
+		DefaultListModel model = new DefaultListModel<>();
+		for (Actividad actividad : actividades) {
+			model.addElement(actividad.getName());
+		}
+
+		return model;
+	}
+	
+	
+	/*LLENAR CON ACTIVIDADES, CLAUSULAS Y PERMISOS NUEVOS*/
+	public void llenarClausulasNuevas() {
+		listClausulasAgregadas.setModel(modelListClaNue(nuevaClausula));
+	}
+
+	private DefaultListModel modelListClaNue(List<Clausula> clausulas){
+		DefaultListModel model = new DefaultListModel<>();
+
+		for (Clausula clausula : clausulas) {
+			if(clausula.getDescripcionClausula().length() > 80) {
+				String nuevaClausula = clausula.getDescripcionClausula().substring(0, 80);
+				model.addElement(nuevaClausula);
+			}
+			else
+				model.addElement(clausula.getDescripcionClausula());
+		}
+
+		return model;
+	}
+	
+	/*EAST*/
+	public void llenarPermisosNuevos() {
+		listPermisosAgregados.setModel(modelListPerNue(nuevoPermiso));
+	}
+
+	private DefaultListModel modelListPerNue(List<Permiso> permisos){
+		DefaultListModel model = new DefaultListModel<>();
+		for (Permiso permiso : permisos) {
+			model.addElement(permiso.getTipoPermiso());
+		}
+
+		return model;
+	}
+	
+	/*EAST*/
+	public void llenarActividadesNuevas() {
+		listActividadesAgregadas.setModel(modelListActNue(nuevaActividad));
+	}
+
+	private DefaultListModel modelListActNue(List<Actividad> actividades){
 		DefaultListModel model = new DefaultListModel<>();
 		for (Actividad actividad : actividades) {
 			model.addElement(actividad.getName());
@@ -836,6 +896,21 @@ public class NuevoContrato extends JPanel implements ActionListener{
 	/*SON LAS ACTIVIDADES PARA LA TABLA ACTREALIZAR (YA EXISTENTES)*/
 	public List<ActividadRealizar> getActividadesAgregadas() {
 		return actividadesRealizar;
+	}
+	
+	/*SON LAS NUEVAS ACTIVIDADES QUE SE AGREGARÁN*/
+	public List<Actividad> getNuevasActividades() {
+		return nuevaActividad;
+	}
+	
+	/*SON LOS NUEVOS PERMISOS QUE SE AGREGARÁN*/
+	public List<Permiso> getNuevosPermisos() {
+		return nuevoPermiso;
+	}
+	
+	/*SON LAS NUEVAS CLAUSULAS QUE SE AGREGARAN*/
+	public List<Clausula> getNuevasClausulas() {
+		return nuevaClausula;
 	}
 	
 	public JButton getButtonGuardar() {

@@ -128,4 +128,27 @@ public class TablaMaterial {
 			return null;
 		}
 	}
+	
+	public Material getDetallesMaterial(String nombre) {
+		String sql = "select * from material where nom_mat = '"+ nombre +"'"; 
+		try {
+			ResultSet rs = statement.executeQuery(sql);
+			Material material = new Material();
+			if(rs.next()) {
+				material.setNombreMaterial(rs.getString("nom_mat"));
+				material.setMarcaMaterial(rs.getString("marca_mat"));
+				material.setTipoMaterial(rs.getString("tipo_mat"));
+				material.setMinimoMaterial(rs.getInt("min_mat"));
+				material.setMaximoMaterial(rs.getInt("max_mat"));
+				material.setUnidadMedidaMaterial(rs.getString("umedida_mat"));
+				material.setContenidoMaterial(rs.getInt("contenido_mat"));
+				material.setClaveMaterial(rs.getInt("cve_mat"));
+				return material;
+			}
+			return null;
+		} catch (Exception e) {
+			System.out.println(e.toString() + ". En tipo de materiales");
+			return null;
+		}
+	}
 }

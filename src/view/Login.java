@@ -114,6 +114,7 @@ public class Login extends JFrame {
 	private AgendarCita agendaCita;
 	private ShowActividad showActivity;
 	private NuevaActividad nuevaAct;
+	private ShowMateriales showMaterials;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -1396,7 +1397,7 @@ public class Login extends JFrame {
 		}
 	}
 
-	public void tipoDeMateriales(String categoria) {
+	public void tipoDeMateriales(String categorias) {
 		contentPane.removeAll();
 		menu = null;
 		contracts = null;
@@ -1426,7 +1427,21 @@ public class Login extends JFrame {
 		if(materials == null) {
 			materials = new MaterialView();
 			
-			materials.showMaterials(tablaMaterial.getNombreMateriales(categoria.trim()));
+			materials.showMaterials(tablaMaterial.getNombreMateriales(categorias.trim()));
+			
+			materials.getButtonVerMaterial().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					iterator = materials.getCounter();
+					String categoria = materials.getNombres().get(materials.getNombres().size() - iterator).getText();
+					if(iterator != 0 && categoria.length() != 0) {
+						showMateriales(categoria, categorias);
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+				}
+			});
 			
 			materials.getButtonRegistrarMaterial().addActionListener(new ActionListener() {
 				
@@ -1794,6 +1809,7 @@ public class Login extends JFrame {
 		agendaCita = null;
 		showActivity = null;
 		nuevaAct = null;
+		showMaterials = null;
 		menuLateral();
 		repaint();
 		
@@ -1822,6 +1838,51 @@ public class Login extends JFrame {
 			});
 			
 			contentPane.add(nuevaAct, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void showMateriales(String nombre, String categoria) {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
+		showMaterials = null;
+		menuLateral();
+		repaint();
+		
+		if(showMaterials == null) {
+			showMaterials = new ShowMateriales();
+			
+			showMaterials.llenarMateriales(tablaMaterial.getDetallesMaterial(nombre.trim()));
+			showMaterials.getButtonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tipoDeMateriales(categoria.trim());
+				}
+			});
+			
+			contentPane.add(showMaterials, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

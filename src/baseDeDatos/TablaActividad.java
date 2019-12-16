@@ -25,17 +25,15 @@ public class TablaActividad {
 		} 
 	}
 	
-//	public String guardar(Empleado empleado) {
-//		String sql = "insert into empleado values(null,'" + empleado.getPaterno() + "','" + empleado.getMaterno() + "','" + 
-//				empleado.getNombre() + "','" + empleado.getCargo() + "')";
-//		try {
-//			statement.executeUpdate(sql);
-//			return "Producto registrado";
-//		} catch (SQLException e) {
-//			System.out.println(e.toString());
-//			return sql.toString();
-//		}
-//	}
+	public void guardarActividad(Actividad act) {
+		String sql = "insert into actividad values(null,'" + act.getName() + "','" + act.getDescription() + "','" + 
+				act.getUnitOfMeasure() + "')";
+		try {
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+	}
 	
 	public List<Actividad> getDetailsActivities(int clave) {
 		String sql = "select a.cve_act, t.cve_traact, nombre_act, cant_traact, descripcion_act, umedida_act from trabajadoractividad t join actrealizar act" + 

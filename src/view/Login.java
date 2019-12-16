@@ -18,6 +18,7 @@ import baseDeDatos.BaseDeDatos;
 import baseDeDatos.TablaActividad;
 import baseDeDatos.TablaAutorizacion;
 import baseDeDatos.TablaAvance;
+import baseDeDatos.TablaCita;
 import baseDeDatos.TablaCiudad;
 import baseDeDatos.TablaClausula;
 import baseDeDatos.TablaCliente;
@@ -31,6 +32,7 @@ import baseDeDatos.TablaPermiso;
 import baseDeDatos.TablaPermisoContrato;
 import baseDeDatos.TablaPersona;
 import baseDeDatos.TablaResurtir;
+import baseDeDatos.TablaStatusCita;
 import baseDeDatos.TablaStatusContrato;
 import baseDeDatos.TablaTrabajadorActividad;
 import modelo.Contrato;
@@ -96,6 +98,8 @@ public class Login extends JFrame {
 	private TablaDiaHora tablaDiaHora;
 	private TablaMaterial tablaMaterial;
 	private TablaResurtir tablaResurtir;
+	private TablaStatusCita tablaStatusCita;
+	private TablaCita tablaCita;
 	private NuevaActividadEmergente actividadEmergente;
 	private NuevaClausulaEmergente clausulaEmergente;
 	private NuevoPermisoEmergente permisoEmergente;
@@ -106,6 +110,10 @@ public class Login extends JFrame {
 	private RegistrarMaterial registraMaterial;
 	private ResurtirMaterial resurtir;
 	private RegistrarMaterialEmergente registroEmergente;
+	private CategoriaCita categoriaCit;
+	private AgendarCita agendaCita;
+	private ShowActividad showActivity;
+	private NuevaActividad nuevaAct;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -154,6 +162,8 @@ public class Login extends JFrame {
 		tablaDiaHora = new TablaDiaHora(baseDatos.getConexion());
 		tablaMaterial = new TablaMaterial(baseDatos.getConexion());
 		tablaResurtir = new TablaResurtir(baseDatos.getConexion());
+		tablaStatusCita = new TablaStatusCita(baseDatos.getConexion());
+		tablaCita = new TablaCita(baseDatos.getConexion());
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
@@ -206,6 +216,22 @@ public class Login extends JFrame {
 					resurtirMaterial();
 				}
 			});
+			
+			menu.getButtonAppoiment().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaCita();
+				}
+			});
+			
+			menu.getButtonActivities().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mostrarActividades();
+				}
+			});
 
 			contentPane.add(menu, BorderLayout.WEST);
 			setVisible(true);
@@ -233,6 +259,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -334,6 +364,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -402,6 +436,10 @@ public class Login extends JFrame {
 		categoriaMaterial = null;
 		materials = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -463,6 +501,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -544,6 +586,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		nuevaAct = null;
+		showActivity = null;
 		menuLateral();
 		repaint();
 
@@ -586,6 +632,9 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -640,6 +689,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		nuevaAct = null;
+		showActivity = null;
 		menuLateral();
 		repaint();
 
@@ -694,6 +747,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		nuevaAct = null;
+		showActivity = null;
 		menuLateral();
 		repaint();
 
@@ -747,6 +804,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -797,6 +858,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -839,6 +904,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -933,6 +1002,11 @@ public class Login extends JFrame {
 					if(bandera == 0) {
 						nuevoEmpleado.getTextColonia().setText(colonia);
 						nuevoEmpleado.getTextCiudad().setText(String.valueOf(tablaCiudad.getCiudad(codigo).getNombreCiudad()));
+						buscarCodigo.dispose();
+						buscarCodigo = null;
+					}
+					else if(bandera == 3) {
+						agendaCita.getColonia().setText(colonia);
 						buscarCodigo.dispose();
 						buscarCodigo = null;
 					}
@@ -1239,6 +1313,9 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
 		menuLateral();
 		repaint();
 
@@ -1281,6 +1358,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		showActivity = null;
+		categoriaCit = null;
+		agendaCita = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 
@@ -1335,6 +1416,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		showActivity = null;
+		agendaCita = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 		
@@ -1383,6 +1468,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 		
@@ -1440,6 +1529,10 @@ public class Login extends JFrame {
 		materials = null;
 		registraMaterial = null;
 		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
 		menuLateral();
 		repaint();
 		
@@ -1517,6 +1610,218 @@ public class Login extends JFrame {
 			});
 			
 			contentPane.add(resurtir, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void categoriaCita() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
+		menuLateral();
+		repaint();
+		
+		if(categoriaCit == null) {
+			categoriaCit = new CategoriaCita();
+			
+			categoriaCit.showCategoriaCita();
+			
+			categoriaCit.getButtonAgendarCita().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					agendarCita();
+				}
+			});
+			
+			contentPane.add(categoriaCit, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void agendarCita() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		showActivity = null;
+		nuevaAct = null;
+		menuLateral();
+		repaint();
+		
+		if(agendaCita == null) {
+			agendaCita = new AgendarCita();
+			
+			agendaCita.llenarCliente(tablaPersona.getFiltroCliente());
+			AutoCompletion.enable(agendaCita.getCampoCliente());
+
+			agendaCita.llenarArquitecto(tablaPersona.getArquitectosDisponibles(tablaTrabajador.getClavesArquitectos()));
+			AutoCompletion.enable(agendaCita.getCampoArquitecto());
+			AutoCompletion.enable(agendaCita.getOrientacion());
+			
+			agendaCita.getButtonBuscarColonia().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					buscarCodigo(3);
+				}
+			});
+			
+			agendaCita.getButtonAgendaCita().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tablaCita.agendarCita(agendaCita.getNuevaCita(), agendaCita.getStatusCita(), agendaCita.getColonia().getText());
+					JOptionPane.showMessageDialog(null, "Cita agendada con éxito");
+				}
+			});
+			
+			agendaCita.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaCita();
+				}
+			});
+			
+			contentPane.add(agendaCita, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void mostrarActividades() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
+		menuLateral();
+		repaint();
+		
+		if(showActivity == null) {
+			showActivity = new ShowActividad();
+			
+			showActivity.showActividades(tablaActividad.getActividades());
+			showActivity.getButtonNuevaActividad().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					nuevaActividad();
+				}
+			});
+			contentPane.add(showActivity, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void nuevaActividad() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		categoriaCit = null;
+		agendaCita = null;
+		showActivity = null;
+		nuevaAct = null;
+		menuLateral();
+		repaint();
+		
+		if(nuevaAct == null) {
+			nuevaAct = new NuevaActividad();
+			
+			nuevaAct.llenarUnidadMedida(tablaActividad.getUnidadesDeMedida());
+			AutoCompletion.enable(nuevaAct.getUnidadMedida());
+			
+			nuevaAct.getButtonGuardarActividad().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tablaActividad.guardarActividad(nuevaAct.nuevaActividad());
+					JOptionPane.showMessageDialog(null, "Actividad registrada");
+					mostrarActividades();
+				}
+			});
+			
+			nuevaAct.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mostrarActividades();
+				}
+			});
+			
+			contentPane.add(nuevaAct, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}

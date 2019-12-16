@@ -1,18 +1,22 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -20,116 +24,138 @@ import javax.swing.SwingConstants;
 
 import modelo.Material;
 
-public class RegistrarMaterial extends JPanel implements ActionListener{
-	private JPanel panelTitulo;
-	private JPanel panelCentral;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Toolkit;
+import javax.swing.JComboBox;
+
+public class RegistrarMaterialEmergente extends JFrame implements ActionListener{
+
+	private JPanel contentPane;
 	private JTextField editNombreMaterial;
 	private JTextField editContenido;
-	private JComboBox<String> editMarcaMaterial;
-	private JComboBox<String> editTipoMaterial;
-	private JSpinner editCantidadMinima;
-	private JSpinner editCantidadMaxima;
-	private JComboBox<String> editUnidadMedida;
 	private JButton buttonRegistrar;
 	private JButton buttonCancelar;
+	private JSpinner editCantidadMinima;
+	private JSpinner editCantidadMaxima;
+	private JPanel panelCentral;
 	private JPanel panelSur;
+	private JPanel panelTitulo;
+	private JComboBox<String> editTipoMaterial;
+	private JComboBox<String> editUnidadMedida;
+	private JComboBox<String> editMarcaMaterial;
 
-	public RegistrarMaterial() {
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RegistrarMaterialEmergente frame = new RegistrarMaterialEmergente();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public RegistrarMaterialEmergente() {
 		setBackground(Color.WHITE);
-		setLayout(new BorderLayout(0, 0));
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\bryangarcia\\Desktop\\POO\\Eclipse\\Tienda\\iconos\\attachment_38986924.jpg"));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 500, 550);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null);
+		
 		panelTitulo = new JPanel();
 		panelTitulo.setBackground(Color.WHITE);
-		add(panelTitulo, BorderLayout.NORTH);
-
-		JLabel lblRegistrarNuevoMaterial = new JLabel("Registrar nuevo material");
-		lblRegistrarNuevoMaterial.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 22));
-		panelTitulo.add(lblRegistrarNuevoMaterial);
-
+		contentPane.add(panelTitulo, BorderLayout.NORTH);
+		
+		JLabel lblNuevoProducto = new JLabel("Nuevo Producto");
+		lblNuevoProducto.setBackground(Color.BLACK);
+		lblNuevoProducto.setFont(new Font("Roboto", Font.PLAIN, 20));
+		lblNuevoProducto.setForeground(Color.BLACK);
+		panelTitulo.add(lblNuevoProducto);
+		
 		panelCentral = new JPanel();
 		panelCentral.setBackground(Color.WHITE);
-		add(panelCentral, BorderLayout.CENTER);
-		panelCentral.setLayout(new GridLayout(4, 4, 0, 100));
-
-		JLabel lblNombreDelMaterial = new JLabel("Nombre del material");
-		lblNombreDelMaterial.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblNombreDelMaterial.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblNombreDelMaterial);
-
+		contentPane.add(panelCentral, BorderLayout.CENTER);
+		panelCentral.setLayout(new GridLayout(7, 2, 0, 30));
+		
+		JLabel lblNombreDelProducto = new JLabel("Nombre del material");
+		lblNombreDelProducto.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblNombreDelProducto);
+		
 		editNombreMaterial = new JTextField();
-		editNombreMaterial.setHorizontalAlignment(SwingConstants.CENTER);
-		editNombreMaterial.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
 		editNombreMaterial.addActionListener(this);
+		editNombreMaterial.setHorizontalAlignment(SwingConstants.CENTER);
+		editNombreMaterial.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelCentral.add(editNombreMaterial);
 		editNombreMaterial.setColumns(10);
-
-		JLabel lblMarca = new JLabel("Marca");
-		lblMarca.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblMarca.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblMarca);
-
+		
+		JLabel lblTipoDeProducto = new JLabel("Marca del material");
+		lblTipoDeProducto.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblTipoDeProducto);
+		
 		editMarcaMaterial = new JComboBox<String>();
-		editMarcaMaterial.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
 		editMarcaMaterial.addActionListener(this);
 		editMarcaMaterial.setBackground(Color.WHITE);
 		panelCentral.add(editMarcaMaterial);
-
-		JLabel lblTipoDeMaterial = new JLabel("Tipo de material");
-		lblTipoDeMaterial.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblTipoDeMaterial.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblTipoDeMaterial);
-
+		
+		JLabel lblContenido = new JLabel("Tipo de material");
+		lblContenido.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblContenido);
+		
 		editTipoMaterial = new JComboBox<String>();
-		editTipoMaterial.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
 		editTipoMaterial.addActionListener(this);
 		editTipoMaterial.setBackground(Color.WHITE);
 		panelCentral.add(editTipoMaterial);
-
-		JLabel lblCantidadMnima = new JLabel("Cantidad mínima");
-		lblCantidadMnima.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblCantidadMnima.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblCantidadMnima);
-
-		editCantidadMinima = new JSpinner();
-		editCantidadMinima.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
-		panelCentral.add(editCantidadMinima);
-
-		JLabel lblCantidadMxima = new JLabel("Cantidad máxima");
-		lblCantidadMxima.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblCantidadMxima.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblCantidadMxima);
-
-		editCantidadMaxima = new JSpinner();
-		editCantidadMaxima.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
-		panelCentral.add(editCantidadMaxima);
-
-		JLabel lblUnidadDeMedida = new JLabel("Unidad de medida");
-		lblUnidadDeMedida.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblUnidadDeMedida.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblUnidadDeMedida);
-
+		
+		JLabel lblMarca = new JLabel("Unidad de medida");
+		lblMarca.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblMarca);
+		
 		editUnidadMedida = new JComboBox<String>();
-		editUnidadMedida.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
 		editUnidadMedida.addActionListener(this);
 		editUnidadMedida.setBackground(Color.WHITE);
 		panelCentral.add(editUnidadMedida);
-
-		JLabel lblContenido = new JLabel("Contenido");
-		lblContenido.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 20));
-		lblContenido.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblContenido);
-
+		
+		JLabel lblPrecioDeVenta = new JLabel("Contenido");
+		lblPrecioDeVenta.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblPrecioDeVenta);
+		
 		editContenido = new JTextField();
-		editContenido.setHorizontalAlignment(SwingConstants.CENTER);
-		editContenido.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
 		editContenido.addActionListener(this);
+		editContenido.setHorizontalAlignment(SwingConstants.CENTER);
+		editContenido.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelCentral.add(editContenido);
 		editContenido.setColumns(10);
-
+		
+		JLabel lblCantidadMnima = new JLabel("Cantidad M\u00EDnima");
+		lblCantidadMnima.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblCantidadMnima);
+		
+		editCantidadMinima = new JSpinner();
+		editCantidadMinima.setModel(new SpinnerNumberModel(1, 1, 50, 1));
+		editCantidadMinima.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(editCantidadMinima);
+		
+		JLabel lblCantidadMxima = new JLabel("Cantidad M\u00E1xima");
+		lblCantidadMxima.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(lblCantidadMxima);
+		
+		editCantidadMaxima = new JSpinner();
+		editCantidadMaxima.setModel(new SpinnerNumberModel(1, 1, 50, 1));
+		editCantidadMaxima.setFont(new Font("Roboto", Font.PLAIN, 15));
+		panelCentral.add(editCantidadMaxima);
+		
 		panelSur = new JPanel();
 		panelSur.setBackground(Color.WHITE);
-		add(panelSur, BorderLayout.SOUTH);
-
+		contentPane.add(panelSur, BorderLayout.SOUTH);
+		
 		buttonRegistrar = new JButton("Registrar");
 		buttonRegistrar.setForeground(Color.WHITE);
 		buttonRegistrar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
@@ -137,15 +163,15 @@ public class RegistrarMaterial extends JPanel implements ActionListener{
 		buttonRegistrar.setBounds(10, 266, 269, 29);
 		buttonRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelSur.add(buttonRegistrar);
-
+		
 		buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.addActionListener(this);
 		buttonCancelar.setForeground(Color.WHITE);
 		buttonCancelar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 17));
 		buttonCancelar.setBackground(new Color(45, 0, 255));
 		buttonCancelar.setBounds(10, 266, 269, 29);
 		buttonCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelSur.add(buttonCancelar);
-
 	}
 
 	@Override
@@ -194,9 +220,12 @@ public class RegistrarMaterial extends JPanel implements ActionListener{
 			else
 				buttonRegistrar.requestFocus();
 		}
+		
+		if(e.getSource() == buttonCancelar)
+			this.dispose();
 	}
-
-	public Material nuevoMaterial() {
+	
+	public Material registrarNuevoMaterial() {
 		Material material = new Material();
 		material.setNombreMaterial(editNombreMaterial.getText());
 		material.setMarcaMaterial(editMarcaMaterial.getSelectedItem().toString());
@@ -224,7 +253,7 @@ public class RegistrarMaterial extends JPanel implements ActionListener{
 		
 		return material;
 	}
-
+	
 	public void llenarMarcaMaterial(List<Material> marca) {
 		for (Material material : marca) {
 			editMarcaMaterial.addItem(material.getMarcaMaterial());
@@ -246,23 +275,27 @@ public class RegistrarMaterial extends JPanel implements ActionListener{
 		editUnidadMedida.addItem("Otro");
 	}
 
-	public JComboBox<String> tipoMaterial() {
+	public JComboBox<String> getTipoMaterial() {
 		return editTipoMaterial;
 	}
 
-	public JComboBox<String> marca() {
+	public JComboBox<String> getMarca() {
 		return editMarcaMaterial;
 	}
 
-	public JComboBox<String> unidadMedida() {
+	public JComboBox<String> getUnidadMedida() {
 		return editUnidadMedida;
+	}
+	
+	public void limpiarVentana() {
+		this.dispose();
+	}
+	
+	public JButton getBotonCancelar() {
+		return buttonCancelar;
 	}
 	
 	public JButton getButtonRegistrar() {
 		return buttonRegistrar;
-	}
-	
-	public JButton getButtonCancelar() {
-		return buttonCancelar;
 	}
 }

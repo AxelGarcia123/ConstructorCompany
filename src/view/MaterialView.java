@@ -131,7 +131,7 @@ public class MaterialView extends JPanel {
 		return iterator;
 	}
 
-	public JButton getVerMaterial() {
+	public JButton getButtonVerMaterial() {
 		return buttonVerMaterial;
 	}
 
@@ -139,7 +139,7 @@ public class MaterialView extends JPanel {
 		return contractNames;
 	}
 
-	public JButton getBotonRegresar() {
+	public JButton getButtonRegresar() {
 		return buttonRegresar;
 	}
 

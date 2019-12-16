@@ -131,7 +131,7 @@ public class CategoriaMateriales extends JPanel {
 		return iterator;
 	}
 	
-	public JButton getVerCategoria() {
+	public JButton getButtonVerCategoria() {
 		return buttonVerMaterial;
 	}
 	
@@ -139,7 +139,7 @@ public class CategoriaMateriales extends JPanel {
 		return projectsNames;
 	}
 	
-	public JButton getRegistrarMaterial() {
+	public JButton getButtonRegistrarMaterial() {
 		return buttonRegistrarCategoria;
 	}
 }

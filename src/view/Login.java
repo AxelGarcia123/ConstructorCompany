@@ -6,24 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import java.awt.font.TextAttribute;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 import java.awt.Color;
-import java.awt.Cursor;
-
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 import baseDeDatos.BaseDeDatos;
 import baseDeDatos.TablaActividad;
@@ -41,20 +30,18 @@ import baseDeDatos.TablaMaterial;
 import baseDeDatos.TablaPermiso;
 import baseDeDatos.TablaPermisoContrato;
 import baseDeDatos.TablaPersona;
+import baseDeDatos.TablaResurtir;
 import baseDeDatos.TablaStatusContrato;
 import baseDeDatos.TablaTrabajadorActividad;
 import modelo.Contrato;
-import modelo.ContratoClausula;
 import modelo.DiaHora;
+import modelo.Material;
 import modelo.PermisoContrato;
-import baseDeDatos.BaseDeDatos;
 import modelo.ActividadRealizar;
 import modelo.AutoCompletion;
 
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -67,7 +54,9 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private List<ActividadRealizar> addActRea;
 	private List<PermisoContrato> permCont;
+	private List<Material> materialesAux;
 	private int iterator = 0;
+	private boolean bandera = false;
 	private String cliente = "";
 	private String nombre = "";
 	private String paterno = "";
@@ -106,6 +95,7 @@ public class Login extends JFrame {
 	private TablaCiudad tablaCiudad;
 	private TablaDiaHora tablaDiaHora;
 	private TablaMaterial tablaMaterial;
+	private TablaResurtir tablaResurtir;
 	private NuevaActividadEmergente actividadEmergente;
 	private NuevaClausulaEmergente clausulaEmergente;
 	private NuevoPermisoEmergente permisoEmergente;
@@ -113,6 +103,9 @@ public class Login extends JFrame {
 	private Clientes clientes;
 	private CategoriaMateriales categoriaMaterial;
 	private MaterialView materials;
+	private RegistrarMaterial registraMaterial;
+	private ResurtirMaterial resurtir;
+	private RegistrarMaterialEmergente registroEmergente;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -160,10 +153,13 @@ public class Login extends JFrame {
 		tablaCiudad = new TablaCiudad(baseDatos.getConexion());
 		tablaDiaHora = new TablaDiaHora(baseDatos.getConexion());
 		tablaMaterial = new TablaMaterial(baseDatos.getConexion());
+		tablaResurtir = new TablaResurtir(baseDatos.getConexion());
+		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		menuLateral();
 		addActRea = new ArrayList<ActividadRealizar>();
 		permCont = new ArrayList<PermisoContrato>();
+		materialesAux = new ArrayList<Material>();
 	}
 
 	/*MENÚ LATERAL*/
@@ -202,6 +198,14 @@ public class Login extends JFrame {
 					categoriaMateriales();
 				}
 			});
+			
+			menu.getButtonBuyMoreMaterials().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					resurtirMaterial();
+				}
+			});
 
 			contentPane.add(menu, BorderLayout.WEST);
 			setVisible(true);
@@ -227,6 +231,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -326,6 +332,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -393,6 +401,7 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -452,6 +461,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -531,6 +542,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -571,6 +584,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -623,6 +638,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -675,6 +692,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -726,6 +745,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -774,6 +795,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -814,6 +837,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -1212,6 +1237,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -1252,6 +1279,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 
@@ -1259,7 +1288,7 @@ public class Login extends JFrame {
 			categoriaMaterial = new CategoriaMateriales();
 
 			categoriaMaterial.showTipoMaterial(tablaMaterial.getTiposMateriales());
-			categoriaMaterial.getVerCategoria().addActionListener(new ActionListener() {
+			categoriaMaterial.getButtonVerCategoria().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -1270,6 +1299,14 @@ public class Login extends JFrame {
 					}
 					else
 						JOptionPane.showMessageDialog(null, "Elige una carpeta");
+				}
+			});
+			
+			categoriaMaterial.getButtonRegistrarMaterial().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					registroMaterial();
 				}
 			});
 
@@ -1296,6 +1333,8 @@ public class Login extends JFrame {
 		clientes = null;
 		categoriaMaterial = null;
 		materials = null;
+		registraMaterial = null;
+		resurtir = null;
 		menuLateral();
 		repaint();
 		
@@ -1304,7 +1343,180 @@ public class Login extends JFrame {
 			
 			materials.showMaterials(tablaMaterial.getNombreMateriales(categoria.trim()));
 			
+			materials.getButtonRegistrarMaterial().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					registroMaterial();
+				}
+			});
+			
+			materials.getButtonRegresar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaMateriales();
+				}
+			});
 			contentPane.add(materials, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void registroMaterial() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		menuLateral();
+		repaint();
+		
+		if(registraMaterial == null) {
+			registraMaterial = new RegistrarMaterial();
+			
+			registraMaterial.llenarTipoMaterial(tablaMaterial.getTiposMateriales());
+			AutoCompletion.enable(registraMaterial.tipoMaterial());
+			
+			registraMaterial.llenarMarcaMaterial(tablaMaterial.getMarcaMateriales());
+			AutoCompletion.enable(registraMaterial.marca());
+			
+			registraMaterial.llenarUnidadMedida(tablaMaterial.getUnidadMedida());
+			AutoCompletion.enable(registraMaterial.unidadMedida());
+			
+			registraMaterial.getButtonRegistrar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tablaMaterial.registrarMaterial(registraMaterial.nuevoMaterial());
+					categoriaMateriales();
+				}
+			});
+			
+			registraMaterial.getButtonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					categoriaMateriales();
+				}
+			});
+			
+			contentPane.add(registraMaterial, BorderLayout.CENTER);
+			setVisible(true);
+		}
+	}
+	
+	public void resurtirMaterial() {
+		contentPane.removeAll();
+		menu = null;
+		contracts = null;
+		details = null;
+		activities = null;
+		trabajadores = null;
+		autorizacion = null;
+		clausula = null;
+		nuevaClausula = null;
+		addClause = null;
+		nuevoEmpleado = null;
+		categoriaEmpleados = null;
+		nuevoContrato = null;
+		nuevoCliente = null;
+		clientes = null;
+		categoriaMaterial = null;
+		materials = null;
+		registraMaterial = null;
+		resurtir = null;
+		menuLateral();
+		repaint();
+		
+		if(resurtir == null) {
+			resurtir = new ResurtirMaterial();
+			
+			resurtir.buscarProducto(tablaMaterial.getNombreParaResurtir());
+			AutoCompletion.enable(resurtir.getCampoMaterial());
+			
+			resurtir.mostrarResurtidos(tablaResurtir.getDatosResurtidos(), tablaResurtir);
+			resurtir.getBotonResurtir().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(bandera) {
+						try {
+							tablaResurtir.resurtirMaterialNuevo(resurtir.registrarResurtir(), materialesAux);
+							resurtir.mostrarResurtidos(tablaResurtir.getDatosResurtidos(), tablaResurtir);
+							resurtir.buscarProducto(tablaMaterial.getNombreParaResurtir());
+							AutoCompletion.enable(resurtir.getCampoMaterial());
+							bandera = false;
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						materialesAux.clear();
+					}
+					else {
+						tablaResurtir.resurtirMaterial(resurtir.registrarResurtir());
+						resurtir.mostrarResurtidos(tablaResurtir.getDatosResurtidos(), tablaResurtir);
+					}
+				}
+			});
+			
+			resurtir.getBotonRegistrarMaterial().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					registroEmergente = new RegistrarMaterialEmergente();
+					
+					registroEmergente.llenarTipoMaterial(tablaMaterial.getTiposMateriales());
+					AutoCompletion.enable(registroEmergente.getTipoMaterial());
+					
+					registroEmergente.llenarMarcaMaterial(tablaMaterial.getMarcaMateriales());
+					AutoCompletion.enable(registroEmergente.getMarca());
+					
+					registroEmergente.llenarUnidadMedida(tablaMaterial.getUnidadMedida());
+					AutoCompletion.enable(registroEmergente.getUnidadMedida());
+					
+					registroEmergente.getButtonRegistrar().addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							resurtir.getCampoMaterial().addItem(registroEmergente.registrarNuevoMaterial().getNombreMaterial());
+							resurtir.getCampoMaterial().setSelectedItem(registroEmergente.registrarNuevoMaterial().getNombreMaterial());
+							materialesAux.add(registroEmergente.registrarNuevoMaterial());
+							bandera = true;
+							registroEmergente.limpiarVentana();
+						}
+					});
+					registroEmergente.setVisible(true);
+				}
+			});
+			
+			resurtir.getBotonCancelar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					contentPane.removeAll();
+					resurtir = null;
+					menu = null;
+					menuLateral();
+					repaint();
+				}
+			});
+			
+			contentPane.add(resurtir, BorderLayout.CENTER);
 			setVisible(true);
 		}
 	}
